@@ -1,0 +1,570 @@
+[
+  {
+    "reagent_id": 3,
+    "cas": "67-64-1",
+    "name_pl": "aceton",
+    "name_eng": "Acetone",
+    "chemical_formula": "CH₃COCH₃",
+    "sds_file_path": "sds/acetone.pdf",
+    "hazard_level": "medium",
+    "hazard_notes": "Wysoce łatwopalny. Pary cięższe od powietrza — ryzyko wybuchu.",
+    "ppe_required": [
+      "gloves_nitrile",
+      "goggles",
+      "lab_coat",
+      "fume_hood"
+    ]
+  },
+  {
+    "reagent_id": 16,
+    "cas": "919-30-2",
+    "name_pl": "(3-aminopropylo)trietoksysilan (APTES)",
+    "name_eng": "(3-Aminopropyl)triethoxysilane",
+    "chemical_formula": "NH₂(CH₂)₃Si(OC₂H₅)₃",
+    "sds_file_path": "sds/aptes.pdf",
+    "hazard_level": "medium",
+    "hazard_notes": "Drażniący; wrażliwy na wilgoć.",
+    "ppe_required": [
+      "gloves_nitrile",
+      "goggles",
+      "lab_coat",
+      "fume_hood"
+    ]
+  },
+  {
+    "reagent_id": 20,
+    "cas": "1336-21-6",
+    "name_pl": "wodorotlenek amonu (roztwór)",
+    "name_eng": "Ammonium hydroxide solution",
+    "chemical_formula": "NH₄OH",
+    "sds_file_path": "sds/ammonium_hydroxide.pdf",
+    "hazard_level": "medium",
+    "hazard_notes": "Drażniący; opary amoniaku drażnią oczy i drogi oddechowe. Wentylacja obowiązkowa.",
+    "ppe_required": [
+      "gloves_nitrile",
+      "goggles",
+      "lab_coat",
+      "fume_hood"
+    ]
+  },
+  {
+    "reagent_id": 21,
+    "cas": "10045-89-3",
+    "name_pl": "siarczan amono-żelazowy(II) sześciowodny (sól Mohra)",
+    "name_eng": "Ammonium iron(II) sulfate hexahydrate",
+    "chemical_formula": "(NH₄)₂Fe(SO₄)₂·6H₂O",
+    "sds_file_path": "sds/mohr_salt.pdf",
+    "hazard_level": "low",
+    "hazard_notes": "Niska toksyczność ostra; może barwić skórę.",
+    "ppe_required": [
+      "gloves_nitrile",
+      "lab_coat"
+    ]
+  },
+  {
+    "reagent_id": 27,
+    "cas": "50-81-7",
+    "name_pl": "kwas L-askorbinowy (witamina C)",
+    "name_eng": "L-Ascorbic acid",
+    "chemical_formula": "C₆H₈O₆",
+    "sds_file_path": "sds/ascorbic_acid.pdf",
+    "hazard_level": "low",
+    "hazard_notes": "Niska toksyczność; silny reduktor.",
+    "ppe_required": [
+      "gloves_nitrile",
+      "lab_coat"
+    ]
+  },
+  {
+    "reagent_id": 52,
+    "cas": "77-92-9",
+    "name_pl": "kwas cytrynowy",
+    "name_eng": "Citric acid",
+    "chemical_formula": "C₆H₈O₇",
+    "sds_file_path": "sds/citric_acid.pdf",
+    "hazard_level": "low",
+    "hazard_notes": "Niskie ryzyko; łagodny kwas organiczny. Lekko drażniący przy kontakcie z oczami.",
+    "ppe_required": [
+      "gloves_nitrile",
+      "lab_coat"
+    ]
+  },
+  {
+    "reagent_id": 68,
+    "cas": "75-09-2",
+    "name_pl": "dichlorometan",
+    "name_eng": "Dichloromethane",
+    "chemical_formula": "CH₂Cl₂",
+    "sds_file_path": "sds/dichloromethane.pdf",
+    "hazard_level": "high",
+    "hazard_notes": "Prawdopodobny kancerogen (Gr. 2A IARC). Działa narkotycznie w wysokich stężeniach. Tylko digestorium.",
+    "ppe_required": [
+      "gloves_nitrile",
+      "goggles",
+      "lab_coat",
+      "fume_hood",
+      "face_shield"
+    ]
+  },
+  {
+    "reagent_id": 74,
+    "cas": "67-68-5",
+    "name_pl": "dimetylosulfotlenek (DMSO)",
+    "name_eng": "Dimethyl sulfoxide",
+    "chemical_formula": "(CH₃)₂SO",
+    "sds_file_path": "sds/dmso.pdf",
+    "hazard_level": "low",
+    "hazard_notes": "Niska toksyczność, przenika przez skórę i przenosi substancje. Używaj rękawiczek!",
+    "ppe_required": [
+      "gloves_nitrile",
+      "lab_coat"
+    ]
+  },
+  {
+    "reagent_id": 78,
+    "cas": "68-12-2",
+    "name_pl": "dimetyloformamid (DMF)",
+    "name_eng": "N,N-Dimethylformamide",
+    "chemical_formula": "HCON(CH₃)₂",
+    "sds_file_path": "sds/dmf.pdf",
+    "hazard_level": "high",
+    "hazard_notes": "Hepatotoksyczny, podejrzany kancerogen. Działa teratogennie. Tylko digestorium.",
+    "ppe_required": [
+      "gloves_nitrile",
+      "goggles",
+      "lab_coat",
+      "fume_hood",
+      "face_shield"
+    ]
+  },
+  {
+    "reagent_id": 94,
+    "cas": "64-17-5",
+    "name_pl": "etanol 96%",
+    "name_eng": "Ethanol 96%",
+    "chemical_formula": "C₂H₅OH",
+    "sds_file_path": "sds/ethanol.pdf",
+    "hazard_level": "medium",
+    "hazard_notes": "Łatwopalny. Niska toksyczność przy krótkotrwałym narażeniu.",
+    "ppe_required": [
+      "gloves_nitrile",
+      "goggles",
+      "lab_coat",
+      "fume_hood"
+    ]
+  },
+  {
+    "reagent_id": 122,
+    "cas": "13453-07-1",
+    "name_pl": "chlorek złota(III)",
+    "name_eng": "Gold(III) chloride",
+    "chemical_formula": "AuCl₃",
+    "sds_file_path": "sds/aucl3.pdf",
+    "hazard_level": "medium",
+    "hazard_notes": "Drażniący dla skóry i oczu. Drogi odczynnik — minimalizuj straty.",
+    "ppe_required": [
+      "gloves_nitrile",
+      "goggles",
+      "lab_coat",
+      "fume_hood"
+    ]
+  },
+  {
+    "reagent_id": 125,
+    "cas": "27988-77-8",
+    "name_pl": "octan złota(III)",
+    "name_eng": "Gold(III) acetate",
+    "chemical_formula": "Au(CH₃COO)₃",
+    "sds_file_path": "sds/gold_acetate.pdf",
+    "hazard_level": "medium",
+    "hazard_notes": "Drażniący; cenny prekursor złota.",
+    "ppe_required": [
+      "gloves_nitrile",
+      "goggles",
+      "lab_coat",
+      "fume_hood"
+    ]
+  },
+  {
+    "reagent_id": 126,
+    "cas": "16961-25-4",
+    "name_pl": "chlorek złota(III) trójwodny",
+    "name_eng": "Gold(III) chloride trihydrate",
+    "chemical_formula": "HAuCl₄·3H₂O",
+    "sds_file_path": "sds/aucl3_3h2o.pdf",
+    "hazard_level": "medium",
+    "hazard_notes": "Drażniący; drogi prekursor złota.",
+    "ppe_required": [
+      "gloves_nitrile",
+      "goggles",
+      "lab_coat",
+      "fume_hood"
+    ]
+  },
+  {
+    "reagent_id": 135,
+    "cas": "7647-01-0",
+    "name_pl": "kwas solny",
+    "name_eng": "Hydrochloric acid",
+    "chemical_formula": "HCl",
+    "sds_file_path": "sds/hydrochloric_acid.pdf",
+    "hazard_level": "high",
+    "hazard_notes": "Silnie żrący; opary drażnią drogi oddechowe. Ryzyko ciężkich oparzeń chemicznych.",
+    "ppe_required": [
+      "gloves_nitrile",
+      "goggles",
+      "lab_coat",
+      "fume_hood",
+      "face_shield"
+    ]
+  },
+  {
+    "reagent_id": 143,
+    "cas": "10025-77-1",
+    "name_pl": "chlorek żelaza(III) sześciowodny",
+    "name_eng": "Iron(III) chloride hexahydrate",
+    "chemical_formula": "FeCl₃·6H₂O",
+    "sds_file_path": "sds/fecl3_6h2o.pdf",
+    "hazard_level": "medium",
+    "hazard_notes": "Drażniący dla oczu i skóry; barwi. Niska toksyczność ostra.",
+    "ppe_required": [
+      "gloves_nitrile",
+      "goggles",
+      "lab_coat",
+      "fume_hood"
+    ]
+  },
+  {
+    "reagent_id": 156,
+    "cas": "7773-01-5",
+    "name_pl": "chlorek manganu(II)",
+    "name_eng": "Manganese(II) chloride",
+    "chemical_formula": "MnCl₂",
+    "sds_file_path": "sds/mncl2.pdf",
+    "hazard_level": "medium",
+    "hazard_notes": "Neurotoksyczny (chroniczny); drażniący.",
+    "ppe_required": [
+      "gloves_nitrile",
+      "goggles",
+      "lab_coat",
+      "fume_hood"
+    ]
+  },
+  {
+    "reagent_id": 160,
+    "cas": "4420-74-0",
+    "name_pl": "(3-merkaptoproylo)trimetoksysilan (MPTMS)",
+    "name_eng": "(3-Mercaptopropyl)trimethoxysilane",
+    "chemical_formula": "HS(CH₂)₃Si(OCH₃)₃",
+    "sds_file_path": "sds/mptms.pdf",
+    "hazard_level": "medium",
+    "hazard_notes": "Drażniący; silny zapach merkaptanu.",
+    "ppe_required": [
+      "gloves_nitrile",
+      "goggles",
+      "lab_coat",
+      "fume_hood"
+    ]
+  },
+  {
+    "reagent_id": 161,
+    "cas": "71310-21-9",
+    "name_pl": "kwas 11-merkaptoundekanowy (MUA)",
+    "name_eng": "11-Mercaptoundecanoic acid",
+    "chemical_formula": "HS(CH₂)₁₀COOH",
+    "sds_file_path": "sds/mua.pdf",
+    "hazard_level": "medium",
+    "hazard_notes": "Drażniący; grupy tiolowe — nieprzyjemny zapach.",
+    "ppe_required": [
+      "gloves_nitrile",
+      "goggles",
+      "lab_coat",
+      "fume_hood"
+    ]
+  },
+  {
+    "reagent_id": 163,
+    "cas": "67-56-1",
+    "name_pl": "metanol",
+    "name_eng": "Methanol",
+    "chemical_formula": "CH₃OH",
+    "sds_file_path": "sds/methanol.pdf",
+    "hazard_level": "high",
+    "hazard_notes": "Wysoce łatwopalny, toksyczny (uszkodzenie wzroku, układu nerwowego). Wymagana wentylacja.",
+    "ppe_required": [
+      "gloves_nitrile",
+      "goggles",
+      "lab_coat",
+      "fume_hood",
+      "face_shield"
+    ]
+  },
+  {
+    "reagent_id": 168,
+    "cas": "7697-37-2",
+    "name_pl": "kwas azotowy",
+    "name_eng": "Nitric acid",
+    "chemical_formula": "HNO₃",
+    "sds_file_path": "sds/nitric_acid.pdf",
+    "hazard_level": "high",
+    "hazard_notes": "Silnie żrący i utleniający. Reaguje gwałtownie z substancjami organicznymi.",
+    "ppe_required": [
+      "gloves_nitrile",
+      "goggles",
+      "lab_coat",
+      "fume_hood",
+      "face_shield"
+    ]
+  },
+  {
+    "reagent_id": 169,
+    "cas": "112-88-9",
+    "name_pl": "1-oktadecen",
+    "name_eng": "1-Octadecene",
+    "chemical_formula": "CH₂=CH(CH₂)₁₅CH₃",
+    "sds_file_path": "sds/octadecene.pdf",
+    "hazard_level": "low",
+    "hazard_notes": "Niska toksyczność ostra; może być drażniący.",
+    "ppe_required": [
+      "gloves_nitrile",
+      "lab_coat"
+    ]
+  },
+  {
+    "reagent_id": 170,
+    "cas": "1120-02-1",
+    "name_pl": "bromek oktadecylotimetyloamonu",
+    "name_eng": "Octadecyltrimethylammonium bromide",
+    "chemical_formula": "C₁₈H₃₇N(CH₃)₃Br",
+    "sds_file_path": "sds/otab.pdf",
+    "hazard_level": "medium",
+    "hazard_notes": "Surfaktant kationowy; drażniący.",
+    "ppe_required": [
+      "gloves_nitrile",
+      "goggles",
+      "lab_coat",
+      "fume_hood"
+    ]
+  },
+  {
+    "reagent_id": 172,
+    "cas": "112-90-3",
+    "name_pl": "oleiloamina",
+    "name_eng": "Oleylamine",
+    "chemical_formula": "C₁₈H₃‵NH₂",
+    "sds_file_path": "sds/oleylamine.pdf",
+    "hazard_level": "medium",
+    "hazard_notes": "Drażniący dla skóry i oczu. Kluczowy surfaktant w syntezie nanocząstek.",
+    "ppe_required": [
+      "gloves_nitrile",
+      "goggles",
+      "lab_coat",
+      "fume_hood"
+    ]
+  },
+  {
+    "reagent_id": 203,
+    "cas": "9002-89-5",
+    "name_pl": "alkohol poliwinylowy Mw 89-98 kDa",
+    "name_eng": "Poly(vinyl alcohol) Mw 89000-98000",
+    "chemical_formula": "(C₂H₃OH)n",
+    "sds_file_path": "sds/pva.pdf",
+    "hazard_level": "low",
+    "hazard_notes": "Niska toksyczność.",
+    "ppe_required": [
+      "gloves_nitrile",
+      "lab_coat"
+    ]
+  },
+  {
+    "reagent_id": 209,
+    "cas": "9003-39-8",
+    "name_pl": "pirolidon poliwinylu (PVP 40 kDa)",
+    "name_eng": "Polyvinyl pyrrolidone Mw ~40000",
+    "chemical_formula": "(C₆H₉NO)n",
+    "sds_file_path": "sds/pvp40.pdf",
+    "hazard_level": "low",
+    "hazard_notes": "Niska toksyczność. Powszechnie stosowany jako surfaktant i stabilizator.",
+    "ppe_required": [
+      "gloves_nitrile",
+      "lab_coat"
+    ]
+  },
+  {
+    "reagent_id": 220,
+    "cas": "67-63-0",
+    "name_pl": "izopropanol",
+    "name_eng": "2-Propanol",
+    "chemical_formula": "(CH₃)₂CHOH",
+    "sds_file_path": "sds/isopropanol.pdf",
+    "hazard_level": "medium",
+    "hazard_notes": "Łatwopalny. Łagodny roztwór — niskie narażenie przy normalnym użytkowaniu.",
+    "ppe_required": [
+      "gloves_nitrile",
+      "goggles",
+      "lab_coat",
+      "fume_hood"
+    ]
+  },
+  {
+    "reagent_id": 228,
+    "cas": "1310-73-2",
+    "name_pl": "wodorotlenek sodu",
+    "name_eng": "Sodium hydroxide",
+    "chemical_formula": "NaOH",
+    "sds_file_path": "sds/sodium_hydroxide.pdf",
+    "hazard_level": "high",
+    "hazard_notes": "Silnie żrący. Wydziela ciepło w kontakcie z wodą. Ryzyko głębokich oparzeń.",
+    "ppe_required": [
+      "gloves_nitrile",
+      "goggles",
+      "lab_coat",
+      "fume_hood",
+      "face_shield"
+    ]
+  },
+  {
+    "reagent_id": 231,
+    "cas": "563-63-3",
+    "name_pl": "octan srebra",
+    "name_eng": "Silver acetate",
+    "chemical_formula": "CH₃COOAg",
+    "sds_file_path": "sds/silver_acetate.pdf",
+    "hazard_level": "medium",
+    "hazard_notes": "Drażniący; wrażliwy na światło. Toksyczny dla środowiska wodnego.",
+    "ppe_required": [
+      "gloves_nitrile",
+      "goggles",
+      "lab_coat",
+      "fume_hood"
+    ]
+  },
+  {
+    "reagent_id": 232,
+    "cas": "7761-88-8",
+    "name_pl": "azotan srebra",
+    "name_eng": "Silver nitrate",
+    "chemical_formula": "AgNO₃",
+    "sds_file_path": "sds/silver_nitrate.pdf",
+    "hazard_level": "high",
+    "hazard_notes": "Żrący; utleniacz; barwi skórę na czarno. Wrażliwy na światło.",
+    "ppe_required": [
+      "gloves_nitrile",
+      "goggles",
+      "lab_coat",
+      "fume_hood",
+      "face_shield"
+    ]
+  },
+  {
+    "reagent_id": 237,
+    "cas": "497-19-8",
+    "name_pl": "węglan sodu",
+    "name_eng": "Sodium carbonate",
+    "chemical_formula": "Na₂CO₃",
+    "sds_file_path": "sds/sodium_carbonate.pdf",
+    "hazard_level": "medium",
+    "hazard_notes": "Drażniący dla oczu i skóry. Roztwory alkaliczne — unikaj kontaktu.",
+    "ppe_required": [
+      "gloves_nitrile",
+      "goggles",
+      "lab_coat",
+      "fume_hood"
+    ]
+  },
+  {
+    "reagent_id": 238,
+    "cas": "7647-14-5",
+    "name_pl": "chlorek sodu",
+    "name_eng": "Sodium chloride",
+    "chemical_formula": "NaCl",
+    "sds_file_path": "sds/nacl.pdf",
+    "hazard_level": "low",
+    "hazard_notes": "Substancja o niskim ryzyku. Może drażnić oczy przy kontakcie z pyłem.",
+    "ppe_required": [
+      "gloves_nitrile",
+      "lab_coat"
+    ]
+  },
+  {
+    "reagent_id": 240,
+    "cas": "6132-04-3",
+    "name_pl": "cytrynian sodu trójzasadowy",
+    "name_eng": "Sodium citrate tribasic dihydrate",
+    "chemical_formula": "Na₃C₆H₅O₇·2H₂O",
+    "sds_file_path": "sds/sodium_citrate_bio.pdf",
+    "hazard_level": "low",
+    "hazard_notes": "Niska toksyczność.",
+    "ppe_required": [
+      "gloves_nitrile",
+      "lab_coat"
+    ]
+  },
+  {
+    "reagent_id": 244,
+    "cas": "1310-73-2",
+    "name_pl": "wodorotlenek sodu",
+    "name_eng": "Sodium hydroxide",
+    "chemical_formula": "NaOH",
+    "sds_file_path": "sds/sodium_hydroxide_sigma.pdf",
+    "hazard_level": "high",
+    "hazard_notes": "Silnie żrący. Wydziela ciepło w kontakcie z wodą. Ryzyko głębokich oparzeń.",
+    "ppe_required": [
+      "gloves_nitrile",
+      "goggles",
+      "lab_coat",
+      "fume_hood",
+      "face_shield"
+    ]
+  },
+  {
+    "reagent_id": 257,
+    "cas": "7664-93-9",
+    "name_pl": "kwas siarkowy",
+    "name_eng": "Sulfuric acid",
+    "chemical_formula": "H₂SO₄",
+    "sds_file_path": "sds/sulfuric_acid.pdf",
+    "hazard_level": "high",
+    "hazard_notes": "Silnie żrący. Silne działanie odwadniające, reakcja egzotermiczna z wodą.",
+    "ppe_required": [
+      "gloves_nitrile",
+      "goggles",
+      "lab_coat",
+      "fume_hood",
+      "face_shield"
+    ]
+  },
+  {
+    "reagent_id": 261,
+    "cas": "78-10-4",
+    "name_pl": "tetraetoksysilan (TEOS)",
+    "name_eng": "Tetraethyl orthosilicate",
+    "chemical_formula": "Si(OC₂H₅)₄",
+    "sds_file_path": "sds/teos.pdf",
+    "hazard_level": "medium",
+    "hazard_notes": "Łatwopalny; hydrolizuje do SiO₂ i etanolu. Drażniący dla oczu.",
+    "ppe_required": [
+      "gloves_nitrile",
+      "goggles",
+      "lab_coat",
+      "fume_hood"
+    ]
+  },
+  {
+    "reagent_id": 265,
+    "cas": "108-88-3",
+    "name_pl": "toluen",
+    "name_eng": "Toluene",
+    "chemical_formula": "C₆H₅CH₃",
+    "sds_file_path": "sds/toluene.pdf",
+    "hazard_level": "high",
+    "hazard_notes": "Łatwopalny, neurotoksyczny, reproduktotoksyczny. Tylko digestorium.",
+    "ppe_required": [
+      "gloves_nitrile",
+      "goggles",
+      "lab_coat",
+      "fume_hood",
+      "face_shield"
+    ]
+  }
+]

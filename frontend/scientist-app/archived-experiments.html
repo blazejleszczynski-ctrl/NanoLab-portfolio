@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NanoLab — Archived Experiments</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-gray-50 h-screen flex flex-col overflow-hidden" x-data="app()">
+
+  <!-- TOPBAR -->
+  <header class="h-14 bg-white border-t-[3px] border-t-indigo-600 border-b border-b-gray-200 flex items-center px-5 shrink-0 z-10">
+    <div class="flex items-center gap-2.5 w-52 shrink-0">
+      <div class="w-7 h-7 rounded-lg bg-indigo-600 flex items-center justify-center shrink-0">
+        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15M14.25 3.104c.251.023.501.05.75.082M19.8 15l-1.8 1.8M5 14.5l1.8 1.8" />
+        </svg>
+      </div>
+      <div class="flex items-baseline gap-1.5">
+        <span class="font-bold text-gray-900 text-sm tracking-tight">NanoLab</span>
+        <span class="text-xs text-indigo-500 font-semibold tracking-wide">Scientist</span>
+      </div>
+    </div>
+    <div class="flex-1"></div>
+    <div class="flex items-center gap-5">
+      <p class="text-xs text-gray-500" x-text="clock.date + ' · ' + clock.time"></p>
+      <div class="w-px h-7 bg-gray-100"></div>
+      <div class="flex items-center gap-3">
+        <div class="text-right">
+          <p class="text-sm font-medium text-gray-800 leading-tight">dr A. Kowalska</p>
+          <p class="text-xs text-gray-400 leading-tight">University Research Lab</p>
+        </div>
+        <div class="w-8 h-8 rounded-full bg-indigo-100 border-2 border-indigo-200 flex items-center justify-center text-indigo-700 font-bold text-xs shrink-0">PF</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="flex flex-1 overflow-hidden">
+
+    <!-- SIDEBAR -->
+    <aside class="w-52 bg-white border-r border-gray-200 flex flex-col shrink-0 overflow-y-auto">
+      <nav class="flex-1 px-3 py-4 flex flex-col gap-0.5">
+
+        <a href="index.html"
+           class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
+          </svg>
+          Overview
+        </a>
+
+        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider px-3 pt-4 pb-1">Research</p>
+
+        <a href="experiments.html"
+           class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium bg-indigo-50 text-indigo-700">
+          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15M14.25 3.104c.251.023.501.05.75.082M19.8 15l-1.8 1.8M5 14.5l1.8 1.8" />
+          </svg>
+          Experiments
+        </a>
+
+        <a href="inventory.html"
+           class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+          </svg>
+          Inventory
+        </a>
+
+        <a href="queued-samples.html"
+           class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z" />
+          </svg>
+          Queued Samples
+        </a>
+
+      </nav>
+
+      <div class="p-3 border-t border-gray-100">
+        <a href="../operator/tem.html"
+           class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium text-gray-500 hover:bg-gray-100 transition-colors">
+          <svg class="w-4 h-4 shrink-0 text-teal-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+          </svg>
+          <span class="text-teal-700 font-medium">Operator App</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="flex-1 overflow-hidden px-5 py-5 flex flex-col">
+
+      <!-- Header -->
+      <div class="mb-4 flex items-center justify-between shrink-0">
+        <div class="flex items-center gap-4">
+          <a href="experiments.html" class="flex items-center gap-1.5 text-xs text-gray-400 hover:text-indigo-600 transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
+            Experiments
+          </a>
+          <div class="w-px h-4 bg-gray-200"></div>
+          <div class="flex items-center gap-3">
+            <div class="w-1 h-8 bg-gray-400 rounded-full"></div>
+            <div>
+              <h1 class="text-xl font-bold text-gray-900">Archived Experiments</h1>
+              <p class="text-xs text-gray-400 mt-0.5" x-text="experiments.length + ' archived experiment(s)'"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- List + Detail -->
+      <div class="flex gap-4 flex-1 overflow-hidden min-h-0">
+
+        <!-- LIST -->
+        <div class="w-80 shrink-0 flex flex-col overflow-y-auto gap-2 pr-1">
+          <template x-for="exp in sortedExperiments" :key="exp.id">
+            <button @click="selectedId = exp.id"
+                    class="text-left bg-white rounded-xl border p-3.5 transition-colors"
+                    :class="selectedId === exp.id
+                      ? 'border-indigo-400 ring-1 ring-indigo-400'
+                      : 'border-gray-200 hover:border-gray-300'">
+              <div class="flex items-start justify-between mb-1">
+                <span class="font-mono text-xs text-gray-400" x-text="exp.experiment_id"></span>
+                <span :class="statusBadge(exp.status).class"
+                      class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium">
+                  <span x-text="statusBadge(exp.status).label"></span>
+                  <span :class="statusBadge(exp.status).dot" class="w-1.5 h-1.5 rounded-full shrink-0"></span>
+                </span>
+              </div>
+              <p class="font-semibold text-gray-900 text-sm leading-tight mb-1 truncate" x-text="exp.target_material"></p>
+              <p class="text-xs text-gray-400" x-text="formatDate(exp.archived_at)"></p>
+            </button>
+          </template>
+          <p x-show="experiments.length === 0" class="text-xs text-gray-400 text-center py-8">No archived experiments yet</p>
+        </div>
+
+        <!-- DETAIL -->
+        <div class="flex-1 overflow-y-auto bg-white rounded-xl border border-gray-200 p-6 min-h-0">
+
+          <p x-show="!selected" class="text-sm text-gray-400 text-center py-16">Select an experiment from the list</p>
+
+          <div x-show="selected">
+            <div class="flex items-start justify-between mb-5">
+              <div>
+                <p class="text-xs text-gray-400 mb-0.5" x-text="selected?.experiment_id"></p>
+                <h2 class="text-lg font-bold text-gray-900" x-text="selected?.target_material"></h2>
+                <p class="text-xs text-gray-500 mt-1" x-text="selected?.synthesis_method"></p>
+              </div>
+              <span :class="statusBadge(selected?.status).class"
+                    class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium shrink-0">
+                <span x-text="statusBadge(selected?.status).label"></span>
+                <span :class="statusBadge(selected?.status).dot" class="w-1.5 h-1.5 rounded-full shrink-0"></span>
+              </span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mb-5 text-xs">
+              <div>
+                <p class="text-gray-400 mb-0.5">Started</p>
+                <p class="font-medium text-gray-700" x-text="formatDate(selected?.date_started)"></p>
+              </div>
+              <div>
+                <p class="text-gray-400 mb-0.5">Archived</p>
+                <p class="font-medium text-gray-700" x-text="formatDate(selected?.archived_at)"></p>
+              </div>
+            </div>
+
+            <template x-if="selected?.notes">
+              <div class="mb-5">
+                <p class="text-xs text-gray-400 mb-1">Notes</p>
+                <p class="text-xs text-gray-600 leading-relaxed" x-text="selected.notes"></p>
+              </div>
+            </template>
+
+            <template x-if="selected?.source?.doi || selected?.source?.first_author || selected?.source?.title">
+              <div class="mb-5 bg-gray-50 rounded-lg px-4 py-3">
+                <p class="text-xs text-gray-400 font-medium mb-1">Source</p>
+                <p class="text-xs text-gray-700" x-text="selected?.source?.title"></p>
+                <p class="text-xs text-gray-500 mt-0.5">
+                  <span x-text="selected?.source?.first_author"></span><span x-show="selected?.source?.year" x-text="' · ' + selected?.source?.year"></span>
+                </p>
+                <p x-show="selected?.source?.doi" class="text-xs font-mono text-gray-400 mt-0.5" x-text="selected?.source?.doi"></p>
+              </div>
+            </template>
+
+            <div>
+              <p class="text-xs text-gray-400 mb-1.5" x-text="'Reagents (' + (selected?.reagents?.length || 0) + ')'"></p>
+              <div class="rounded-lg border border-gray-100 overflow-hidden" x-show="selected?.reagents?.length > 0">
+                <table class="w-full text-xs">
+                  <thead>
+                    <tr class="bg-gray-50 border-b border-gray-100">
+                      <th class="px-3 py-1.5 text-left text-gray-500 font-medium">Name</th>
+                      <th class="px-3 py-1.5 text-left text-gray-500 font-medium">Formula</th>
+                      <th class="px-3 py-1.5 text-left text-gray-500 font-medium">Qty</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <template x-for="(r, i) in selected?.reagents || []" :key="i">
+                      <tr class="border-b border-gray-50 last:border-0">
+                        <td class="px-3 py-1.5 text-gray-700" x-text="r.name_eng"></td>
+                        <td class="px-3 py-1.5 font-mono text-gray-500" x-text="r.chemical_formula"></td>
+                        <td class="px-3 py-1.5 text-gray-500" x-text="(r.quantity || '—') + ' ' + (r.unit || '')"></td>
+                      </tr>
+                    </template>
+                  </tbody>
+                </table>
+              </div>
+              <p x-show="!selected?.reagents?.length" class="text-xs text-gray-400">No reagents recorded</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function app() {
+      return {
+        clock: { date: '', time: '' },
+        experiments: [],
+        selectedId: null,
+
+        async init() {
+          const update = () => {
+            const now = new Date()
+            this.clock.date = now.toLocaleDateString('en-GB', { timeZone: 'Europe/Warsaw', day: 'numeric', month: 'short', year: 'numeric' })
+            this.clock.time = now.toLocaleTimeString('en-GB', { timeZone: 'Europe/Warsaw', hour: '2-digit', minute: '2-digit', second: '2-digit' })
+          }
+          update()
+          setInterval(update, 1000)
+
+          const res = await fetch('/api/experiments')
+          const all = await res.json()
+          this.experiments = all.filter(e => e.archived)
+          if (this.experiments.length) this.selectedId = this.sortedExperiments[0].id
+        },
+
+        get sortedExperiments() {
+          return [...this.experiments].sort((a, b) => new Date(b.archived_at || 0) - new Date(a.archived_at || 0))
+        },
+
+        get selected() {
+          return this.experiments.find(e => e.id === this.selectedId) || null
+        },
+
+        statusBadge(status) {
+          const map = {
+            draft:               { label: 'Draft',               dot: 'bg-slate-400',   class: 'bg-slate-100 text-slate-600' },
+            planned:             { label: 'Planned',             dot: 'bg-blue-500',    class: 'bg-blue-100 text-blue-800' },
+            in_synthesis:        { label: 'In the Lab',          dot: 'bg-amber-500',   class: 'bg-amber-100 text-amber-800' },
+            in_characterization: { label: 'In Characterization', dot: 'bg-violet-500',  class: 'bg-violet-100 text-violet-800' },
+            completed:           { label: 'Completed',           dot: 'bg-emerald-500', class: 'bg-emerald-100 text-emerald-800' },
+          }
+          return map[status] || map['draft']
+        },
+
+        formatDate(str) {
+          if (!str) return '—'
+          return new Date(str).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+        },
+      }
+    }
+  </script>
+</body>
+</html>

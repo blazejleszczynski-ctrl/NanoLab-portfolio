@@ -1,0 +1,2081 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NanoLab — New Experiment</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-gray-50 h-screen flex flex-col overflow-hidden" x-data="app()">
+
+  <!-- TOPBAR -->
+  <header class="h-14 bg-white border-t-[3px] border-t-indigo-600 border-b border-b-gray-200 flex items-center px-5 shrink-0 z-10">
+    <div class="flex items-center gap-2.5 w-52 shrink-0">
+      <div class="w-7 h-7 rounded-lg bg-indigo-600 flex items-center justify-center shrink-0">
+        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15M14.25 3.104c.251.023.501.05.75.082M19.8 15l-1.8 1.8M5 14.5l1.8 1.8" />
+        </svg>
+      </div>
+      <div class="flex items-baseline gap-1.5">
+        <span class="font-bold text-gray-900 text-sm tracking-tight">NanoLab</span>
+        <span class="text-xs text-indigo-500 font-semibold tracking-wide">Scientist</span>
+      </div>
+    </div>
+    <div class="flex-1"></div>
+    <div class="flex items-center gap-5">
+      <p class="text-xs text-gray-500" x-text="clock.date + ' · ' + clock.time"></p>
+      <div class="w-px h-7 bg-gray-100"></div>
+      <div class="flex items-center gap-3">
+        <div class="text-right">
+          <p class="text-sm font-medium text-gray-800 leading-tight">dr A. Kowalska</p>
+          <p class="text-xs text-gray-400 leading-tight">University Research Lab</p>
+        </div>
+        <div class="w-8 h-8 rounded-full bg-indigo-100 border-2 border-indigo-200 flex items-center justify-center text-indigo-700 font-bold text-xs shrink-0">
+          PF
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="flex flex-1 overflow-hidden">
+
+    <!-- SIDEBAR -->
+    <aside class="w-52 bg-white border-r border-gray-200 flex flex-col shrink-0 overflow-y-auto">
+      <nav class="flex-1 px-3 py-4 flex flex-col gap-0.5">
+        <a href="index.html"
+           class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
+          </svg>
+          Overview
+        </a>
+
+        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider px-3 pt-4 pb-1">Research</p>
+
+        <a href="experiments.html"
+           class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium bg-indigo-50 text-indigo-700">
+          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15M14.25 3.104c.251.023.501.05.75.082M19.8 15l-1.8 1.8M5 14.5l1.8 1.8" />
+          </svg>
+          Experiments
+        </a>
+
+        <a href="inventory.html"
+           class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+          </svg>
+          Inventory
+        </a>
+
+        <a href="queued-samples.html"
+           class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z" />
+          </svg>
+          Queued Samples
+        </a>
+      </nav>
+
+      <div class="p-3 border-t border-gray-100">
+        <a href="../operator/tem.html"
+           class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium text-gray-500 hover:bg-gray-100 transition-colors">
+          <svg class="w-4 h-4 shrink-0 text-teal-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+          </svg>
+          <span class="text-teal-700 font-medium">Operator App</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <!-- @input/@change na całym kontenerze: dowolna edycja pola tekstowego/select/textarea czyści komunikat "Draft saved"/"Plan saved"/itd. -->
+    <main class="flex-1 overflow-y-auto overflow-x-hidden px-8 py-7"
+          @input="saveStatus = ''" @change="saveStatus = ''">
+
+      <!-- Page header -->
+      <div class="flex items-center justify-between mb-7">
+        <div class="flex items-center gap-3">
+          <a href="experiments.html" class="text-gray-400 hover:text-gray-600 transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+            </svg>
+          </a>
+          <div class="flex items-center gap-3">
+            <div class="w-1 h-8 bg-indigo-600 rounded-full"></div>
+            <div>
+              <h1 class="text-xl font-bold text-gray-900"
+                  x-text="savedId ? form.experiment_id : 'New Experiment'"></h1>
+              <p x-show="!savedId" class="text-xs text-gray-400 mt-0.5">Draft — not saved yet</p>
+              <div x-show="savedId" class="flex items-center gap-2 mt-1">
+                <span :class="statusBadge(experimentStatus).class"
+                      class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium">
+                  <span x-text="statusBadge(experimentStatus).label"></span>
+                  <span :class="statusBadge(experimentStatus).dot" class="w-1.5 h-1.5 rounded-full shrink-0"></span>
+                </span>
+                <span x-show="isLocked" class="text-xs text-amber-600 font-medium">🔒 Locked</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex items-center gap-3">
+          <!-- Feedback -->
+          <p x-show="saveStatus === 'draft'" x-transition class="text-xs text-gray-500 font-medium flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+            Draft saved
+          </p>
+          <p x-show="saveStatus === 'submitted'" x-transition class="text-xs text-indigo-600 font-medium flex items-center gap-1.5">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+            Plan saved
+          </p>
+          <p x-show="saveStatus === 'in_the_lab'" x-transition class="text-xs text-amber-600 font-medium flex items-center gap-1.5">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+            Sent to Lab App
+          </p>
+          <p x-show="saveStatus === 'error'" x-transition class="text-xs text-red-500 font-medium">
+            Error — check console
+          </p>
+          <button @click="saveDraft()" :disabled="saving || isLocked"
+                  class="px-4 py-2 text-sm font-medium text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50">
+            <span x-text="saving && saveStatus === '' ? 'Saving…' : 'Save as Draft'"></span>
+          </button>
+          <button @click="submitExperiment()" :disabled="saving || isLocked"
+                  class="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm disabled:opacity-50">
+            <span x-text="saving && saveStatus === '' ? 'Saving…' : 'Save as Planned'"></span>
+          </button>
+          <button @click="submitToLab()" :disabled="saving || isLocked || form.steps.length < 3"
+                  :title="form.steps.length < 3 ? 'Add at least 3 steps in the Steps tab first' : ''"
+                  class="px-4 py-2 text-sm font-semibold text-white bg-amber-500 rounded-lg hover:bg-amber-600 transition-colors shadow-sm disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15M14.25 3.104c.251.023.501.05.75.082M19.8 15l-1.8 1.8M5 14.5l1.8 1.8" />
+            </svg>
+            <span x-text="saving && saveStatus === '' ? 'Saving…' : 'Lock Edit & Send to Lab'"></span>
+          </button>
+          <button @click="deleteConfirmOpen = true" :disabled="saving || isLocked || !savedId"
+                  :title="isLocked ? 'Locked experiments cannot be deleted — change status first' : ''"
+                  class="px-3 py-2 text-sm font-medium text-red-500 bg-white border border-gray-200 rounded-lg hover:bg-red-50 hover:border-red-200 hover:text-red-600 transition-colors disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-red-500 flex items-center gap-1.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+            </svg>
+            Delete
+          </button>
+        </div>
+      </div>
+
+      <!-- TABS -->
+      <div class="flex items-center gap-1 mb-6 border-b border-gray-200">
+        <button @click="activeTab = 'protocol'"
+                :class="activeTab === 'protocol'
+                  ? 'text-indigo-700 border-b-2 border-indigo-600'
+                  : 'text-gray-500 hover:text-gray-700 border-b-2 border-transparent'"
+                class="px-4 py-2.5 text-sm font-medium transition-colors -mb-px">
+          Protocol
+        </button>
+        <button @click="activeTab = 'reagents'"
+                :class="activeTab === 'reagents'
+                  ? 'text-indigo-700 border-b-2 border-indigo-600'
+                  : 'text-gray-500 hover:text-gray-700 border-b-2 border-transparent'"
+                class="px-4 py-2.5 text-sm font-medium transition-colors -mb-px flex items-center gap-2">
+          Reagents
+          <span x-show="form.reagents.length > 0"
+                class="text-xs bg-indigo-100 text-indigo-600 font-semibold px-1.5 py-0.5 rounded-md"
+                x-text="form.reagents.length"></span>
+        </button>
+        <button @click="activeTab = 'steps'"
+                :class="activeTab === 'steps'
+                  ? 'text-indigo-700 border-b-2 border-indigo-600'
+                  : 'text-gray-500 hover:text-gray-700 border-b-2 border-transparent'"
+                class="px-4 py-2.5 text-sm font-medium transition-colors -mb-px flex items-center gap-2">
+          Steps
+          <span x-show="form.steps.length > 0"
+                class="text-xs bg-indigo-100 text-indigo-600 font-semibold px-1.5 py-0.5 rounded-md"
+                x-text="form.steps.length"></span>
+        </button>
+      </div>
+
+      <!-- Lock banner -->
+      <div x-show="isLocked"
+           class="mb-5 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 flex items-center gap-3">
+        <svg class="w-5 h-5 text-amber-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+        </svg>
+        <div>
+          <p class="text-sm font-semibold text-amber-800">Experiment in the lab — editing locked</p>
+          <p class="text-xs text-amber-700 mt-0.5">This experiment has been sent to Lab App and is currently being executed. Changes are not allowed.</p>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════
+           TAB: Protocol
+      ══════════════════════════════ -->
+      <div x-show="activeTab === 'protocol'" class="flex gap-6" :class="isLocked ? 'pointer-events-none opacity-60 select-none' : ''"
+
+        <!-- LEFT: form fields -->
+        <div class="w-1/2 min-w-0">
+
+          <!-- AI filled indicator -->
+          <div x-show="pdfFilled && !pdfProcessing"
+               class="bg-emerald-50 border border-emerald-100 rounded-xl px-4 py-3 mb-3 flex items-center gap-2">
+            <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <p class="text-sm text-emerald-800">
+              Auto-filled from <span class="font-semibold" x-text="pdfFilename"></span> — review and confirm
+            </p>
+          </div>
+
+          <!-- Low confidence warning -->
+          <div x-show="pdfFilled && !pdfProcessing && llmConfidence !== null && llmConfidence < 0.8"
+               class="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 mb-3 flex items-start gap-2">
+            <svg class="w-4 h-4 text-amber-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+            </svg>
+            <div>
+              <p class="text-sm font-semibold text-amber-800">Low extraction confidence (<span x-text="llmConfidence !== null ? Math.round(llmConfidence * 100) + '%' : ''"></span>)</p>
+              <p class="text-xs text-amber-700 mt-0.5">The AI is not fully certain about the extracted data. Please review all fields carefully before submitting.</p>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl border border-gray-200 p-6 flex flex-col gap-5">
+
+            <!-- Previous experiments picker -->
+            <div x-show="previousExperiments.length > 0" class="relative">
+              <button @click="showPreviousPicker = !showPreviousPicker"
+                      class="w-full flex items-center justify-between px-3.5 py-2.5 text-sm font-medium text-indigo-600 bg-indigo-50 border border-indigo-100 rounded-lg hover:bg-indigo-100 transition-colors">
+                <span class="flex items-center gap-2">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                  Load existing experiment
+                </span>
+                <svg class="w-3.5 h-3.5 transition-transform" :class="showPreviousPicker ? 'rotate-180' : ''" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
+              </button>
+              <div x-show="showPreviousPicker" @click.outside="showPreviousPicker = false" x-transition
+                   class="absolute left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-lg z-20 overflow-hidden">
+                <ul class="max-h-56 overflow-y-auto divide-y divide-gray-50">
+                  <template x-for="exp in previousExperiments" :key="exp.id">
+                    <li @click="loadExperiment(exp)"
+                        class="px-4 py-3 hover:bg-indigo-50 cursor-pointer transition-colors">
+                      <div class="flex items-center justify-between gap-2">
+                        <div class="min-w-0">
+                          <p class="text-sm font-medium text-gray-800 truncate" x-text="exp.experiment_id || exp.id"></p>
+                          <p class="text-xs text-gray-400 truncate mt-0.5" x-text="exp.target_material || '—'"></p>
+                        </div>
+                        <span class="shrink-0 text-xs px-2 py-0.5 rounded-full font-medium"
+                              :class="exp.status === 'draft' ? 'bg-gray-100 text-gray-500' : 'bg-indigo-100 text-indigo-600'"
+                              x-text="exp.status"></span>
+                      </div>
+                    </li>
+                  </template>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Experiment ID -->
+            <div>
+              <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+                Experiment ID
+              </label>
+              <div class="flex items-center gap-2">
+                <input type="text"
+                       class="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg bg-white font-mono
+                              focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                       x-model="form.experiment_id" />
+                <button @click="form.experiment_id = generateId()"
+                        class="shrink-0 px-3 py-2.5 text-xs font-medium text-gray-500 bg-gray-50 border border-gray-200
+                               rounded-lg hover:bg-gray-100 transition-colors whitespace-nowrap">
+                  Generate
+                </button>
+              </div>
+              <p class="text-xs text-gray-400 mt-1">Format: EXP-YYYY-NNN · assigned automatically, editable</p>
+            </div>
+
+            <!-- Target material -->
+            <div>
+              <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+                Target Material
+              </label>
+              <input type="text"
+                     placeholder="e.g. Fe₃O₄, ZnO, Au nanoparticles…"
+                     class="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg
+                            focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent
+                            placeholder:text-gray-300 transition-colors"
+                     :class="pdfFilled ? 'bg-indigo-50/50 border-indigo-200' : 'bg-white'"
+                     x-model="form.target_material" />
+            </div>
+
+            <!-- Experiment type + Synthesis method -->
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+                  Experiment Type
+                </label>
+                <select class="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg bg-white
+                               focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-700"
+                        x-model="form.experiment_type">
+                  <option value="">— select —</option>
+                  <option value="synthesis">Synthesis</option>
+                  <option value="precursor_synthesis">Precursor Synthesis</option>
+                  <option value="post_treatment">Post-treatment</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+                  Synthesis Method
+                </label>
+                <input type="text"
+                       placeholder="e.g. Co-precipitation…"
+                       class="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg
+                              focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent
+                              placeholder:text-gray-300 transition-colors"
+                       :class="pdfFilled ? 'bg-indigo-50/50 border-indigo-200' : 'bg-white'"
+                       x-model="form.synthesis_method" />
+              </div>
+            </div>
+
+            <!-- Notes -->
+            <div>
+              <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+                Notes
+                <span class="normal-case font-normal text-gray-400 ml-1">— from article or own observations</span>
+              </label>
+              <textarea rows="6"
+                        placeholder="Synthesis conditions, temperature, atmosphere, key observations…"
+                        class="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg
+                               focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent
+                               placeholder:text-gray-300 resize-none transition-colors"
+                        :class="pdfFilled ? 'bg-indigo-50/50 border-indigo-200' : 'bg-white'"
+                        x-model="form.notes"></textarea>
+            </div>
+
+            <!-- Source / Reference -->
+            <div class="border-t border-gray-100 pt-5">
+              <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Source / Reference</p>
+              <div class="flex flex-col gap-3">
+
+                <div>
+                  <label class="block text-xs font-medium text-gray-500 mb-1.5">DOI</label>
+                  <input type="text" x-model="form.source.doi" placeholder="e.g. 10.1021/jacs.0c01234"
+                         class="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg bg-white font-mono
+                                focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder:text-gray-300 placeholder:font-sans"
+                         :class="pdfFilled ? 'bg-indigo-50/50 border-indigo-200' : 'bg-white'" />
+                </div>
+
+                <div class="grid grid-cols-3 gap-3">
+                  <div class="col-span-2">
+                    <label class="block text-xs font-medium text-gray-500 mb-1.5">First author</label>
+                    <input type="text" x-model="form.source.first_author" placeholder="e.g. Zhang"
+                           class="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg
+                                  focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder:text-gray-300"
+                           :class="pdfFilled ? 'bg-indigo-50/50 border-indigo-200' : 'bg-white'" />
+                  </div>
+                  <div>
+                    <label class="block text-xs font-medium text-gray-500 mb-1.5">Year</label>
+                    <input type="number" x-model="form.source.year" placeholder="2024"
+                           min="1950" :max="new Date().getFullYear()"
+                           class="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg
+                                  focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder:text-gray-300"
+                           :class="pdfFilled ? 'bg-indigo-50/50 border-indigo-200' : 'bg-white'" />
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-medium text-gray-500 mb-1.5">Title</label>
+                  <input type="text" x-model="form.source.title" placeholder="Article title"
+                         class="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg
+                                focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder:text-gray-300"
+                         :class="pdfFilled ? 'bg-indigo-50/50 border-indigo-200' : 'bg-white'" />
+                </div>
+
+                <div x-show="form.source.pdf_filename" class="flex items-center gap-2 text-xs text-gray-400">
+                  <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" /></svg>
+                  <span x-text="form.source.pdf_filename"></span>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- AI source note -->
+            <div x-show="pdfFilled" class="flex items-center gap-2 text-xs text-indigo-400">
+              <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
+              </svg>
+              Fields highlighted in blue were filled by AI · verify before submitting
+            </div>
+
+          </div>
+        </div>
+
+        <!-- RIGHT: Import from PDF panel -->
+        <div class="w-1/2 flex flex-col gap-4">
+
+          <!-- Ukryty input pliku -->
+          <input type="file" accept=".pdf" class="hidden" x-ref="pdfInput" @change="handlePdfUpload($event)" />
+
+          <!-- AI Import panel -->
+          <div class="rounded-xl overflow-hidden border border-violet-200" style="background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);">
+
+            <!-- Nagłówek -->
+            <div class="px-5 pt-5 pb-4">
+              <div class="flex items-center gap-2 mb-1">
+                <svg class="w-4 h-4 text-violet-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
+                </svg>
+                <p class="text-sm font-bold text-violet-800 tracking-tight">Import from PDF</p>
+              </div>
+              <p class="text-xs text-violet-600 leading-relaxed">Drop a scientific article and AI will automatically fill in the synthesis protocol, reagents and source reference — saving you minutes of manual entry.</p>
+            </div>
+
+            <!-- Drag & drop zone -->
+            <div class="mx-4 mb-4"
+                 @dragover.prevent="dragging = true"
+                 @dragleave.prevent="dragging = false"
+                 @drop.prevent="dragging = false; handlePdfDrop($event)"
+                 @click="$refs.pdfInput.click()"
+                 :class="dragging ? 'border-violet-400 bg-violet-100' : selectedFile ? 'border-violet-400 bg-white/70' : 'border-violet-300 bg-white/50 hover:bg-white/80 hover:border-violet-400'"
+                 class="border-2 border-dashed rounded-xl p-6 flex flex-col items-center justify-center gap-3 cursor-pointer transition-all min-h-[120px]">
+
+              <template x-if="!selectedFile">
+                <div class="flex flex-col items-center gap-2 text-center">
+                  <svg class="w-10 h-10 text-violet-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                  </svg>
+                  <div>
+                    <p class="text-sm font-medium text-violet-700">Drop PDF here</p>
+                    <p class="text-xs text-violet-400 mt-0.5">or click to select file</p>
+                  </div>
+                </div>
+              </template>
+
+              <template x-if="selectedFile">
+                <div class="flex items-center gap-3 w-full" @click.stop>
+                  <svg class="w-9 h-9 text-violet-500 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                  </svg>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-semibold text-violet-800 truncate" x-text="selectedFile.name"></p>
+                    <p class="text-xs text-violet-400 mt-0.5" x-text="(selectedFile.size / 1024).toFixed(0) + ' KB'"></p>
+                  </div>
+                  <button @click.stop="selectedFile = null; $refs.pdfInput.value = ''"
+                          class="shrink-0 w-6 h-6 flex items-center justify-center rounded-full text-violet-400 hover:text-violet-700 hover:bg-violet-100 transition-colors"
+                          title="Remove file">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+              </template>
+
+            </div>
+
+            <!-- Hint for AI -->
+            <div class="mx-4 mb-3">
+              <label class="block text-xs font-semibold text-violet-700 mb-1 flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
+                </svg>
+                Your hint to AI
+                <span class="font-normal text-violet-400 normal-case">— optional</span>
+              </label>
+              <textarea x-model="userInstruction" :disabled="pdfProcessing" rows="2" maxlength="100"
+                        placeholder="e.g. 'Focus on the Fe3O4 synthesis, ignore precursor step' or 'Main synthesis starts on page 3'"
+                        class="w-full px-3 py-2 text-xs border border-violet-200 rounded-lg bg-white/70 focus:outline-none focus:ring-2 focus:ring-violet-400 placeholder:text-violet-300 resize-none disabled:opacity-40"></textarea>
+              <p class="text-right text-xs mt-0.5"
+                 :class="userInstruction.length >= 90 ? 'text-amber-500 font-medium' : 'text-violet-300'"
+                 x-text="userInstruction.length + '/100'"></p>
+            </div>
+
+            <!-- Kontrolki: Import button + Model + Prompt -->
+            <div class="flex items-center gap-2 px-4 pb-5">
+
+              <!-- Import button -->
+              <button @click="processFile(selectedFile)"
+                      :disabled="!selectedFile || pdfProcessing || !llmPromptFile"
+                      class="shrink-0 flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-lg transition-colors disabled:opacity-40 bg-violet-600 hover:bg-violet-700 text-white whitespace-nowrap">
+                <template x-if="!pdfProcessing">
+                  <span class="flex items-center gap-1.5">
+                    Import
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 010 1.972l-11.54 6.347a1.125 1.125 0 01-1.667-.986V5.653z" />
+                    </svg>
+                  </span>
+                </template>
+                <template x-if="pdfProcessing">
+                  <span class="flex items-center gap-1.5">
+                    Analyzing…
+                    <svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                    </svg>
+                  </span>
+                </template>
+              </button>
+
+              <!-- Model -->
+              <select x-model="llmModel" :disabled="pdfProcessing"
+                      class="flex-1 px-3 py-2 text-sm border border-violet-200 rounded-lg bg-white/70 focus:outline-none focus:ring-2 focus:ring-violet-400 disabled:opacity-40">
+                <option value="gpt-4o">GPT-4o</option>
+                <option value="gpt-4o-mini">GPT-4o mini</option>
+              </select>
+
+              <!-- Prompt -->
+              <select x-model="llmPromptFile" :disabled="pdfProcessing || availablePrompts.length === 0"
+                      class="flex-1 px-3 py-2 text-sm border border-violet-200 rounded-lg bg-white/70 focus:outline-none focus:ring-2 focus:ring-violet-400 disabled:opacity-40">
+                <template x-if="availablePrompts.length === 0">
+                  <option value="">No prompts</option>
+                </template>
+                <template x-for="p in availablePrompts" :key="p.file">
+                  <option :value="p.file" x-text="p.name"></option>
+                </template>
+              </select>
+
+            </div>
+          </div>
+
+          <!-- Stan: processing info -->
+          <div x-show="pdfProcessing" class="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 flex items-center gap-3">
+            <svg class="w-4 h-4 text-amber-400 animate-spin shrink-0" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+            </svg>
+            <p class="text-xs text-amber-700">Extracting text · calling LLM…</p>
+          </div>
+
+          <!-- Stan: warning (truncated PDF) -->
+          <div x-show="llmWarning" class="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 flex items-start gap-2">
+            <svg class="w-4 h-4 text-amber-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+            </svg>
+            <p class="text-xs text-amber-700" x-text="llmWarning"></p>
+          </div>
+
+          <!-- Stan: error -->
+          <div x-show="llmError" class="bg-red-50 border border-red-200 rounded-xl p-4">
+            <p class="text-xs font-semibold text-red-700 mb-1">Error</p>
+            <p class="text-xs text-red-600" x-text="llmError"></p>
+          </div>
+
+          <!-- Log wywołania LLM -->
+          <div x-show="llmLog" class="bg-white border border-gray-200 rounded-xl overflow-hidden">
+            <div class="px-4 py-3 border-b border-gray-100 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                <p class="text-xs font-semibold text-gray-700">LLM call log</p>
+              </div>
+              <button @click="resetPdf()" class="text-xs text-gray-400 hover:text-gray-600 underline underline-offset-2">Reset</button>
+            </div>
+            <div class="px-4 py-3 flex flex-col gap-1.5 text-xs">
+              <div class="flex justify-between text-gray-500">
+                <span>Model</span>
+                <span class="font-mono text-gray-700" x-text="llmLog?.meta?.model_id"></span>
+              </div>
+              <div class="flex justify-between text-gray-500">
+                <span>Prompt</span>
+                <span class="font-mono text-gray-700" x-text="llmLog?.meta?.prompt_file"></span>
+              </div>
+              <div class="flex justify-between text-gray-500">
+                <span>Tokens</span>
+                <span class="text-gray-700">
+                  <span x-text="llmLog?.meta?.total_tokens"></span>
+                  <span class="text-gray-400"> (prompt: <span x-text="llmLog?.meta?.prompt_tokens"></span> · completion: <span x-text="llmLog?.meta?.completion_tokens"></span>)</span>
+                </span>
+              </div>
+              <div class="flex justify-between text-gray-500">
+                <span>Elapsed</span>
+                <span class="text-gray-700" x-text="llmLog?.meta?.elapsed_ms + ' ms'"></span>
+              </div>
+              <div class="flex justify-between text-gray-500">
+                <span>Confidence</span>
+                <span :class="llmConfidence !== null && llmConfidence < 0.8 ? 'text-amber-600 font-semibold' : 'text-gray-700'"
+                      x-text="llmConfidence !== null ? Math.round(llmConfidence * 100) + '%' : '—'"></span>
+              </div>
+              <div x-show="llmComment" class="flex justify-between text-gray-500 gap-4">
+                <span class="shrink-0">Note</span>
+                <span class="text-amber-700 text-right italic" x-text="llmComment"></span>
+              </div>
+            </div>
+            <div class="border-t border-gray-100">
+              <button @click="showRawResponse = !showRawResponse"
+                      class="w-full px-4 py-2 text-xs text-gray-400 hover:text-gray-600 hover:bg-gray-50 transition-colors text-left flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5 transition-transform" :class="showRawResponse ? 'rotate-90' : ''" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+                Raw response
+              </button>
+              <div x-show="showRawResponse" class="px-4 pb-3">
+                <pre class="text-xs text-gray-500 bg-gray-50 rounded-lg p-3 overflow-x-auto whitespace-pre-wrap break-all" x-text="llmLog?.raw_response"></pre>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ══════════════════════════════
+           TAB: Reagents
+      ══════════════════════════════ -->
+      <div x-show="activeTab === 'reagents'" :class="isLocked ? 'pointer-events-none opacity-60 select-none' : ''">
+
+        <div class="flex gap-4">
+
+          <!-- COLUMN 1 (1/2): manual add form -->
+          <div class="w-1/2 min-w-0">
+            <div class="bg-white rounded-xl border border-gray-200 p-6 flex flex-col gap-5">
+
+              <div>
+                <p class="text-base font-semibold text-gray-800">Add reagent</p>
+                <p class="text-xs text-gray-400 mt-0.5">Fill in the fields and click Add — or import a PDF to fill all at once</p>
+              </div>
+
+              <!-- Name — autocomplete -->
+              <div class="relative" @click.outside="showReagentDropdown = false">
+                <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Name</label>
+                <input type="text"
+                       placeholder="Type name (EN/PL) or formula…"
+                       class="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg bg-white
+                              focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder:text-gray-300"
+                       x-model="reagentQuery"
+                       @input="searchReagents()"
+                       @keydown.escape="showReagentDropdown = false"
+                       autocomplete="off" />
+                <!-- Dropdown wyników -->
+                <ul x-show="showReagentDropdown" x-transition
+                    class="absolute left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-lg z-30 overflow-hidden max-h-56 overflow-y-auto">
+                  <template x-for="r in reagentResults" :key="r.reagent_id">
+                    <li @click="selectReagent(r)"
+                        class="px-4 py-2.5 hover:bg-indigo-50 cursor-pointer transition-colors">
+                      <div class="flex items-baseline gap-2">
+                        <span class="text-sm font-medium text-gray-800" x-text="r.name_eng"></span>
+                        <span class="text-xs font-mono text-gray-400" x-text="r.chemical_formula"></span>
+                      </div>
+                      <p class="text-xs text-gray-400 mt-0.5" x-text="r.name_pl"></p>
+                    </li>
+                  </template>
+                </ul>
+              </div>
+
+              <!-- Formula + Purity -->
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+                    Chemical Formula
+                    <span class="normal-case font-normal text-gray-400 ml-1">optional</span>
+                  </label>
+                  <input type="text" placeholder="FeCl₃·6H₂O"
+                         class="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg bg-white font-mono
+                                focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder:text-gray-300 placeholder:font-sans"
+                         x-model="newReagent.chemical_formula" />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+                    Purity
+                    <span class="normal-case font-normal text-gray-400 ml-1">optional</span>
+                  </label>
+                  <input type="text" placeholder="e.g. 99%, ACS grade"
+                         class="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg bg-white
+                                focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder:text-gray-300"
+                         x-model="newReagent.purity" />
+                </div>
+              </div>
+
+              <!-- Quantity + Unit -->
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Quantity</label>
+                  <input type="number" step="any" placeholder="0.0"
+                         class="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg bg-white
+                                focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder:text-gray-300"
+                         x-model="newReagent.quantity" />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Unit</label>
+                  <input type="text" placeholder="g / mL / mol/L"
+                         class="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg bg-white
+                                focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder:text-gray-300"
+                         x-model="newReagent.unit" />
+                </div>
+              </div>
+
+              <!-- Add button -->
+              <button @click="addReagentRow()"
+                      :disabled="!newReagent.name_eng && !reagentQuery.trim()"
+                      class="w-full py-3 text-sm font-semibold rounded-lg transition-colors"
+                      :class="(newReagent.name_eng || reagentQuery.trim())
+                        ? 'bg-indigo-600 hover:bg-indigo-700 text-white'
+                        : 'bg-gray-100 text-gray-400 cursor-not-allowed'">
+                + Add reagent
+              </button>
+
+              <!-- PDF shortcut -->
+              <div class="flex items-center gap-3">
+                <div class="flex-1 h-px bg-gray-100"></div>
+                <span class="text-xs text-gray-400">or skip the typing</span>
+                <div class="flex-1 h-px bg-gray-100"></div>
+              </div>
+              <button @click="activeTab = 'protocol'"
+                      class="w-full py-2.5 text-sm font-medium text-indigo-600 bg-indigo-50 hover:bg-indigo-100
+                             rounded-lg transition-colors flex items-center justify-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                </svg>
+                Import from PDF — fills all reagents automatically
+              </button>
+            </div>
+          </div>
+
+          <!-- COLUMN 2 (1/4): AI suggestions — untouched reference, never overwritten by matching -->
+          <div class="w-1/4 shrink-0">
+            <div class="bg-white rounded-xl border border-gray-200 overflow-hidden sticky top-0">
+
+              <!-- Header -->
+              <div class="px-4 py-3 border-b border-gray-100 flex items-center justify-between">
+                <p class="text-xs font-semibold text-gray-600">Suggested by AI</p>
+                <span class="text-xs text-gray-400" x-text="aiSuggestedReagents.length + ' items'"></span>
+              </div>
+
+              <!-- Empty -->
+              <div x-show="aiSuggestedReagents.length === 0" class="px-4 py-8 text-center">
+                <p class="text-xs text-gray-400">Import a PDF (Protocol tab) to see AI suggestions here</p>
+              </div>
+
+              <!-- AI reagent list — read-only, + toggles membership in the synthesis list -->
+              <ul x-show="aiSuggestedReagents.length > 0" class="divide-y divide-gray-50">
+                <template x-for="(r, i) in aiSuggestedReagents" :key="i">
+                  <li class="px-3 py-2.5 flex items-start gap-2">
+                    <div class="flex-1 min-w-0">
+                      <p class="text-xs text-gray-700 truncate" x-text="r.name_eng"></p>
+                      <p class="text-xs font-mono text-gray-400 truncate" x-text="r.chemical_formula"></p>
+                      <p class="text-xs text-gray-400" x-text="r.quantity && r.unit ? r.quantity + ' ' + r.unit : ''"></p>
+                    </div>
+                    <button @click="toggleAiReagent(r)"
+                            :title="isInTarget(r) ? 'Remove from synthesis list' : 'Add to synthesis list'"
+                            class="shrink-0 w-6 h-6 flex items-center justify-center rounded-full transition-colors"
+                            :class="isInTarget(r)
+                              ? 'bg-emerald-100 text-emerald-600 hover:bg-red-100 hover:text-red-500'
+                              : 'bg-indigo-50 text-indigo-500 hover:bg-indigo-100'">
+                      <svg x-show="!isInTarget(r)" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                      </svg>
+                      <svg x-show="isInTarget(r)" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                      </svg>
+                    </button>
+                  </li>
+                </template>
+              </ul>
+            </div>
+          </div>
+
+          <!-- COLUMN 3 (1/4): target list for this synthesis, matched to inventory -->
+          <div class="w-1/4 shrink-0">
+            <div class="bg-white rounded-xl border border-gray-200 overflow-hidden sticky top-0">
+
+              <!-- Header -->
+              <div class="px-4 py-3 border-b border-gray-100 flex items-center justify-between">
+                <p class="text-xs font-semibold text-gray-600">For this synthesis</p>
+                <span class="text-xs text-gray-400" x-text="form.reagents.length + ' items'"></span>
+              </div>
+
+              <!-- Empty -->
+              <div x-show="form.reagents.length === 0" class="px-4 py-8 text-center">
+                <p class="text-xs text-gray-400">No reagents added yet</p>
+              </div>
+
+              <!-- Reagent list -->
+              <ul x-show="form.reagents.length > 0" class="divide-y divide-gray-50">
+                <template x-for="(r, i) in form.reagents" :key="i">
+                  <li>
+                    <!-- Widok kompaktowy (kliknięcie otwiera edycję) -->
+                    <div x-show="editingReagentIndex !== i"
+                         @click="editingReagentIndex = i"
+                         class="px-4 py-2.5 flex items-center gap-2.5 cursor-pointer hover:bg-gray-50 transition-colors">
+                      <span class="w-2 h-2 rounded-full shrink-0"
+                            :class="inventoryStatusFor(r).dot"></span>
+                      <span class="text-xs text-gray-700 flex-1 truncate"
+                            x-text="[r.chemical_formula || r.name_eng, r.purity, r.quantity && r.unit ? r.quantity + ' ' + r.unit : ''].filter(Boolean).join(', ')">
+                      </span>
+                      <span x-show="r.bottle_id"
+                            :title="r.bottle_id"
+                            class="shrink-0 w-4 h-4 rounded-full bg-emerald-100 flex items-center justify-center">
+                        <svg class="w-2.5 h-2.5 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                        </svg>
+                      </span>
+                      <svg class="w-3 h-3 text-gray-300 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z" />
+                      </svg>
+                      <button @click.stop="form.reagents.splice(i, 1); saveStatus = ''"
+                              class="shrink-0 w-5 h-5 flex items-center justify-center rounded text-gray-300 hover:text-red-500 hover:bg-red-50 transition-colors">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                        </svg>
+                      </button>
+                    </div>
+
+                    <!-- Widok edycji inline -->
+                    <div x-show="editingReagentIndex === i"
+                         class="px-4 py-3 bg-indigo-50/40 border-l-2 border-indigo-300 flex flex-col gap-2">
+                      <div class="flex gap-2">
+                        <input x-model="r.name_eng" @input="r.bottle_id = null" placeholder="Name"
+                               class="flex-1 px-2.5 py-1.5 text-xs border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-1 focus:ring-indigo-400" />
+                        <input x-model="r.chemical_formula" placeholder="Formula"
+                               class="w-28 px-2.5 py-1.5 text-xs font-mono border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-1 focus:ring-indigo-400" />
+                      </div>
+                      <div class="flex gap-2">
+                        <input x-model="r.purity" placeholder="Purity"
+                               class="w-24 px-2.5 py-1.5 text-xs border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-1 focus:ring-indigo-400" />
+                        <input x-model="r.quantity" type="number" placeholder="Qty"
+                               class="w-20 px-2.5 py-1.5 text-xs border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-1 focus:ring-indigo-400" />
+                        <input x-model="r.unit" placeholder="Unit"
+                               class="w-16 px-2.5 py-1.5 text-xs border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-1 focus:ring-indigo-400" />
+                        <div class="flex-1"></div>
+                        <button @click="editingReagentIndex = null"
+                                class="px-2.5 py-1.5 text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg transition-colors">
+                          Done
+                        </button>
+                        <button @click="form.reagents.splice(i, 1); editingReagentIndex = null; saveStatus = ''"
+                                class="px-2.5 py-1.5 text-xs font-medium text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-colors">
+                          Remove
+                        </button>
+                      </div>
+                    </div>
+                  </li>
+                </template>
+              </ul>
+
+              <!-- Legend -->
+              <div x-show="form.reagents.length > 0"
+                   class="px-4 py-3 border-t border-gray-50 flex flex-col gap-1">
+                <div class="flex items-center gap-1.5 text-xs text-gray-400">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Available in inventory
+                </div>
+                <div class="flex items-center gap-1.5 text-xs text-gray-400">
+                  <span class="w-2 h-2 rounded-full bg-orange-400"></span> Low stock
+                </div>
+                <div class="flex items-center gap-1.5 text-xs text-gray-400">
+                  <span class="w-2 h-2 rounded-full bg-red-400"></span> Not in inventory
+                </div>
+              </div>
+
+              <!-- Check in Inventory -->
+              <div x-show="form.reagents.length > 0" class="px-4 pb-4">
+                <button @click="openInventoryModal()"
+                        class="w-full px-3 py-2 text-xs font-semibold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 border border-indigo-100 rounded-lg transition-colors flex items-center justify-center gap-2">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+                  </svg>
+                  Check in Inventory
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ══════════════════════════════
+           TAB: Steps
+      ══════════════════════════════ -->
+      <div x-show="activeTab === 'steps'" :class="isLocked ? 'pointer-events-none opacity-60 select-none' : ''">
+        <div class="flex gap-6">
+
+          <!-- LEFT: Add step form -->
+          <div class="w-1/2 min-w-0">
+            <div class="bg-white rounded-xl border border-gray-200 p-6 flex flex-col gap-5">
+
+              <div>
+                <p class="text-base font-semibold text-gray-800">Add step</p>
+                <p class="text-xs text-gray-400 mt-0.5">Build the synthesis protocol — Lab App will use this to guide the chemist step by step</p>
+              </div>
+
+              <!-- Action type + Reagent picker -->
+              <div class="grid grid-cols-2 gap-4" @click.outside="showStepReagentDropdown = false">
+
+                <!-- Action type (lewa połowa) -->
+                <div>
+                  <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Action type</label>
+                  <select x-model="newStep.action_type"
+                          @change="newStep.reagent_label = ''; showStepReagentDropdown = false"
+                          class="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700">
+                    <option value="prepare">Prepare</option>
+                    <option value="add">Add</option>
+                    <option value="heat">Heat</option>
+                    <option value="stir">Stir</option>
+                    <option value="wait">Wait</option>
+                    <option value="measure">Measure</option>
+                    <option value="separate">Separate</option>
+                    <option value="wash">Wash</option>
+                    <option value="dry">Dry</option>
+                    <option value="note">Note</option>
+                  </select>
+                </div>
+
+                <!-- Reagent picker (prawa połowa — tylko dla prepare/add) -->
+                <div x-show="newStep.action_type === 'prepare' || newStep.action_type === 'add'"
+                     class="relative">
+                  <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+                    Reagent
+                    <span class="normal-case font-normal text-gray-400 ml-1">— from this experiment</span>
+                  </label>
+                  <input type="text"
+                         placeholder="Select or type name…"
+                         class="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder:text-gray-300"
+                         x-model="newStep.reagent_label"
+                         @input="searchStepReagents()"
+                         @keydown.escape="showStepReagentDropdown = false"
+                         autocomplete="off" />
+                  <ul x-show="showStepReagentDropdown" x-transition
+                      class="absolute left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-lg z-30 overflow-hidden max-h-48 overflow-y-auto">
+                    <template x-for="r in stepReagentResults" :key="r.name_eng">
+                      <li @click="newStep.reagent_label = r.name_eng; showStepReagentDropdown = false"
+                          class="px-4 py-2.5 hover:bg-indigo-50 cursor-pointer transition-colors">
+                        <div class="flex items-baseline gap-2">
+                          <span class="text-sm font-medium text-gray-800" x-text="r.name_eng"></span>
+                          <span class="text-xs font-mono text-gray-400" x-text="r.chemical_formula"></span>
+                        </div>
+                      </li>
+                    </template>
+                  </ul>
+                </div>
+
+              </div>
+
+              <!-- Title -->
+              <div>
+                <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Step title</label>
+                <input type="text" placeholder="e.g. 'Heat to 80°C' or 'Add NH₄OH dropwise'"
+                       class="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder:text-gray-300"
+                       x-model="newStep.title" />
+              </div>
+
+              <!-- Description -->
+              <div>
+                <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+                  Instructions
+                  <span class="normal-case font-normal text-gray-400 ml-1">— shown to chemist in Lab App</span>
+                </label>
+                <textarea rows="2" placeholder="Detailed instruction for the lab technician…"
+                          class="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder:text-gray-300 resize-none"
+                          x-model="newStep.description"></textarea>
+              </div>
+
+              <!-- Parameters (dynamic) -->
+              <div class="border border-gray-100 rounded-xl p-4 bg-gray-50 flex flex-col gap-3">
+                <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Parameters</p>
+
+                <div x-show="newStep.action_type === 'prepare'" class="grid grid-cols-2 gap-3">
+                  <div>
+                    <label class="block text-xs text-gray-500 mb-1">Solvent</label>
+                    <input type="text" placeholder="e.g. deionized water"
+                           class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-1 focus:ring-indigo-400 placeholder:text-gray-300"
+                           x-model="newStep.p_solvent" />
+                  </div>
+                  <div>
+                    <label class="block text-xs text-gray-500 mb-1">Volume (mL)</label>
+                    <input type="number" step="any" placeholder="50"
+                           class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-1 focus:ring-indigo-400 placeholder:text-gray-300"
+                           x-model="newStep.p_volume_ml" />
+                  </div>
+                </div>
+
+                <div x-show="newStep.action_type === 'add'" class="grid grid-cols-2 gap-3">
+                  <div>
+                    <label class="block text-xs text-gray-500 mb-1">Addition rate</label>
+                    <select class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-1 focus:ring-indigo-400"
+                            x-model="newStep.p_addition_rate">
+                      <option value="dropwise">Dropwise</option>
+                      <option value="slowly">Slowly</option>
+                      <option value="quickly">Quickly (all at once)</option>
+                      <option value="portion-wise">Portion-wise</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="block text-xs text-gray-500 mb-1">Target pH <span class="font-normal text-gray-400">(optional)</span></label>
+                    <input type="number" step="0.1" min="0" max="14" placeholder="e.g. 10"
+                           class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-1 focus:ring-indigo-400 placeholder:text-gray-300"
+                           x-model="newStep.p_target_pH" />
+                  </div>
+                </div>
+
+                <div x-show="newStep.action_type === 'heat'" class="grid grid-cols-2 gap-3">
+                  <div>
+                    <label class="block text-xs text-gray-500 mb-1">Target temp (°C)</label>
+                    <input type="number" step="any" placeholder="80"
+                           class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-1 focus:ring-indigo-400 placeholder:text-gray-300"
+                           x-model="newStep.p_target_temp_c" />
+                  </div>
+                  <div>
+                    <label class="block text-xs text-gray-500 mb-1">Keep at this temp. (min)</label>
+                    <input type="number" step="any" placeholder="30"
+                           class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-1 focus:ring-indigo-400 placeholder:text-gray-300"
+                           x-model="newStep.p_hold_min" />
+                  </div>
+                </div>
+
+                <div x-show="newStep.action_type === 'stir'" class="grid grid-cols-2 gap-3">
+                  <div>
+                    <label class="block text-xs text-gray-500 mb-1">Speed (rpm)</label>
+                    <input type="number" step="any" placeholder="300"
+                           class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-1 focus:ring-indigo-400 placeholder:text-gray-300"
+                           x-model="newStep.p_speed_rpm" />
+                  </div>
+                  <div>
+                    <label class="block text-xs text-gray-500 mb-1">Duration (min)</label>
+                    <input type="number" step="any" placeholder="30"
+                           class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-1 focus:ring-indigo-400 placeholder:text-gray-300"
+                           x-model="newStep.p_duration_min" />
+                  </div>
+                </div>
+
+                <div x-show="newStep.action_type === 'wait'" class="grid grid-cols-2 gap-3">
+                  <div>
+                    <label class="block text-xs text-gray-500 mb-1">Duration (min) <span class="font-normal text-gray-400">(optional)</span></label>
+                    <input type="number" step="any" placeholder="60"
+                           class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-1 focus:ring-indigo-400 placeholder:text-gray-300"
+                           x-model="newStep.p_duration_min" />
+                  </div>
+                  <div>
+                    <label class="block text-xs text-gray-500 mb-1">Condition</label>
+                    <input type="text" placeholder="e.g. until cooled to RT"
+                           class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-1 focus:ring-indigo-400 placeholder:text-gray-300"
+                           x-model="newStep.p_condition" />
+                  </div>
+                </div>
+
+                <div x-show="newStep.action_type === 'measure'">
+                  <label class="block text-xs text-gray-500 mb-1">What to measure</label>
+                  <select class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-1 focus:ring-indigo-400"
+                          x-model="newStep.p_measurement_type">
+                    <option value="">— select —</option>
+                    <option value="pH">pH</option>
+                    <option value="temperature">Temperature</option>
+                    <option value="mass">Mass</option>
+                    <option value="absorbance">Absorbance (UV-Vis)</option>
+                    <option value="conductivity">Conductivity</option>
+                    <option value="other">Other (describe in instructions)</option>
+                  </select>
+                </div>
+
+                <div x-show="newStep.action_type === 'separate'">
+                  <label class="block text-xs text-gray-500 mb-1">Method</label>
+                  <select class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-1 focus:ring-indigo-400"
+                          x-model="newStep.p_sep_method">
+                    <option value="">— select —</option>
+                    <option value="centrifuge">Centrifuge</option>
+                    <option value="filter">Filtration</option>
+                    <option value="decant">Decantation</option>
+                    <option value="magnetic">Magnetic separation</option>
+                  </select>
+                </div>
+
+                <div x-show="newStep.action_type === 'wash'" class="grid grid-cols-2 gap-3">
+                  <div>
+                    <label class="block text-xs text-gray-500 mb-1">Solvent</label>
+                    <input type="text" placeholder="e.g. deionized water"
+                           class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-1 focus:ring-indigo-400 placeholder:text-gray-300"
+                           x-model="newStep.p_solvent" />
+                  </div>
+                  <div>
+                    <label class="block text-xs text-gray-500 mb-1">Number of cycles</label>
+                    <input type="number" step="1" min="1" placeholder="3"
+                           class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-1 focus:ring-indigo-400 placeholder:text-gray-300"
+                           x-model="newStep.p_wash_cycles" />
+                  </div>
+                </div>
+
+                <div x-show="newStep.action_type === 'dry'" class="grid grid-cols-2 gap-3">
+                  <div>
+                    <label class="block text-xs text-gray-500 mb-1">Method</label>
+                    <select class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-1 focus:ring-indigo-400"
+                            x-model="newStep.p_dry_method">
+                      <option value="">— select —</option>
+                      <option value="oven">Oven</option>
+                      <option value="vacuum_oven">Vacuum oven</option>
+                      <option value="air">Air dry</option>
+                      <option value="freeze_dry">Freeze drying</option>
+                      <option value="rotary_evap">Rotary evaporator</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="block text-xs text-gray-500 mb-1">Temperature (°C) <span class="font-normal text-gray-400">(optional)</span></label>
+                    <input type="number" step="any" placeholder="60"
+                           class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-1 focus:ring-indigo-400 placeholder:text-gray-300"
+                           x-model="newStep.p_dry_temp_c" />
+                  </div>
+                </div>
+
+                <p x-show="newStep.action_type === 'note'" class="text-xs text-gray-400 italic">
+                  No additional parameters for informational steps — use the instructions field above.
+                </p>
+              </div>
+
+              <!-- Duration + Critical -->
+              <div class="grid grid-cols-2 gap-4 items-end">
+                <div>
+                  <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+                    Expected duration
+                    <span class="normal-case font-normal text-gray-400 ml-1">min</span>
+                  </label>
+                  <input type="number" step="any" placeholder="—"
+                         class="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder:text-gray-300"
+                         x-model="newStep.expected_duration_min" />
+                </div>
+                <div class="flex items-center gap-2.5 pb-0.5">
+                  <input type="checkbox" id="step-critical"
+                         class="w-4 h-4 rounded border-gray-300 text-red-500 focus:ring-red-500"
+                         x-model="newStep.critical" />
+                  <label for="step-critical" class="text-sm text-gray-700 cursor-pointer">
+                    Critical step
+                    <span class="text-xs text-gray-400 block font-normal">highlight for chemist</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Expected observation -->
+              <div>
+                <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+                  Expected observation
+                  <span class="normal-case font-normal text-gray-400 ml-1">optional</span>
+                </label>
+                <input type="text" placeholder="e.g. 'Black precipitate forms', 'Solution turns clear'"
+                       class="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder:text-gray-300"
+                       x-model="newStep.expected_observation" />
+              </div>
+
+              <!-- Add button -->
+              <button @click="addStep()"
+                      :disabled="!newStep.title.trim()"
+                      class="w-full py-3 text-sm font-semibold rounded-lg transition-colors"
+                      :class="newStep.title.trim()
+                        ? 'bg-indigo-600 hover:bg-indigo-700 text-white'
+                        : 'bg-gray-100 text-gray-400 cursor-not-allowed'">
+                + Add step
+              </button>
+
+            </div>
+          </div>
+
+          <!-- RIGHT: Steps list -->
+          <div class="w-1/2 shrink-0">
+
+            <!-- Empty state -->
+            <div x-show="form.steps.length === 0"
+                 class="bg-white rounded-xl border border-gray-200 p-10 text-center">
+              <svg class="w-10 h-10 text-gray-200 mx-auto mb-3" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25z" />
+              </svg>
+              <p class="text-sm text-gray-400">No steps yet</p>
+              <p class="text-xs text-gray-300 mt-1">Add protocol steps using the form on the left</p>
+            </div>
+
+            <!-- Steps timeline -->
+            <div x-show="form.steps.length > 0" class="flex flex-col gap-2">
+              <template x-for="(step, i) in form.steps" :key="i">
+                <div class="bg-white rounded-xl border overflow-hidden transition-all"
+                     :class="editingStepIndex === i ? 'border-indigo-300 shadow-sm' : 'border-gray-200'">
+
+                  <!-- Compact view -->
+                  <div x-show="editingStepIndex !== i"
+                       class="px-4 py-3 flex items-start gap-3 cursor-pointer hover:bg-gray-50 transition-colors"
+                       @click="startEditStep(i)">
+
+                    <!-- Step number -->
+                    <div class="w-6 h-6 rounded-full shrink-0 flex items-center justify-center text-xs font-bold mt-0.5"
+                         :class="step.critical ? 'bg-red-100 text-red-700' : 'bg-gray-100 text-gray-600'"
+                         x-text="i + 1"></div>
+
+                    <!-- Content -->
+                    <div class="flex-1 min-w-0">
+                      <div class="flex items-center gap-2 flex-wrap">
+                        <span class="text-xs font-semibold px-1.5 py-0.5 rounded-md"
+                              :class="stepActionMeta(step.action_type).color"
+                              x-text="stepActionMeta(step.action_type).label"></span>
+                        <span x-show="step.reagent_label && (step.action_type === 'prepare' || step.action_type === 'add')"
+                              class="text-xs font-semibold text-indigo-700 bg-indigo-50 px-1.5 py-0.5 rounded-md"
+                              x-text="step.reagent_label"></span>
+                        <span class="text-sm font-medium text-gray-800" x-text="step.title"></span>
+                        <span x-show="step.critical"
+                              class="text-xs font-semibold text-red-600 bg-red-50 px-1.5 py-0.5 rounded-md border border-red-100">⚠ Critical</span>
+                      </div>
+                      <div class="flex items-center gap-2 mt-1 flex-wrap">
+                        <span x-show="stepParamSummary(step)"
+                              class="text-xs text-gray-500 font-mono"
+                              x-text="stepParamSummary(step)"></span>
+                        <span x-show="step.expected_duration_min"
+                              class="text-xs text-gray-400"
+                              x-text="'~' + step.expected_duration_min + ' min'"></span>
+                        <span x-show="step.expected_observation"
+                              class="text-xs text-gray-400 italic"
+                              x-text="'→ ' + step.expected_observation"></span>
+                      </div>
+                    </div>
+
+                    <!-- Move + delete -->
+                    <div class="flex items-center gap-1 shrink-0" @click.stop>
+                      <button @click="moveStep(i, -1)" :disabled="i === 0"
+                              class="w-6 h-6 flex items-center justify-center rounded text-gray-300 hover:text-gray-600 hover:bg-gray-100 disabled:opacity-30 transition-colors">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+                        </svg>
+                      </button>
+                      <button @click="moveStep(i, 1)" :disabled="i === form.steps.length - 1"
+                              class="w-6 h-6 flex items-center justify-center rounded text-gray-300 hover:text-gray-600 hover:bg-gray-100 disabled:opacity-30 transition-colors">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                        </svg>
+                      </button>
+                      <button @click="removeStep(i)"
+                              class="w-6 h-6 flex items-center justify-center rounded text-gray-300 hover:text-red-500 hover:bg-red-50 transition-colors">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Edit view -->
+                  <div x-show="editingStepIndex === i"
+                       class="p-4 flex flex-col gap-3 bg-indigo-50/30">
+
+                    <div class="flex items-center gap-2">
+                      <span class="text-xs font-semibold px-1.5 py-0.5 rounded-md"
+                            :class="stepActionMeta(step.action_type).color"
+                            x-text="stepActionMeta(step.action_type).label"></span>
+                      <p class="text-xs text-gray-500">Editing step <span x-text="i + 1"></span></p>
+                    </div>
+
+                    <div>
+                      <label class="block text-xs text-gray-500 mb-1">Title</label>
+                      <input x-model="editStep.title" type="text"
+                             class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-1 focus:ring-indigo-400" />
+                    </div>
+                    <div>
+                      <label class="block text-xs text-gray-500 mb-1">Instructions</label>
+                      <textarea x-model="editStep.description" rows="2"
+                                class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-1 focus:ring-indigo-400 resize-none"></textarea>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                      <div>
+                        <label class="block text-xs text-gray-500 mb-1">Expected observation</label>
+                        <input x-model="editStep.expected_observation" type="text" placeholder="What should happen"
+                               class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-1 focus:ring-indigo-400 placeholder:text-gray-300" />
+                      </div>
+                      <div>
+                        <label class="block text-xs text-gray-500 mb-1">Duration (min)</label>
+                        <input x-model="editStep.expected_duration_min" type="number" step="any" placeholder="—"
+                               class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-1 focus:ring-indigo-400 placeholder:text-gray-300" />
+                      </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <input type="checkbox" :id="'edit-crit-' + i" x-model="editStep.critical"
+                             class="w-4 h-4 rounded border-gray-300 text-red-500 focus:ring-red-500" />
+                      <label :for="'edit-crit-' + i" class="text-xs text-gray-700 cursor-pointer">Critical step</label>
+                    </div>
+                    <div class="flex gap-2 pt-1">
+                      <button @click="saveEditStep()"
+                              class="px-3 py-1.5 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg transition-colors">
+                        Save
+                      </button>
+                      <button @click="editingStepIndex = null; editStep = null"
+                              class="px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+                        Cancel
+                      </button>
+                      <div class="flex-1"></div>
+                      <button @click="removeStep(i)"
+                              class="px-3 py-1.5 text-xs font-medium text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-colors">
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+
+                </div>
+              </template>
+
+              <!-- Total estimated time -->
+              <div x-show="form.steps.filter(s => s.expected_duration_min).length > 0"
+                   class="flex items-center justify-end gap-2 text-xs text-gray-400 mt-1 px-1">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Estimated total:
+                <span class="font-semibold text-gray-600"
+                      x-text="form.steps.reduce((acc, s) => acc + (Number(s.expected_duration_min) || 0), 0) + ' min'"></span>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ===== INVENTORY MATCH MODAL ===== -->
+  <div x-show="inventoryModal"
+       x-transition:enter="transition ease-out duration-150"
+       x-transition:enter-start="opacity-0"
+       x-transition:enter-end="opacity-100"
+       x-transition:leave="transition ease-in duration-100"
+       x-transition:leave-start="opacity-100"
+       x-transition:leave-end="opacity-0"
+       class="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
+       @click.self="inventoryModal = false">
+
+    <div class="bg-white rounded-2xl shadow-xl w-[620px] max-h-[80vh] flex flex-col overflow-hidden mx-4">
+
+      <!-- Modal header -->
+      <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between shrink-0">
+        <div>
+          <h2 class="text-sm font-semibold text-gray-900">Match Reagents to Inventory</h2>
+          <p class="text-xs text-gray-400 mt-0.5">Select which bottle to use for each reagent. Choose by purity, quantity, or expiry date.</p>
+        </div>
+        <button @click="inventoryModal = false"
+                class="w-8 h-8 rounded-lg hover:bg-gray-100 flex items-center justify-center text-gray-400 transition-colors">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Rows -->
+      <div class="overflow-y-auto flex-1 px-6 py-4 flex flex-col gap-2.5">
+        <template x-for="(m, i) in inventoryMatches" :key="i">
+          <div class="flex items-center gap-3 px-4 py-3 rounded-xl border border-gray-100 bg-gray-50/60">
+
+            <!-- Reagent info -->
+            <div class="flex-1 min-w-0">
+              <p class="text-xs font-semibold text-gray-800 truncate"
+                 x-text="m.reagent.name_eng || m.reagent.name || '—'"></p>
+              <p class="text-xs font-mono text-gray-400"
+                 x-text="m.reagent.chemical_formula || m.reagent.formula || ''"></p>
+              <p class="text-xs text-gray-400"
+                 x-text="m.reagent.quantity ? m.reagent.quantity + ' ' + (m.reagent.unit || '') : ''"></p>
+            </div>
+
+            <!-- Arrow -->
+            <svg class="w-4 h-4 text-gray-300 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            </svg>
+
+            <!-- Bottle selector -->
+            <div class="w-56 shrink-0">
+              <template x-if="m.candidates.length === 0">
+                <div class="flex items-center gap-1.5">
+                  <div class="flex-1 px-2.5 py-2 text-xs text-red-500 bg-red-50 rounded-lg border border-red-100 flex items-center gap-1.5">
+                    <span>⚠ Not found</span>
+                  </div>
+                  <button @click="m.requested = !m.requested"
+                          :title="m.requested ? 'Request sent (mock) — click to undo' : 'Request from stock manager (mock)'"
+                          :class="m.requested
+                            ? 'bg-emerald-100 text-emerald-600 border-emerald-200'
+                            : 'bg-white text-gray-400 border-gray-200 hover:text-indigo-500 hover:bg-indigo-50 hover:border-indigo-200'"
+                          class="shrink-0 w-8 h-8 flex items-center justify-center rounded-lg border transition-colors">
+                    <svg x-show="!m.requested" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                    </svg>
+                    <svg x-show="m.requested" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
+                  </button>
+                </div>
+              </template>
+              <template x-if="m.candidates.length > 0">
+                <div>
+                  <select x-model="m.selectedBottleId"
+                          class="w-full px-2.5 py-2 text-xs border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-1 focus:ring-indigo-400">
+                    <option value="">— select —</option>
+                    <template x-for="b in m.candidates" :key="b.bottle_id">
+                      <option :value="b.bottle_id"
+                              x-text="(b.name || b.bottle_id) + (b.purity ? ' | ' + b.purity : '') + ' | ' + b.current + '/' + b.initial + ' ' + b.unit + (b.manufacturer ? ' | ' + b.manufacturer : '')">
+                      </option>
+                    </template>
+                    <option value="__other__">Other — not in this list</option>
+                  </select>
+
+                  <!-- Wybrano "Other": żadna z dopasowanych butelek się nie zgadza — ten sam mock zamówienia co przy braku w magazynie -->
+                  <div x-show="m.selectedBottleId === '__other__'" class="flex items-center gap-1.5 mt-1.5">
+                    <span class="flex-1 text-xs text-gray-400">Order other reagent</span>
+                    <button @click="m.requested = !m.requested"
+                            :title="m.requested ? 'Request sent (mock) — click to undo' : 'Request from stock manager (mock)'"
+                            :class="m.requested
+                              ? 'bg-emerald-100 text-emerald-600 border-emerald-200'
+                              : 'bg-white text-gray-400 border-gray-200 hover:text-indigo-500 hover:bg-indigo-50 hover:border-indigo-200'"
+                            class="shrink-0 w-8 h-8 flex items-center justify-center rounded-lg border transition-colors">
+                      <svg x-show="!m.requested" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                      </svg>
+                      <svg x-show="m.requested" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </template>
+              <p x-show="m.requested" class="text-xs text-emerald-600 mt-1">✓ Request sent to stock manager</p>
+            </div>
+          </div>
+        </template>
+      </div>
+
+      <!-- Footer -->
+      <div class="px-6 py-4 border-t border-gray-100 flex items-center justify-between shrink-0">
+        <p class="text-xs text-gray-400">
+          <span x-text="inventoryMatches.filter(m => m.selectedBottleId && m.selectedBottleId !== '__other__').length"></span>/<span x-text="inventoryMatches.length"></span> matched
+        </p>
+        <div class="flex gap-2">
+          <button @click="inventoryModal = false"
+                  class="px-4 py-2 text-xs font-medium text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+            Cancel
+          </button>
+          <button @click="confirmInventoryMatches()"
+                  class="px-4 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg transition-colors">
+            Confirm selection
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ===== END INVENTORY MATCH MODAL ===== -->
+
+  <!-- ===== DELETE CONFIRMATION MODAL ===== -->
+  <div x-show="deleteConfirmOpen"
+       x-transition:enter="transition ease-out duration-150"
+       x-transition:enter-start="opacity-0"
+       x-transition:enter-end="opacity-100"
+       x-transition:leave="transition ease-in duration-100"
+       x-transition:leave-start="opacity-100"
+       x-transition:leave-end="opacity-0"
+       class="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
+       @click.self="deleteConfirmOpen = false">
+
+    <div class="bg-white rounded-2xl shadow-xl w-[420px] mx-4">
+      <div class="px-6 py-5">
+        <h2 class="text-sm font-semibold text-gray-900">Delete this experiment?</h2>
+        <p class="text-xs text-gray-500 mt-1.5 leading-relaxed">
+          <span x-text="form.experiment_id"></span> and all its reagents, steps, and source data will be permanently removed. This cannot be undone.
+        </p>
+        <p x-show="deleteError" class="text-xs text-red-500 font-medium mt-3" x-text="deleteError"></p>
+      </div>
+      <div class="px-6 py-4 border-t border-gray-100 flex items-center justify-end gap-3">
+        <button @click="deleteConfirmOpen = false" :disabled="deleting"
+                class="px-4 py-2 text-xs font-medium text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50">
+          Cancel
+        </button>
+        <button @click="deleteExperiment()" :disabled="deleting"
+                class="px-4 py-2 text-xs font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg transition-colors disabled:opacity-50">
+          <span x-text="deleting ? 'Deleting…' : 'Delete Experiment'"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- ===== END DELETE CONFIRMATION MODAL ===== -->
+
+  <script>
+    function app() {
+      return {
+        activeTab: 'protocol',
+        pdfProcessing: false,
+        pdfFilled: false,
+        pdfFilename: '',
+        selectedFile: null,
+        dragging: false,
+        llmModel: 'gpt-4o-mini',
+        llmPromptFile: '',
+        availablePrompts: [],
+        llmLog: null,
+        llmError: '',
+        llmWarning: '',
+        llmConfidence: null,
+        llmComment: '',
+        userInstruction: '',
+        showRawResponse: false,
+
+        clock: { date: '', time: '' },
+        savedId: null,
+        saving: false,
+        saveStatus: '',   // '' | 'draft' | 'submitted' | 'in_the_lab' | 'error'
+        experimentStatus: '',
+        deleteConfirmOpen: false,
+        deleting: false,
+        deleteError: '',
+
+        get isLocked() { return this.experimentStatus === 'in_synthesis' },
+
+        // Ta sama paleta co statusBadge() w experiments.html — status musi wyglądać identycznie w obu miejscach
+        statusBadge(status) {
+          const map = {
+            draft:               { label: 'Draft',               dot: 'bg-slate-400',   class: 'bg-slate-100 text-slate-600' },
+            planned:             { label: 'Planned',             dot: 'bg-blue-500',    class: 'bg-blue-100 text-blue-800' },
+            in_synthesis:        { label: 'In the Lab',          dot: 'bg-amber-500',   class: 'bg-amber-100 text-amber-800' },
+            in_characterization: { label: 'In Characterization', dot: 'bg-violet-500',  class: 'bg-violet-100 text-violet-800' },
+            completed:           { label: 'Completed',           dot: 'bg-emerald-500', class: 'bg-emerald-100 text-emerald-800' },
+          }
+          return map[status] || map['draft']
+        },
+        previousExperiments: [],
+        showPreviousPicker: false,
+
+        form: {
+          experiment_id: '',
+          target_material: '',
+          experiment_type: '',
+          synthesis_method: '',
+          notes: '',
+          reagents: [],
+          steps: [],
+          source: { doi: '', first_author: '', year: null, title: '', pdf_filename: '' }
+        },
+
+        newReagent: { name_eng: '', chemical_formula: '', cas: '', purity: '', quantity: '', unit: '' },
+        editingReagentIndex: null,
+        aiSuggestedReagents: [],   // niezmienny zapis oryginalnej sugestii LLM — kolumna środkowa w Reagents
+
+        inventory: {},        // wypełniane przez init() z GET /api/reagents/availability
+        allReagents: [],      // pełna lista z reagents.json
+        allBottles: [],       // pełna lista butelek z inwentarza
+        reagentQuery: '',     // to co user wpisuje w polu Name
+        reagentResults: [],   // przefiltrowana lista do dropdownu
+        showReagentDropdown: false,
+        inventoryModal: false,
+        inventoryMatches: [],
+
+        newStep: {
+          action_type: 'add', title: '', description: '', reagent_label: '', expected_duration_min: '', expected_observation: '', critical: false,
+          p_solvent: '', p_volume_ml: '', p_addition_rate: 'dropwise', p_target_pH: '',
+          p_target_temp_c: '', p_hold_min: '', p_duration_min: '', p_speed_rpm: '', p_condition: '',
+          p_measurement_type: '', p_sep_method: '', p_wash_cycles: '', p_dry_method: '', p_dry_temp_c: '',
+        },
+        editStep: null,
+        editingStepIndex: null,
+        showStepReagentDropdown: false,
+        stepReagentResults: [],
+
+        async init() {
+          this.form.experiment_id = this.generateId()
+          const [availRes, reagentsRes, prevRes, promptsRes, bottlesRes] = await Promise.all([
+            fetch('/api/reagents/availability'),
+            fetch('/api/reagents'),
+            fetch('/api/experiments'),
+            fetch('/api/llm/prompts'),
+            fetch('/api/bottles'),
+          ])
+          if (availRes.ok)    this.inventory           = await availRes.json()
+          if (reagentsRes.ok) this.allReagents         = await reagentsRes.json()
+          if (prevRes.ok)     this.previousExperiments = await prevRes.json()
+          if (bottlesRes.ok)  this.allBottles          = await bottlesRes.json()
+          if (promptsRes.ok) {
+            this.availablePrompts = await promptsRes.json()
+            if (this.availablePrompts.length > 0)
+              this.llmPromptFile = this.availablePrompts[0].file
+          }
+          const urlId = new URLSearchParams(window.location.search).get('id')
+          if (urlId) {
+            const expRes = await fetch(`/api/experiments/${urlId}`)
+            if (expRes.ok) this.loadExperiment(await expRes.json())
+          }
+
+          const update = () => {
+            const now = new Date()
+            this.clock.date = now.toLocaleDateString('en-GB', { timeZone: 'Europe/Warsaw', day: 'numeric', month: 'short', year: 'numeric' })
+            this.clock.time = now.toLocaleTimeString('en-GB', { timeZone: 'Europe/Warsaw', hour: '2-digit', minute: '2-digit', second: '2-digit' })
+          }
+          update()
+          setInterval(update, 1000)
+        },
+
+        handlePdfDrop(event) {
+          const file = event.dataTransfer.files[0]
+          if (!file || file.type !== 'application/pdf') return
+          this.selectedFile = file
+        },
+
+        handlePdfUpload(event) {
+          const file = event.target.files[0]
+          if (!file) return
+          this.selectedFile = file
+        },
+
+        async processFile(file) {
+          this.pdfFilename  = file.name
+          this.pdfProcessing = true
+          this.pdfFilled    = false
+          this.llmLog        = null
+          this.llmError      = ''
+          this.llmWarning    = ''
+          this.llmConfidence = null
+
+          // Krok 1: ekstrakcja tekstu z PDF
+          const formData = new FormData()
+          formData.append('file', file)
+          const extractRes = await fetch('/api/llm/extract-pdf', { method: 'POST', body: formData })
+          if (!extractRes.ok) {
+            this.llmError = 'PDF extraction failed: ' + (await extractRes.json()).detail
+            this.pdfProcessing = false
+            return
+          }
+          const extracted = await extractRes.json()
+          this.form.source.pdf_filename = file.name
+          this.llmWarning = extracted.truncated
+            ? `PDF has ${extracted.total_pages} pages — only the first 20 were sent to AI.`
+            : ''
+
+          // Krok 2: wywołanie LLM
+          const callRes = await fetch('/api/llm/call', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              text: extracted.text,
+              model: this.llmModel,
+              prompt_file: this.llmPromptFile,
+              user_instruction: this.userInstruction.trim(),
+            })
+          })
+          if (!callRes.ok) {
+            this.llmError = 'LLM call failed: ' + (await callRes.json()).detail
+            this.pdfProcessing = false
+            return
+          }
+          const llmData = await callRes.json()
+          this.llmLog = llmData
+
+          // Krok 3: wypełnij formularz wynikiem
+          const r = llmData.result || {}
+          if (r.target_material)  this.form.target_material  = r.target_material
+          if (r.experiment_type)  this.form.experiment_type  = r.experiment_type
+          if (r.synthesis_method) this.form.synthesis_method = r.synthesis_method
+          if (r.notes)            this.form.notes            = r.notes
+          if (r.reagents)         this.aiSuggestedReagents   = r.reagents.map(re => ({ purity: '', bottle_id: null, ...re, ai_extracted: true }))
+          if (r.source)           this.form.source           = { ...this.form.source, ...r.source, pdf_filename: file.name }
+
+          this.pdfProcessing = false
+          this.pdfFilled     = true
+          this.llmConfidence = typeof r.confidence === 'number' ? r.confidence : null
+          this.llmComment    = r.comment || ''
+          this.activeTab     = 'reagents'
+          this.saveStatus    = ''
+        },
+
+        generateId() {
+          const year = new Date().getFullYear()
+          const num = String(Math.floor(Math.random() * 900) + 100)
+          return `EXP-${year}-${num}`
+        },
+
+        resetPdf() {
+          this.pdfFilled = false
+          this.pdfFilename = ''
+          this.selectedFile = null
+          this.llmLog = null
+          this.llmError = ''
+          this.llmWarning = ''
+          this.llmConfidence = null
+          this.llmComment = ''
+          this.userInstruction = ''
+          this.form.target_material = ''
+          this.form.experiment_type = ''
+          this.form.synthesis_method = ''
+          this.form.notes = ''
+          this.form.reagents = []
+          this.saveStatus = ''
+        },
+
+        async addReagentRow() {
+          const name_eng = this.newReagent.name_eng || this.reagentQuery.trim()
+          if (!name_eng) return
+          this.form.reagents.push({ ...this.newReagent, name_eng, ai_extracted: false, bottle_id: null })
+          this.newReagent = { name_eng: '', chemical_formula: '', cas: '', purity: '', quantity: '', unit: '' }
+          this.reagentQuery = ''
+          this.showReagentDropdown = false
+          await this._saveToApi('draft')
+        },
+
+        // Kolumna "Suggested by AI" — czysty, niezmienny odczyt z importu PDF.
+        // isInTarget/toggleAiReagent dopasowują po name_eng — wystarczające dla MVP (kolizje nazw mało prawdopodobne).
+        isInTarget(r) {
+          const name = (r.name_eng || '').toLowerCase().trim()
+          return this.form.reagents.some(t => (t.name_eng || '').toLowerCase().trim() === name)
+        },
+
+        toggleAiReagent(r) {
+          const name = (r.name_eng || '').toLowerCase().trim()
+          const idx = this.form.reagents.findIndex(t => (t.name_eng || '').toLowerCase().trim() === name)
+          if (idx > -1) {
+            this.form.reagents.splice(idx, 1)
+          } else {
+            this.form.reagents.push({ ...r })
+          }
+          this.saveStatus = ''
+        },
+
+        inventoryStatusFor(r) {
+          if (r.bottle_id) {
+            const b = this.allBottles.find(b => String(b.bottle_id) === String(r.bottle_id))
+            if (!b || b.current <= 0)                              return { dot: 'bg-red-400' }
+            if (b.initial > 0 && b.current / b.initial < 0.2)     return { dot: 'bg-orange-400' }
+            return { dot: 'bg-emerald-500' }
+          }
+          return this.inventoryStatus(r.name_eng || r.name || '')
+        },
+
+        inventoryStatus(name) {
+          const status = this.inventory[name] || 'none'
+          return {
+            ok:   { dot: 'bg-emerald-500' },
+            low:  { dot: 'bg-orange-400' },
+            none: { dot: 'bg-red-400' },
+          }[status]
+        },
+
+        searchReagents() {
+          const q = this.reagentQuery.toLowerCase().trim()
+          if (q.length < 1) {
+            this.reagentResults = []
+            this.showReagentDropdown = false
+            return
+          }
+          this.reagentResults = this.allReagents.filter(r =>
+            (r.name_eng          || '').toLowerCase().includes(q) ||
+            (r.name_pl           || '').toLowerCase().includes(q) ||
+            (r.chemical_formula  || '').toLowerCase().includes(q)
+          ).slice(0, 8)   // max 8 wyników
+          this.showReagentDropdown = this.reagentResults.length > 0
+        },
+
+        selectReagent(r) {
+          this.newReagent.name_eng          = r.name_eng
+          this.newReagent.chemical_formula  = r.chemical_formula || ''
+          this.newReagent.cas               = r.cas || ''
+          this.reagentQuery                 = r.name_eng
+          this.showReagentDropdown = false
+          this.reagentResults      = []
+        },
+
+        loadExperiment(exp) {
+          this.savedId = exp.id
+          this.form = {
+            experiment_id:    exp.experiment_id || exp.id,
+            target_material:  exp.target_material  || '',
+            experiment_type:  exp.experiment_type  || '',
+            synthesis_method: exp.synthesis_method || '',
+            notes:            exp.notes            || '',
+            reagents:         exp.reagents         || [],
+            steps:            exp.steps            || [],
+            source:           exp.source || { doi: '', first_author: '', year: null, title: '', pdf_filename: '' },
+          }
+          this.aiSuggestedReagents = exp.ai_suggested_reagents || []
+          this.showPreviousPicker = false
+          this.experimentStatus = exp.status || 'draft'
+          this.saveStatus = exp.status === 'draft' ? 'draft' : 'submitted'
+          this.pdfFilled     = false
+          this.pdfFilename   = ''
+          this.selectedFile  = null
+          this.llmLog        = null
+          this.llmError      = ''
+          this.llmConfidence = null
+          if (this.$refs.pdfInput) this.$refs.pdfInput.value = ''
+          this.editingReagentIndex = null
+          this.activeTab = 'protocol'
+        },
+
+        async _saveToApi(status) {
+          this.saving = true
+          this.saveStatus = ''
+          const source = { ...this.form.source, year: this.form.source.year === '' ? null : this.form.source.year || null }
+          const payload = { ...this.form, source, status, ai_suggested_reagents: this.aiSuggestedReagents }
+          try {
+            let res
+            if (!this.savedId) {
+              // Pierwszy zapis — utwórz nowy rekord
+              res = await fetch('/api/experiments', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+              })
+            } else {
+              // Kolejny zapis — zaktualizuj istniejący
+              res = await fetch(`/api/experiments/${this.savedId}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+              })
+            }
+            if (!res.ok) throw new Error(await res.text())
+            const data = await res.json()
+            this.savedId = data.id
+            this.experimentStatus = data.status
+            this.saveStatus = status === 'draft' ? 'draft' : status === 'in_synthesis' ? 'in_the_lab' : 'submitted'
+          } catch (e) {
+            console.error(e)
+            this.saveStatus = 'error'
+          } finally {
+            this.saving = false
+          }
+        },
+
+        openInventoryModal() {
+          this.inventoryMatches = this.form.reagents.map(r => {
+            const candidates = this.matchBottlesForReagent(r)
+            return {
+              reagent: r,
+              candidates,
+              // Domyślnie puste ("— select —") nawet gdy są kandydaci — auto-zgadywanie pierwszego
+              // trafienia było zbyt łatwo pomylić z realnym potwierdzeniem przy przypadkowym "Confirm selection".
+              // Pre-wypełnione tylko gdy reagent ma już WCZEŚNIEJ świadomie potwierdzone bottle_id.
+              selectedBottleId: r.bottle_id ? String(r.bottle_id) : '',
+              requested: false,   // mock "Request from stock manager"
+            }
+          })
+          this.inventoryModal = true
+        },
+
+        normalizeFormula(f) {
+          return (f || '').toLowerCase().trim()
+            .replace(/[₀₁₂₃₄₅₆₇₈₉]/g, d => '₀₁₂₃₄₅₆₇₈₉'.indexOf(d))
+            .replace(/[·•]/g, '.')
+        },
+
+        matchBottlesForReagent(r) {
+          const cas     = (r.cas || '').trim()
+          const formula = this.normalizeFormula(r.chemical_formula || r.formula)
+          const name    = (r.name_eng || r.name || '').toLowerCase().trim()
+          if (!cas && !formula && !name) return []
+          // CAS match — definitive, return immediately
+          if (cas) {
+            const casMatch = this.allBottles.filter(b => (b.cas || '').trim() === cas)
+            if (casMatch.length > 0) return casMatch
+          }
+          // Exact formula match
+          const exact = this.allBottles.filter(b =>
+            formula && this.normalizeFormula(b.formula) === formula
+          )
+          if (exact.length > 0) return exact
+          // Fuzzy formula + name fallback
+          return this.allBottles.filter(b => {
+            const bf = this.normalizeFormula(b.formula)
+            const bn = (b.name || '').toLowerCase()
+            return (formula && bf.includes(formula)) ||
+                   (formula && formula.includes(bf) && bf.length > 3) ||
+                   (name.length > 4 && (bn.includes(name.slice(0, 10)) || name.includes(bn.slice(0, 8))))
+          })
+        },
+
+        confirmInventoryMatches() {
+          this.form.reagents = this.form.reagents.map((r, i) => {
+            const m = this.inventoryMatches[i]
+            if (!m) return r
+            // "__other__" = "żadna z dopasowanych butelek się nie zgadza" — traktowane jak brak wyboru, nigdy nie zapisywane jako bottle_id
+            const selected = m.selectedBottleId === '__other__' ? '' : m.selectedBottleId
+            const updated = { ...r, bottle_id: selected || null }
+            if (selected) {
+              const bottle = this.allBottles.find(b => String(b.bottle_id) === String(selected))
+              if (bottle) {
+                if (bottle.name)    updated.name_eng          = bottle.name
+                if (bottle.formula) updated.chemical_formula  = bottle.formula
+              }
+            }
+            return updated
+          })
+          this.inventoryModal = false
+          this.saveStatus = ''
+        },
+
+        stepActionMeta(type) {
+          const m = {
+            prepare:  { label: 'Prepare',  color: 'bg-blue-100 text-blue-700' },
+            add:      { label: 'Add',      color: 'bg-indigo-100 text-indigo-700' },
+            heat:     { label: 'Heat',     color: 'bg-red-100 text-red-700' },
+            stir:     { label: 'Stir',     color: 'bg-purple-100 text-purple-700' },
+            wait:     { label: 'Wait',     color: 'bg-gray-100 text-gray-600' },
+            measure:  { label: 'Measure',  color: 'bg-teal-100 text-teal-700' },
+            separate: { label: 'Separate', color: 'bg-green-100 text-green-700' },
+            wash:     { label: 'Wash',     color: 'bg-cyan-100 text-cyan-700' },
+            dry:      { label: 'Dry',      color: 'bg-amber-100 text-amber-700' },
+            note:     { label: 'Note',     color: 'bg-gray-100 text-gray-500' },
+          }
+          return m[type] || { label: type, color: 'bg-gray-100 text-gray-600' }
+        },
+
+        stepParamSummary(step) {
+          const p = step.parameters || {}
+          switch(step.action_type) {
+            case 'prepare':  return [p.volume_ml ? p.volume_ml + ' mL' : '', p.solvent || ''].filter(Boolean).join(' · ')
+            case 'add':      return [p.addition_rate || '', p.target_pH != null && p.target_pH !== '' ? 'until pH ' + p.target_pH : ''].filter(Boolean).join(' · ')
+            case 'heat':     return [p.target_temp_c ? p.target_temp_c + '°C' : '', p.hold_min ? 'hold ' + p.hold_min + ' min' : ''].filter(Boolean).join(' · ')
+            case 'stir':     return [p.speed_rpm ? p.speed_rpm + ' rpm' : '', p.duration_min ? p.duration_min + ' min' : ''].filter(Boolean).join(' · ')
+            case 'wait':     return [p.duration_min ? p.duration_min + ' min' : '', p.condition || ''].filter(Boolean).join(' · ')
+            case 'measure':  return p.measurement_type || ''
+            case 'separate': return p.method || ''
+            case 'wash':     return [p.wash_cycles ? p.wash_cycles + '×' : '', p.solvent || ''].filter(Boolean).join(' ')
+            case 'dry':      return [p.method || '', p.temp_c ? p.temp_c + '°C' : ''].filter(Boolean).join(' · ')
+            default: return ''
+          }
+        },
+
+        buildStepParams(s) {
+          const p = {}
+          switch(s.action_type) {
+            case 'prepare':
+              if(s.p_solvent) p.solvent = s.p_solvent
+              if(s.p_volume_ml) p.volume_ml = Number(s.p_volume_ml)
+              break
+            case 'add':
+              if(s.p_addition_rate) p.addition_rate = s.p_addition_rate
+              if(s.p_target_pH !== '') p.target_pH = Number(s.p_target_pH)
+              break
+            case 'heat':
+              if(s.p_target_temp_c) p.target_temp_c = Number(s.p_target_temp_c)
+              if(s.p_hold_min) p.hold_min = Number(s.p_hold_min)
+              break
+            case 'stir':
+              if(s.p_speed_rpm) p.speed_rpm = Number(s.p_speed_rpm)
+              if(s.p_duration_min) p.duration_min = Number(s.p_duration_min)
+              break
+            case 'wait':
+              if(s.p_duration_min) p.duration_min = Number(s.p_duration_min)
+              if(s.p_condition) p.condition = s.p_condition
+              break
+            case 'measure':
+              if(s.p_measurement_type) p.measurement_type = s.p_measurement_type
+              break
+            case 'separate':
+              if(s.p_sep_method) p.method = s.p_sep_method
+              break
+            case 'wash':
+              if(s.p_solvent) p.solvent = s.p_solvent
+              if(s.p_wash_cycles) p.wash_cycles = Number(s.p_wash_cycles)
+              break
+            case 'dry':
+              if(s.p_dry_method) p.method = s.p_dry_method
+              if(s.p_dry_temp_c) p.temp_c = Number(s.p_dry_temp_c)
+              break
+          }
+          return p
+        },
+
+        searchStepReagents() {
+          const q = this.newStep.reagent_label.toLowerCase().trim()
+          if (q.length < 1) { this.stepReagentResults = []; this.showStepReagentDropdown = false; return }
+          this.stepReagentResults = this.form.reagents.filter(r =>
+            (r.name_eng || '').toLowerCase().includes(q) ||
+            (r.chemical_formula || '').toLowerCase().includes(q)
+          ).slice(0, 6)
+          this.showStepReagentDropdown = this.stepReagentResults.length > 0
+        },
+
+        addStep() {
+          if (!this.newStep.title.trim()) return
+          this.form.steps.push({
+            step_id: this.form.steps.length + 1,
+            action_type: this.newStep.action_type,
+            reagent_label: this.newStep.reagent_label.trim(),
+            title: this.newStep.title.trim(),
+            description: this.newStep.description.trim(),
+            parameters: this.buildStepParams(this.newStep),
+            expected_duration_min: this.newStep.expected_duration_min ? Number(this.newStep.expected_duration_min) : null,
+            expected_observation: this.newStep.expected_observation.trim(),
+            critical: this.newStep.critical,
+          })
+          this.newStep = {
+            action_type: 'add', title: '', description: '', reagent_label: '', expected_duration_min: '', expected_observation: '', critical: false,
+            p_solvent: '', p_volume_ml: '', p_addition_rate: 'dropwise', p_target_pH: '',
+            p_target_temp_c: '', p_hold_min: '', p_duration_min: '', p_speed_rpm: '', p_condition: '',
+            p_measurement_type: '', p_sep_method: '', p_wash_cycles: '', p_dry_method: '', p_dry_temp_c: '',
+          }
+          this.showStepReagentDropdown = false
+          this.saveStatus = ''
+        },
+
+        moveStep(i, dir) {
+          const j = i + dir
+          if (j < 0 || j >= this.form.steps.length) return
+          const arr = [...this.form.steps]
+          ;[arr[i], arr[j]] = [arr[j], arr[i]]
+          arr.forEach((s, idx) => { s.step_id = idx + 1 })
+          this.form.steps = arr
+          if (this.editingStepIndex === i) this.editingStepIndex = j
+          else if (this.editingStepIndex === j) this.editingStepIndex = i
+          this.saveStatus = ''
+        },
+
+        removeStep(i) {
+          this.form.steps.splice(i, 1)
+          this.form.steps.forEach((s, idx) => { s.step_id = idx + 1 })
+          this.form.steps = [...this.form.steps]
+          if (this.editingStepIndex === i) { this.editingStepIndex = null; this.editStep = null }
+          else if (this.editingStepIndex > i) this.editingStepIndex--
+          this.saveStatus = ''
+        },
+
+        startEditStep(i) {
+          const s = this.form.steps[i]
+          const p = s.parameters || {}
+          this.editStep = {
+            title: s.title || '',
+            description: s.description || '',
+            expected_duration_min: s.expected_duration_min || '',
+            expected_observation: s.expected_observation || '',
+            critical: s.critical || false,
+          }
+          this.editingStepIndex = i
+        },
+
+        saveEditStep() {
+          if (this.editStep === null || this.editingStepIndex === null) return
+          const i = this.editingStepIndex
+          this.form.steps = this.form.steps.map((s, idx) => idx === i ? {
+            ...s,
+            title: this.editStep.title.trim(),
+            description: this.editStep.description.trim(),
+            expected_duration_min: this.editStep.expected_duration_min ? Number(this.editStep.expected_duration_min) : null,
+            expected_observation: this.editStep.expected_observation.trim(),
+            critical: this.editStep.critical,
+          } : s)
+          this.editingStepIndex = null
+          this.editStep = null
+          this.saveStatus = ''
+        },
+
+        async saveDraft() {
+          await this._saveToApi('draft')
+        },
+
+        async submitExperiment() {
+          await this._saveToApi('planned')
+        },
+
+        async submitToLab() {
+          await this._saveToApi('in_synthesis')
+        },
+
+        async deleteExperiment() {
+          if (!this.savedId) return
+          this.deleting = true
+          this.deleteError = ''
+          try {
+            const res = await fetch(`/api/experiments/${this.savedId}`, { method: 'DELETE' })
+            if (!res.ok) {
+              const err = await res.json().catch(() => ({ detail: 'Server error' }))
+              throw new Error(typeof err.detail === 'string' ? err.detail : 'Could not delete experiment')
+            }
+            window.location.href = 'experiments.html'
+          } catch (e) {
+            this.deleteError = e.message || 'Delete failed'
+            this.deleting = false
+          }
+        }
+      }
+    }
+  </script>
+
+</body>
+</html>

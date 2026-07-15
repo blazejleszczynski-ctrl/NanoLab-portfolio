@@ -1,0 +1,16 @@
+# Environment / secrets
+.env
+*.env
+!.env.example
+
+# Python
+venv/
+__pycache__/
+*.pyc
+*.log
+
+# Runtime data (uploaded files, PDF extraction cache)
+backend/data/uploads/*
+!backend/data/uploads/.gitkeep
+backend/LLM/extracted/*
+!backend/LLM/extracted/.gitkeep

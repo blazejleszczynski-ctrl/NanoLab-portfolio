@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NanoLab — Sample Preparation</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body x-data="app()"
+      class="h-screen flex flex-col overflow-hidden transition-colors duration-200"
+      :class="darkMode ? 'bg-gray-900' : 'bg-gray-50'">
+
+  <!-- TOPBAR -->
+  <header class="h-14 border-t-[3px] border-t-teal-600 border-b flex items-center px-5 shrink-0 z-10"
+          :class="darkMode ? 'bg-gray-900 border-gray-700' : 'bg-white border-gray-200'">
+    <div class="flex items-center gap-2.5 w-56 shrink-0">
+      <div class="w-7 h-7 rounded-lg bg-teal-600 flex items-center justify-center shrink-0">
+        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15M14.25 3.104c.251.023.501.05.75.082M19.8 15l-1.8 1.8M5 14.5l1.8 1.8" />
+        </svg>
+      </div>
+      <div class="flex items-baseline gap-1.5">
+        <span class="font-bold text-gray-900 dark:text-white text-sm tracking-tight">NanoLab</span>
+        <span class="text-xs text-teal-600 font-semibold tracking-wide">Operator</span>
+      </div>
+    </div>
+    <div class="flex-1"></div>
+    <div class="flex items-center gap-4">
+      <p class="text-xs text-gray-500 dark:text-gray-400" x-text="clock.date + ' · ' + clock.time"></p>
+      <button @click="toggleDark()" class="w-8 h-8 rounded-lg flex items-center justify-center text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+        <svg x-show="darkMode" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" /></svg>
+        <svg x-show="!darkMode" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" /></svg>
+      </button>
+      <div class="w-px h-7 bg-gray-100 dark:bg-gray-700"></div>
+      <div class="flex items-center gap-3">
+        <div class="text-right">
+          <p class="text-sm font-medium text-gray-800 dark:text-gray-200 leading-tight">mgr J. Nowak</p>
+          <p class="text-xs text-gray-400 dark:text-gray-500 leading-tight">TEM Operator · University Research Lab</p>
+        </div>
+        <div class="w-8 h-8 rounded-full bg-teal-100 dark:bg-teal-900 border-2 border-teal-200 dark:border-teal-700 flex items-center justify-center text-teal-700 dark:text-teal-300 font-bold text-xs shrink-0">GN</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="flex flex-1 overflow-hidden">
+
+    <!-- SIDEBAR -->
+    <aside class="w-56 border-r flex flex-col shrink-0"
+           :class="darkMode ? 'bg-gray-900 border-gray-700' : 'bg-white border-gray-200'">
+      <nav class="flex-1 px-3 py-4 flex flex-col gap-0.5">
+        <p class="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider px-3 pb-1">Instruments</p>
+        <a href="tem.html" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium bg-teal-50 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400">
+          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" /></svg>
+          TEM
+        </a>
+        <a class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium text-gray-300 dark:text-gray-600 cursor-not-allowed select-none">
+          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" /></svg>
+          SEM · JSM-7001
+        </a>
+      </nav>
+      <div class="p-3 border-t border-gray-100 dark:border-gray-700">
+        <a href="../scientist/index.html" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <svg class="w-4 h-4 shrink-0 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>
+          <span class="text-indigo-600 dark:text-indigo-400 font-medium">Scientist App</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="flex-1 overflow-y-auto px-8 py-7">
+
+      <!-- Back + header -->
+      <div class="flex items-center gap-4 mb-7">
+        <a href="tem.html" class="flex items-center gap-1.5 text-xs text-gray-400 dark:text-gray-500 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
+          TEM Queue
+        </a>
+        <div class="w-px h-4 bg-gray-200 dark:bg-gray-700"></div>
+        <div class="flex items-center gap-3">
+          <div class="w-1 h-8 bg-amber-500 rounded-full"></div>
+          <div>
+            <h1 class="text-xl font-bold text-gray-900 dark:text-white">Sample Preparation</h1>
+            <p class="text-xs text-gray-400 dark:text-gray-500 mt-0.5" x-text="sample.id + ' · ' + sample.exp_id"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="max-w-2xl flex flex-col gap-5">
+
+        <!-- Sample info -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
+          <div class="flex items-start justify-between">
+            <div>
+              <p class="text-xs text-gray-400 dark:text-gray-500 mb-0.5">Material</p>
+              <p class="font-semibold text-gray-900 dark:text-white" x-text="sample.material"></p>
+              <p class="text-xs text-gray-500 dark:text-gray-400 mt-1" x-text="sample.scientist + ' · submitted ' + formatDate(sample.submitted)"></p>
+            </div>
+            <span class="text-xs bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400 px-2.5 py-1 rounded-full font-medium shrink-0 ml-4">In Preparation</span>
+          </div>
+
+          <!-- Scientist note -->
+          <template x-if="sample.scientist_note">
+            <div class="mt-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-100 dark:border-amber-800/30 rounded-lg p-3">
+              <div class="flex items-center gap-1.5 mb-1">
+                <svg class="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" /></svg>
+                <span class="text-xs font-semibold text-amber-700 dark:text-amber-400">Note from scientist</span>
+              </div>
+              <p class="text-xs text-amber-800 dark:text-amber-300 leading-relaxed italic" x-text="sample.scientist_note"></p>
+            </div>
+          </template>
+        </div>
+
+        <!-- Form: Grid & Support -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
+          <h2 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4 flex items-center gap-2">
+            <span class="w-5 h-5 rounded bg-teal-100 dark:bg-teal-900 text-teal-700 dark:text-teal-400 text-xs font-bold flex items-center justify-center">1</span>
+            Grid &amp; Support Film
+          </h2>
+          <div class="grid grid-cols-2 gap-4">
+
+            <div class="col-span-2">
+              <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1.5">Grid type <span class="text-red-500">*</span></label>
+              <select x-model="form.grid_type"
+                      :class="attemptedSave && !form.grid_type ? 'border-red-400 dark:border-red-600 focus:ring-red-500' : 'border-gray-200 dark:border-gray-600 focus:ring-teal-500'"
+                      class="w-full px-3 py-2 text-sm border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2">
+                <option value="">— select —</option>
+                <option>Carbon-coated Cu, 300 mesh</option>
+                <option>Carbon-coated Cu, 400 mesh</option>
+                <option>Formvar/Carbon Cu, 200 mesh</option>
+                <option>Holey carbon Cu, 300 mesh</option>
+                <option>Quantifoil R2/2 Cu, 300 mesh</option>
+                <option>Quantifoil R1.2/1.3 Cu, 300 mesh</option>
+                <option>Carbon-coated Ni, 300 mesh</option>
+                <option>Au, 300 mesh (EELS)</option>
+                <option>SiN membrane window</option>
+                <option>Ultrathin carbon on lacey Cu, 400 mesh</option>
+              </select>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Form: Sample Application -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
+          <h2 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4 flex items-center gap-2">
+            <span class="w-5 h-5 rounded bg-teal-100 dark:bg-teal-900 text-teal-700 dark:text-teal-400 text-xs font-bold flex items-center justify-center">2</span>
+            Sample Application
+          </h2>
+          <div class="grid grid-cols-2 gap-4">
+
+            <div>
+              <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1.5">Solvent <span class="text-red-500">*</span></label>
+              <select x-model="form.solvent"
+                      :class="attemptedSave && !form.solvent ? 'border-red-400 dark:border-red-600 focus:ring-red-500' : 'border-gray-200 dark:border-gray-600 focus:ring-teal-500'"
+                      class="w-full px-3 py-2 text-sm border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2">
+                <option value="">— select —</option>
+                <option>As received</option>
+                <option>Hexane</option>
+                <option>Toluene</option>
+                <option>Chloroform</option>
+                <option>Dichloromethane</option>
+                <option>Ethanol</option>
+                <option>Methanol</option>
+                <option>Acetone</option>
+                <option>Water (deionized)</option>
+                <option>PBS buffer</option>
+                <option>Custom…</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1.5">Dilution</label>
+              <input type="text" x-model="form.dilution" placeholder="e.g. 1:5 v/v, 0.1 mg/mL"
+                     class="w-full px-3 py-2 text-sm border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500" />
+            </div>
+
+            <div>
+              <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1.5">Application method <span class="text-red-500">*</span></label>
+              <select x-model="form.application_method"
+                      :class="attemptedSave && !form.application_method ? 'border-red-400 dark:border-red-600 focus:ring-red-500' : 'border-gray-200 dark:border-gray-600 focus:ring-teal-500'"
+                      class="w-full px-3 py-2 text-sm border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2">
+                <option value="">— select —</option>
+                <option>Drop casting</option>
+                <option>Dip coating</option>
+                <option>Spray coating</option>
+                <option>Spin coating</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1.5">Volume applied (µL)</label>
+              <input type="number" x-model="form.volume_ul" placeholder="e.g. 5"
+                     class="w-full px-3 py-2 text-sm border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500" />
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Form: Drying & Atmosphere -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
+          <h2 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4 flex items-center gap-2">
+            <span class="w-5 h-5 rounded bg-teal-100 dark:bg-teal-900 text-teal-700 dark:text-teal-400 text-xs font-bold flex items-center justify-center">3</span>
+            Drying &amp; Atmosphere
+          </h2>
+          <div class="grid grid-cols-2 gap-4">
+
+            <div>
+              <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1.5">Drying method <span class="text-red-500">*</span></label>
+              <select x-model="form.drying_method"
+                      :class="attemptedSave && !form.drying_method ? 'border-red-400 dark:border-red-600 focus:ring-red-500' : 'border-gray-200 dark:border-gray-600 focus:ring-teal-500'"
+                      class="w-full px-3 py-2 text-sm border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2">
+                <option value="">— select —</option>
+                <option>Air dry (ambient, RT)</option>
+                <option>N₂ stream</option>
+                <option>Ar stream</option>
+                <option>Vacuum (RT)</option>
+                <option>Heating plate (40 °C)</option>
+                <option>Heating plate (60 °C)</option>
+                <option>Glovebox (inert atmosphere)</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1.5">Atmosphere</label>
+              <div class="flex gap-2 mt-0.5">
+                <template x-for="atm in ['Air', 'N₂', 'Ar']" :key="atm">
+                  <label class="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg border text-xs font-medium cursor-pointer transition-colors"
+                         :class="form.atmosphere === atm
+                           ? 'border-teal-500 bg-teal-50 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300'
+                           : 'border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:border-gray-300 dark:hover:border-gray-500'">
+                    <input type="radio" :value="atm" x-model="form.atmosphere" class="sr-only" />
+                    <span x-text="atm"></span>
+                  </label>
+                </template>
+              </div>
+            </div>
+
+            <div class="col-span-2">
+              <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1.5">Staining (optional)</label>
+              <select x-model="form.staining" class="w-full px-3 py-2 text-sm border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-teal-500">
+                <option value="">None</option>
+                <option>Uranyl acetate (2%)</option>
+                <option>Phosphotungstic acid (1%)</option>
+                <option>Lead citrate</option>
+                <option>Osmium tetroxide (OsO₄)</option>
+              </select>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Form: Notes -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
+          <h2 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4 flex items-center gap-2">
+            <span class="w-5 h-5 rounded bg-teal-100 dark:bg-teal-900 text-teal-700 dark:text-teal-400 text-xs font-bold flex items-center justify-center">4</span>
+            Operator Notes
+          </h2>
+          <textarea x-model="form.notes" rows="3" placeholder="Additional observations, deviations from protocol, issues encountered…"
+                    class="w-full px-3 py-2 text-sm border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"></textarea>
+        </div>
+
+        <!-- Save button -->
+        <div class="flex items-center justify-between pb-8">
+          <a href="tem.html" class="text-sm text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">Cancel</a>
+          <div class="flex items-center gap-3">
+            <!-- Validation error -->
+            <p x-show="attemptedSave && missingRequired().length" x-transition class="text-xs text-red-500 dark:text-red-400 font-medium">
+              Fill in: <span x-text="missingRequired().join(', ')"></span>
+            </p>
+            <!-- Server / save error -->
+            <p x-show="saveError" x-transition class="text-xs text-red-500 dark:text-red-400 font-medium" x-text="saveError"></p>
+            <!-- Draft feedback -->
+            <p x-show="drafted && !saved && !saveError && !(attemptedSave && missingRequired().length)" x-transition class="text-xs text-gray-500 dark:text-gray-400 font-medium flex items-center gap-1.5">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              Draft saved
+            </p>
+            <!-- Success message -->
+            <p x-show="saved" x-transition class="text-xs text-teal-600 dark:text-teal-400 font-medium flex items-center gap-1.5">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              Saved — sample moved to Imaging Queue
+            </p>
+            <button @click="saveDraft()" :disabled="drafting"
+                    class="px-5 py-2.5 text-sm font-semibold text-gray-600 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors shadow-sm disabled:opacity-50">
+              <span x-text="drafting ? 'Saving…' : 'Save draft'"></span>
+            </button>
+            <button @click="save()"
+                    class="px-5 py-2.5 text-sm font-semibold text-white bg-teal-600 hover:bg-teal-700 dark:bg-teal-700 dark:hover:bg-teal-600 rounded-lg transition-colors shadow-sm">
+              Save &amp; Move to Imaging Queue
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function app() {
+      return {
+        darkMode: JSON.parse(localStorage.getItem('nanolab_dark') || 'false'),
+        clock: { date: '', time: '' },
+        saved: false,
+        drafted: false,
+        drafting: false,
+        attemptedSave: false,
+        saveError: null,
+        requiredFields: { grid_type: 'Grid type', solvent: 'Solvent', application_method: 'Application method', drying_method: 'Drying method' },
+
+        sample: {},
+
+        form: {
+          grid_type: '',
+          solvent: '',
+          dilution: '',
+          application_method: '',
+          volume_ul: '',
+          drying_method: '',
+          atmosphere: 'Air',
+          staining: '',
+          notes: '',
+        },
+
+        async init() {
+          document.documentElement.classList.toggle('dark', this.darkMode)
+          const update = () => {
+            const now = new Date()
+            this.clock.date = now.toLocaleDateString('en-GB', { timeZone: 'Europe/Warsaw', day: 'numeric', month: 'short', year: 'numeric' })
+            this.clock.time = now.toLocaleTimeString('en-GB', { timeZone: 'Europe/Warsaw', hour: '2-digit', minute: '2-digit', second: '2-digit' })
+          }
+          update()
+          setInterval(update, 1000)
+
+          const id = new URLSearchParams(window.location.search).get('id')
+          if (id) {
+            const res = await fetch(`/api/tem/requests/${id}`)
+            this.sample = await res.json()
+          }
+
+          // Pre-fill solvent from scientist note heuristic
+          const note = (this.sample.scientist_note || '').toLowerCase()
+          if (note.includes('hexane'))                            this.form.solvent = 'Hexane'
+          if (note.includes('toluene'))                          this.form.solvent = 'Toluene'
+          if (note.includes('ethanol'))                          this.form.solvent = 'Ethanol'
+          if (note.includes('aqueous') || note.includes('water')) this.form.solvent = 'Water (deionized)'
+
+          // Wczytaj zapisane dane preparatyki jeśli istnieją
+          if (this.sample.preparation) {
+            this.form = { ...this.form, ...this.sample.preparation }
+            this.drafted = true
+          }
+        },
+
+        toggleDark() {
+          this.darkMode = !this.darkMode
+          localStorage.setItem('nanolab_dark', JSON.stringify(this.darkMode))
+          document.documentElement.classList.toggle('dark', this.darkMode)
+        },
+
+        preparationPayload() {
+          return {
+            ...this.form,
+            volume_ul: this.form.volume_ul === '' ? null : Number(this.form.volume_ul),
+          }
+        },
+
+        async saveDraft() {
+          this.drafting = true
+          this.saveError = null
+          try {
+            const res = await fetch(`/api/tem/requests/${this.sample.id}/preparation`, {
+              method: 'PATCH',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(this.preparationPayload())
+            })
+            if (!res.ok) {
+              const err = await res.json().catch(() => ({ detail: 'Server error' }))
+              throw new Error(typeof err.detail === 'string' ? err.detail : 'Could not save draft')
+            }
+            this.drafted = true
+          } catch (e) {
+            this.saveError = e.message || 'Could not save draft'
+          }
+          this.drafting = false
+        },
+
+        missingRequired() {
+          return Object.entries(this.requiredFields)
+            .filter(([key]) => !this.form[key])
+            .map(([, label]) => label)
+        },
+
+        async save() {
+          this.attemptedSave = true
+          this.saveError = null
+          if (this.missingRequired().length) return
+
+          try {
+            const prepRes = await fetch(`/api/tem/requests/${this.sample.id}/preparation`, {
+              method: 'PATCH',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(this.preparationPayload())
+            })
+            if (!prepRes.ok) {
+              const err = await prepRes.json().catch(() => ({ detail: 'Server error' }))
+              throw new Error(typeof err.detail === 'string' ? err.detail : 'Could not save preparation data')
+            }
+
+            const colRes = await fetch(`/api/tem/requests/${this.sample.id}/column`, {
+              method: 'PATCH',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ column: 'imaging' })
+            })
+            if (!colRes.ok) {
+              const err = await colRes.json().catch(() => ({ detail: 'Server error' }))
+              throw new Error(typeof err.detail === 'string' ? err.detail : 'Could not move sample to Imaging Queue')
+            }
+
+            this.saved = true
+            setTimeout(() => { window.location.href = 'tem.html' }, 1800)
+          } catch (e) {
+            this.saveError = e.message || 'Save failed'
+          }
+        },
+
+        formatDate(str) {
+          return new Date(str).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+        },
+      }
+    }
+  </script>
+</body>
+</html>

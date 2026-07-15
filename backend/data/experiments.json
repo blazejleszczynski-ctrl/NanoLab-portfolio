@@ -1,0 +1,693 @@
+[
+  {
+    "id": "EXP-2026-457",
+    "experiment_id": "EXP-2026-457",
+    "target_material": "Fe3O4",
+    "experiment_type": "synthesis",
+    "synthesis_method": "Co-precipitation",
+    "notes": "Synthesis at various temperatures; NaOH added to FeCl2·6H2O and FeCl3·4H2O in ethanol for pH 10, followed by 12h modification with sodium citrate and oleic acid.",
+    "reagents": [
+      {
+        "name_eng": "Iron(III) chloride hexahydrate",
+        "chemical_formula": "FeCl₃·6H₂O",
+        "cas": "",
+        "purity": "analytical grade",
+        "quantity": null,
+        "unit": "",
+        "ai_extracted": true,
+        "bottle_id": "191"
+      },
+      {
+        "name_eng": "iron(II) chloride tetrahydrate",
+        "chemical_formula": "FeCl2·4H2O",
+        "cas": "",
+        "purity": "analytical grade",
+        "quantity": null,
+        "unit": "",
+        "ai_extracted": true,
+        "bottle_id": null
+      },
+      {
+        "name_eng": "Sodium hydroxide",
+        "chemical_formula": "NaOH",
+        "cas": "",
+        "purity": "analytical grade",
+        "quantity": null,
+        "unit": "",
+        "ai_extracted": true,
+        "bottle_id": "308"
+      },
+      {
+        "name_eng": "Ethanol 96%",
+        "chemical_formula": "C₂H₅OH",
+        "cas": "",
+        "purity": "chemical grade",
+        "quantity": null,
+        "unit": "",
+        "ai_extracted": true,
+        "bottle_id": "124"
+      },
+      {
+        "name_eng": "Sodium citrate tribasic dihydrate",
+        "chemical_formula": "Na₃C₆H₅O₇·2H₂O",
+        "cas": "",
+        "purity": "chemical grade",
+        "quantity": 0.43,
+        "unit": "mol L-1",
+        "ai_extracted": true,
+        "bottle_id": "303"
+      },
+      {
+        "name_eng": "oleic acid",
+        "chemical_formula": "C18H34O2",
+        "cas": "",
+        "purity": "chemical grade",
+        "quantity": 0.86,
+        "unit": "mol L-1",
+        "ai_extracted": true,
+        "bottle_id": null
+      }
+    ],
+    "status": "draft",
+    "date_started": "2026-06-18",
+    "source": {
+      "doi": "10.1016/j.proeng.2011.12.498",
+      "first_author": "Wei",
+      "year": 2011,
+      "title": "Synthesis of Fe O nanoparticles and their magnetic properties",
+      "pdf_filename": "1-s2.0-S187770581106334X-mainext.pdf"
+    },
+    "steps": []
+  },
+  {
+    "id": "BL-2026-881",
+    "experiment_id": "BL-2026-881",
+    "target_material": "Fe3O4",
+    "experiment_type": "synthesis",
+    "synthesis_method": "Co-precipitation",
+    "notes": "Synthesis performed at 40-80 °C with NaOH, sodium citrate, and oleic acid; particles aged for 30 min, dried at 60 °C.",
+    "reagents": [
+      {
+        "name_eng": "Iron(III) chloride hexahydrate",
+        "chemical_formula": "FeCl₃·6H₂O",
+        "cas": "",
+        "purity": "",
+        "quantity": 2.0,
+        "unit": "g",
+        "ai_extracted": true,
+        "bottle_id": "191"
+      },
+      {
+        "name_eng": "Ammonium iron(II) sulfate hexahydrate",
+        "chemical_formula": "(NH₄)₂Fe(SO₄)₂·6H₂O",
+        "cas": "",
+        "purity": "99,99",
+        "quantity": 1.0,
+        "unit": "kg",
+        "ai_extracted": true,
+        "bottle_id": "24"
+      },
+      {
+        "name_eng": "Sodium hydroxide",
+        "chemical_formula": "NaOH",
+        "cas": "",
+        "purity": "",
+        "quantity": 3.0,
+        "unit": "mol/L",
+        "ai_extracted": true,
+        "bottle_id": "289"
+      },
+      {
+        "name_eng": "Sodium carbonate",
+        "chemical_formula": "Na₂CO₃",
+        "cas": "",
+        "purity": "",
+        "quantity": 0.43,
+        "unit": "mol/L",
+        "ai_extracted": true,
+        "bottle_id": "300"
+      },
+      {
+        "name_eng": "Oleic acid",
+        "chemical_formula": "C18H34O2",
+        "cas": "",
+        "purity": "",
+        "quantity": 0.86,
+        "unit": "mol/L",
+        "ai_extracted": true,
+        "bottle_id": null
+      },
+      {
+        "name_eng": "Ethanol 96%",
+        "chemical_formula": "C₂H₅OH",
+        "cas": "",
+        "purity": "",
+        "quantity": null,
+        "unit": "",
+        "ai_extracted": true,
+        "bottle_id": "124"
+      },
+      {
+        "name_eng": "Deionized water",
+        "chemical_formula": "",
+        "cas": "",
+        "purity": "",
+        "quantity": null,
+        "unit": "",
+        "ai_extracted": true,
+        "bottle_id": null
+      }
+    ],
+    "status": "in_synthesis",
+    "date_started": "2026-06-18",
+    "source": {
+      "doi": "10.1016/j.proeng.2011.12.498",
+      "first_author": "Wei",
+      "year": 2011,
+      "title": "Synthesis of Fe3O4 nanoparticles and their magnetic properties",
+      "pdf_filename": "1-s2.0-S187770581106334X-mainext.pdf"
+    },
+    "steps": [
+      {
+        "step_id": 1,
+        "action_type": "add",
+        "title": "Włóż pręt stalowy do kolby",
+        "description": "",
+        "parameters": {
+          "addition_rate": "quickly"
+        },
+        "expected_duration_min": 1.0,
+        "expected_observation": "",
+        "critical": false
+      },
+      {
+        "step_id": 2,
+        "action_type": "heat",
+        "title": "Podgrzewaj",
+        "description": "Do czerwoności",
+        "parameters": {
+          "target_temp_c": 550,
+          "hold_min": 2
+        },
+        "expected_duration_min": 10.0,
+        "expected_observation": "",
+        "critical": false
+      },
+      {
+        "step_id": 3,
+        "action_type": "stir",
+        "title": "mieszaj przez 20 min",
+        "description": "",
+        "parameters": {
+          "speed_rpm": 500,
+          "duration_min": 20
+        },
+        "expected_duration_min": null,
+        "expected_observation": "",
+        "critical": false
+      }
+    ],
+    "ai_suggested_reagents": []
+  },
+  {
+    "id": "EXP-2026-978",
+    "experiment_id": "EXP-2026-978",
+    "target_material": "EGO frameworks (EGOF)",
+    "experiment_type": "synthesis",
+    "synthesis_method": "Electrochemical oxidation",
+    "notes": "Electrochemical oxidation in 8 M HClO4, amine functionalization with various amines, reaction time 24 h at room temperature.",
+    "reagents": [
+      {
+        "name_eng": "Perchloric acid",
+        "chemical_formula": "HClO4",
+        "cas": "",
+        "purity": "",
+        "quantity": 8.0,
+        "unit": "M",
+        "ai_extracted": true,
+        "bottle_id": null
+      },
+      {
+        "name_eng": "1,8-diaminooctane",
+        "chemical_formula": "",
+        "cas": "",
+        "purity": "",
+        "quantity": 480.0,
+        "unit": "mg",
+        "ai_extracted": true,
+        "bottle_id": null
+      },
+      {
+        "name_eng": "p-phenylenediamine",
+        "chemical_formula": "",
+        "cas": "",
+        "purity": "",
+        "quantity": null,
+        "unit": "",
+        "ai_extracted": true,
+        "bottle_id": null
+      },
+      {
+        "name_eng": "3,3'-dimethoxybenzidine",
+        "chemical_formula": "",
+        "cas": "",
+        "purity": "",
+        "quantity": null,
+        "unit": "",
+        "ai_extracted": true,
+        "bottle_id": null
+      },
+      {
+        "name_eng": "6-methyl-1,3,5-triazine-2,4-diamine",
+        "chemical_formula": "",
+        "cas": "",
+        "purity": "",
+        "quantity": null,
+        "unit": "",
+        "ai_extracted": true,
+        "bottle_id": null
+      },
+      {
+        "name_eng": "Melamine",
+        "chemical_formula": "C3H6N6",
+        "cas": "",
+        "purity": "",
+        "quantity": null,
+        "unit": "",
+        "ai_extracted": true,
+        "bottle_id": null
+      },
+      {
+        "name_eng": "Ethanol",
+        "chemical_formula": "C2H5OH",
+        "cas": "",
+        "purity": "",
+        "quantity": 28.0,
+        "unit": "mL",
+        "ai_extracted": true,
+        "bottle_id": null
+      },
+      {
+        "name_eng": "Distilled water",
+        "chemical_formula": "",
+        "cas": "",
+        "purity": "",
+        "quantity": 26.0,
+        "unit": "mL",
+        "ai_extracted": true,
+        "bottle_id": null
+      }
+    ],
+    "source": {
+      "doi": "10.1016/j.carbon.2021.01.134",
+      "first_author": "Subrati",
+      "year": 2021,
+      "title": "Synthesis and characterization of electrochemically-oxidized amine-functionalized graphite framework materials",
+      "pdf_filename": "j.carbon.2021.01.134.pdf"
+    },
+    "status": "planned",
+    "date_started": "2026-06-18",
+    "steps": []
+  },
+  {
+    "id": "EXP-2026-109",
+    "experiment_id": "EXP-2026-109",
+    "target_material": "Fe3O4",
+    "experiment_type": "synthesis",
+    "synthesis_method": "Co-precipitation",
+    "notes": "Synthesis at 40-80 °C; pH 10; reaction time 30 min; modified for 12 h; dried at 60 °C for 6 h.",
+    "reagents": [
+      {
+        "name_eng": "Iron(III) chloride hexahydrate",
+        "chemical_formula": "FeCl3·6H2O",
+        "cas": "",
+        "purity": "99,9",
+        "quantity": 18.5,
+        "unit": "g",
+        "ai_extracted": true,
+        "bottle_id": null
+      },
+      {
+        "name_eng": "Iron(II) chloride tetrahydrate",
+        "chemical_formula": "FeCl2·4H2O",
+        "cas": "",
+        "purity": "90",
+        "quantity": 1.0,
+        "unit": "g",
+        "ai_extracted": true,
+        "bottle_id": null
+      },
+      {
+        "name_eng": "Sodium hydroxide",
+        "chemical_formula": "NaOH",
+        "cas": "",
+        "purity": "",
+        "quantity": null,
+        "unit": "",
+        "ai_extracted": true,
+        "bottle_id": null
+      },
+      {
+        "name_eng": "Ethanol",
+        "chemical_formula": "",
+        "cas": "",
+        "purity": "",
+        "quantity": null,
+        "unit": "",
+        "ai_extracted": true,
+        "bottle_id": null
+      },
+      {
+        "name_eng": "Deionized water",
+        "chemical_formula": "",
+        "cas": "",
+        "purity": "",
+        "quantity": null,
+        "unit": "",
+        "ai_extracted": true,
+        "bottle_id": null
+      },
+      {
+        "name_eng": "Sodium citrate",
+        "chemical_formula": "Na3C6H5O7·2H2O",
+        "cas": "",
+        "purity": "",
+        "quantity": 0.43,
+        "unit": "mol/L",
+        "ai_extracted": true,
+        "bottle_id": null
+      },
+      {
+        "name_eng": "Oleic acid",
+        "chemical_formula": "C18H34O2",
+        "cas": "",
+        "purity": "",
+        "quantity": 0.86,
+        "unit": "mol/L",
+        "ai_extracted": true,
+        "bottle_id": null
+      }
+    ],
+    "source": {
+      "doi": "10.1016/j.proeng.2011.12.498",
+      "first_author": "Wei",
+      "year": 2011,
+      "title": "Synthesis of Fe O nanoparticles and their magnetic properties",
+      "pdf_filename": "1-s2.0-S187770581106334X-mainext.pdf"
+    },
+    "status": "completed",
+    "date_started": "2026-06-19",
+    "steps": [
+      {
+        "step_id": 1,
+        "action_type": "add",
+        "title": "DOdaj proszek",
+        "description": "Dodaj żółty proszek",
+        "parameters": {
+          "addition_rate": "quickly"
+        },
+        "expected_duration_min": null,
+        "expected_observation": "",
+        "critical": false
+      },
+      {
+        "step_id": 2,
+        "action_type": "heat",
+        "title": "zacznij ogrzewanie",
+        "description": "podgrzewaj pod płomieniem",
+        "parameters": {
+          "target_temp_c": 200,
+          "hold_min": 3
+        },
+        "expected_duration_min": 6.0,
+        "expected_observation": "",
+        "critical": false
+      },
+      {
+        "step_id": 3,
+        "action_type": "wait",
+        "title": "ODczekaj aż do ostygnięcia",
+        "description": "",
+        "parameters": {
+          "duration_min": 20,
+          "condition": "until cooled to RT"
+        },
+        "expected_duration_min": 19.0,
+        "expected_observation": "",
+        "critical": false
+      }
+    ]
+  },
+  {
+    "id": "EXP-2026-100",
+    "experiment_id": "EXP-2026-100",
+    "target_material": "Oleinian żelaza",
+    "experiment_type": "precursor_synthesis",
+    "synthesis_method": "",
+    "notes": "Synteza prekursora organicznego",
+    "reagents": [
+      {
+        "name_eng": "Oleylamine",
+        "chemical_formula": "C₁₈H₃‵NH₂",
+        "cas": "",
+        "purity": "99,9",
+        "quantity": 30.0,
+        "unit": "ml",
+        "ai_extracted": false,
+        "bottle_id": "222"
+      },
+      {
+        "name_eng": "Iron(III) chloride hexahydrate",
+        "chemical_formula": "FeCl₃·6H₂O",
+        "cas": "",
+        "purity": "99,9",
+        "quantity": 7.0,
+        "unit": "g",
+        "ai_extracted": false,
+        "bottle_id": "191"
+      },
+      {
+        "name_eng": "woda",
+        "chemical_formula": "H2O",
+        "cas": "",
+        "purity": "",
+        "quantity": 20.0,
+        "unit": "ml",
+        "ai_extracted": false,
+        "bottle_id": null
+      }
+    ],
+    "steps": [
+      {
+        "step_id": 1,
+        "action_type": "prepare",
+        "title": "Wlej oleinian do kolby",
+        "description": "Wlej oleinian do kolby,",
+        "parameters": {},
+        "expected_duration_min": 1.0,
+        "expected_observation": "",
+        "critical": false
+      },
+      {
+        "step_id": 2,
+        "action_type": "stir",
+        "title": "rozpocznij mieszanie",
+        "description": "włącz mieszanie na 800",
+        "parameters": {
+          "speed_rpm": 800,
+          "duration_min": 5
+        },
+        "expected_duration_min": 1.0,
+        "expected_observation": "",
+        "critical": false
+      },
+      {
+        "step_id": 3,
+        "action_type": "add",
+        "title": "dodaj Chlorek żelaza",
+        "description": "z bibułki delikatnie zsuń proszek.",
+        "parameters": {
+          "addition_rate": "portion-wise"
+        },
+        "expected_duration_min": 2.0,
+        "expected_observation": "zabarwienie na żółto",
+        "critical": false
+      },
+      {
+        "step_id": 4,
+        "action_type": "heat",
+        "title": "podgrzewaj do 60 st C",
+        "description": "Podgrzewaj roztwór za pośrednictwem łaźni olejowej",
+        "parameters": {
+          "target_temp_c": 60,
+          "duration_min": 20
+        },
+        "expected_duration_min": 10.0,
+        "expected_observation": "",
+        "critical": false
+      }
+    ],
+    "source": {
+      "doi": "",
+      "first_author": "",
+      "year": null,
+      "title": "",
+      "pdf_filename": ""
+    },
+    "status": "planned",
+    "date_started": "2026-06-19"
+  },
+  {
+    "id": "BBL-2026-894",
+    "experiment_id": "BBL-2026-894",
+    "target_material": "Au",
+    "experiment_type": "",
+    "synthesis_method": "",
+    "notes": "",
+    "reagents": [],
+    "steps": [],
+    "source": {
+      "doi": "",
+      "first_author": "",
+      "year": null,
+      "title": "",
+      "pdf_filename": ""
+    },
+    "status": "planned",
+    "date_started": "2026-07-15",
+    "archived": true,
+    "archived_at": "2026-07-15T20:14:37.060012+00:00"
+  },
+  {
+    "id": "EXP-2026-738",
+    "experiment_id": "EXP-2026-738",
+    "target_material": "Au nanoparticles",
+    "experiment_type": "synthesis",
+    "synthesis_method": "One-phase method",
+    "notes": "2.0 mmol dodecanethiol added to 1.1 mmol HAuCl4·3H2O in 30 mL THF, stirred 20 min at room temperature. 20 mL 1.0 M lithium triethylborohydride in THF added, stirred 3 h, then precipitated with ethanol.",
+    "reagents": [
+      {
+        "name_eng": "dodecanethiol",
+        "chemical_formula": "C12H26S",
+        "cas": "34364-90-6",
+        "purity": "",
+        "quantity": 2.0,
+        "unit": "mmol",
+        "ai_extracted": true,
+        "bottle_id": null
+      },
+      {
+        "name_eng": "Gold(III) chloride trihydrate",
+        "chemical_formula": "HAuCl₄·3H₂O",
+        "cas": "16961-25-4",
+        "purity": "",
+        "quantity": 1.1,
+        "unit": "mmol",
+        "ai_extracted": true,
+        "bottle_id": "165"
+      },
+      {
+        "name_eng": "lithium triethylborohydride",
+        "chemical_formula": "LiC6H15B",
+        "cas": "29356-48-1",
+        "purity": "",
+        "quantity": 20.0,
+        "unit": "mL",
+        "ai_extracted": true,
+        "bottle_id": null
+      },
+      {
+        "name_eng": "tetrahydrofuran",
+        "chemical_formula": "C4H8O",
+        "cas": "109-99-9",
+        "purity": "",
+        "quantity": 30.0,
+        "unit": "mL",
+        "ai_extracted": true,
+        "bottle_id": null
+      },
+      {
+        "name_eng": "absolute ethanol",
+        "chemical_formula": "C2H6O",
+        "cas": "64-17-5",
+        "purity": "",
+        "quantity": 200.0,
+        "unit": "mL",
+        "ai_extracted": true,
+        "bottle_id": null
+      },
+      {
+        "name_eng": "woda woda",
+        "chemical_formula": "H2O",
+        "cas": "",
+        "purity": "99,99",
+        "quantity": 20.0,
+        "unit": "mL",
+        "ai_extracted": false,
+        "bottle_id": null
+      }
+    ],
+    "ai_suggested_reagents": [
+      {
+        "name_eng": "dodecanethiol",
+        "chemical_formula": "C12H26S",
+        "cas": "693-98-1",
+        "purity": "",
+        "quantity": 2.0,
+        "unit": "mmol",
+        "ai_extracted": true,
+        "bottle_id": null
+      },
+      {
+        "name_eng": "hydrogen tetrachloroaurate(III) trihydrate",
+        "chemical_formula": "HAuCl4·3H2O",
+        "cas": "",
+        "purity": "",
+        "quantity": 1.1,
+        "unit": "mmol",
+        "ai_extracted": true,
+        "bottle_id": null
+      },
+      {
+        "name_eng": "tetrahydrofuran",
+        "chemical_formula": "C4H8O",
+        "cas": "142-26-1",
+        "purity": "",
+        "quantity": 30.0,
+        "unit": "mL",
+        "ai_extracted": true,
+        "bottle_id": null
+      },
+      {
+        "name_eng": "lithium triethylborohydride",
+        "chemical_formula": "LiC6H15B",
+        "cas": "100618-73-8",
+        "purity": "",
+        "quantity": 20.0,
+        "unit": "mL",
+        "ai_extracted": true,
+        "bottle_id": null
+      },
+      {
+        "name_eng": "absolute ethanol",
+        "chemical_formula": "C2H5OH",
+        "cas": "64-17-5",
+        "purity": "",
+        "quantity": 200.0,
+        "unit": "mL",
+        "ai_extracted": true,
+        "bottle_id": null
+      }
+    ],
+    "steps": [],
+    "source": {
+      "doi": "10.1063/1.2126666",
+      "first_author": "Frenkel",
+      "year": 2005,
+      "title": "Size-controlled synthesis and characterization of thiol-stabilized gold nanoparticles",
+      "pdf_filename": "1.2126666 gold nanop.pdf"
+    },
+    "status": "planned",
+    "date_started": "2026-07-15"
+  }
+]

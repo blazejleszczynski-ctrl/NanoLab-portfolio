@@ -1,0 +1,141 @@
+[
+  {
+    "id": "TEM-2026-001",
+    "exp_id": "EXP-2026-001",
+    "material": "Fe₃O₄ (co-precipitation)",
+    "scientist": "dr A. Kowalska",
+    "submitted": "2026-05-15",
+    "column": "pending",
+    "scientist_note": "Sample in hexane (1 mg/mL), drop cast on Cu 300 grid.",
+    "imaging_draft": {
+      "scope": {
+        "microscope": "JEOL JEM-1400",
+        "camera": "Gatan Orius SC200D",
+        "voltage": "120 kV",
+        "sample_holder": "Single tilt",
+        "notes": "Obiekty na tyle duże, że udało się zrobić dobre zdjęcia.",
+        "mode": "BF-TEM",
+        "magnification": "",
+        "exposure": "",
+        "spot_size": "",
+        "obj_aperture": "",
+        "cond_aperture": ""
+      },
+      "naming": {
+        "template": "{date}_EXP-2026-001_{material}_{mag}_{seq}",
+        "root_folder": "C:/TEM_DATA/"
+      }
+    },
+    "preparation": {
+      "grid_type": "Carbon-coated Cu, 300 mesh",
+      "solvent": "Hexane",
+      "dilution": "1:200",
+      "application_method": "Drop casting",
+      "volume_ul": 2.0,
+      "drying_method": "Air dry (ambient, RT)",
+      "atmosphere": "Air",
+      "staining": "",
+      "notes": ""
+    }
+  },
+  {
+    "id": "TEM-2026-002",
+    "exp_id": "EXP-2026-002",
+    "material": "Fe₃O₄ + sodium citrate",
+    "scientist": "dr A. Kowalska",
+    "submitted": "2026-06-01",
+    "column": "pending",
+    "scientist_note": "Aqueous suspension, pH ~7. Do not use hexane or non-polar solvents."
+  },
+  {
+    "id": "TEM-2026-003",
+    "exp_id": "EXP-2026-004",
+    "material": "Fe₃O₄ (thermal decomp.)",
+    "scientist": "dr A. Kowalska",
+    "submitted": "2026-06-08",
+    "column": "archived",
+    "scientist_note": "Sample in hexane (~1 mg/mL). Previous batch showed agglomeration - try diluting 1:5 before drop casting.",
+    "preparation": {
+      "grid_type": "Carbon-coated Cu, 400 mesh",
+      "solvent": "Hexane",
+      "dilution": "",
+      "application_method": "Drop casting",
+      "volume_ul": null,
+      "drying_method": "Air dry (ambient, RT)",
+      "atmosphere": "Air",
+      "staining": "",
+      "notes": ""
+    },
+    "notified": true,
+    "notified_at": "2026-07-15T22:41:27.394856+00:00",
+    "image_folder_path": "C:/TEM_DATA/2026/Kowalska/EXP-2026-004/",
+    "archive": {
+      "box_number": "niebieskie",
+      "slot": "B3",
+      "archived_at": "2026-07-15T22:41:50.888343+00:00"
+    }
+  },
+  {
+    "id": "TEM-2026-004",
+    "exp_id": "EXP-2026-005",
+    "material": "Fe₃O₄ · OAm stabilizer",
+    "scientist": "dr A. Kowalska",
+    "submitted": "2026-06-12",
+    "column": "imaging",
+    "scientist_note": "Synthesis just finished. Sample in toluene. Can be diluted if needed.",
+    "preparation": {
+      "grid_type": "Carbon-coated Cu, 300 mesh",
+      "solvent": "Ethanol",
+      "dilution": "",
+      "application_method": "Drop casting",
+      "volume_ul": null,
+      "drying_method": "Air dry (ambient, RT)",
+      "atmosphere": "Air",
+      "staining": "",
+      "notes": ""
+    }
+  },
+  {
+    "id": "TEM-2026-005",
+    "exp_id": "EXP-2026-006",
+    "material": "ZnO (sol-gel)",
+    "scientist": "dr A. Kowalska",
+    "submitted": "2026-06-13",
+    "column": "archived",
+    "scientist_note": "Ethanol suspension, 0.5 mg/mL. Handle gently to avoid sedimentation.",
+    "preparation": {
+      "grid_type": "Quantifoil R2/2 Cu, 300 mesh",
+      "box_number": "pudełko białe",
+      "slot": "D2",
+      "solvent": "Ethanol",
+      "dilution": "5x",
+      "application_method": "Drop casting",
+      "volume_ul": 1.0,
+      "drying_method": "Air dry (ambient, RT)",
+      "atmosphere": "Air",
+      "staining": "",
+      "notes": "fiolka była otwarta1"
+    },
+    "imaging_draft": {
+      "scope": {
+        "microscope": "JEOL JEM-1400 (TEM 120 kV)",
+        "camera": "Gatan Orius SC1000A",
+        "voltage": "120 kV",
+        "sample_holder": "Single tilt",
+        "notes": ""
+      },
+      "naming": {
+        "template": "{sample_name}_{material}_{seq}",
+        "root_folder": "D:/TEM_DATA/"
+      }
+    },
+    "notified": true,
+    "notified_at": "2026-07-15T16:51:32.834215+00:00",
+    "image_folder_path": "C:/TEM_DATA/2026/Kowalska/EXP-2026-006/",
+    "archive": {
+      "box_number": "Niebieski nr 3",
+      "slot": "A4",
+      "archived_at": "2026-07-15T16:51:49.757210+00:00"
+    }
+  }
+]

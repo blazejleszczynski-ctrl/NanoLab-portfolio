@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NanoLab — Inventory</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-gray-50 h-screen flex flex-col overflow-hidden" x-data="app()">
+
+  <!-- TOPBAR -->
+  <header class="h-14 bg-white border-t-[3px] border-t-indigo-600 border-b border-b-gray-200 flex items-center px-5 shrink-0 z-10">
+    <div class="flex items-center gap-2.5 w-52 shrink-0">
+      <div class="w-7 h-7 rounded-lg bg-indigo-600 flex items-center justify-center shrink-0">
+        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15M14.25 3.104c.251.023.501.05.75.082M19.8 15l-1.8 1.8M5 14.5l1.8 1.8" />
+        </svg>
+      </div>
+      <div class="flex items-baseline gap-1.5">
+        <span class="font-bold text-gray-900 text-sm tracking-tight">NanoLab</span>
+        <span class="text-xs text-indigo-500 font-semibold tracking-wide">Scientist</span>
+      </div>
+    </div>
+    <div class="flex-1"></div>
+    <div class="flex items-center gap-5">
+      <p class="text-xs text-gray-500" x-text="clock.date + ' · ' + clock.time"></p>
+      <div class="w-px h-7 bg-gray-100"></div>
+      <div class="flex items-center gap-3">
+        <div class="text-right">
+          <p class="text-sm font-medium text-gray-800 leading-tight">dr A. Kowalska</p>
+          <p class="text-xs text-gray-400 leading-tight">University Research Lab</p>
+        </div>
+        <div class="w-8 h-8 rounded-full bg-indigo-100 border-2 border-indigo-200 flex items-center justify-center text-indigo-700 font-bold text-xs shrink-0">
+          PF
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="flex flex-1 overflow-hidden">
+
+    <!-- SIDEBAR -->
+    <aside class="w-52 bg-white border-r border-gray-200 flex flex-col shrink-0 overflow-y-auto">
+      <nav class="flex-1 px-3 py-4 flex flex-col gap-0.5">
+
+        <a href="index.html"
+           class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
+          </svg>
+          Overview
+        </a>
+
+        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider px-3 pt-4 pb-1">Research</p>
+
+        <a href="experiments.html"
+           class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15M14.25 3.104c.251.023.501.05.75.082M19.8 15l-1.8 1.8M5 14.5l1.8 1.8" />
+          </svg>
+          Experiments
+        </a>
+
+        <a href="inventory.html"
+           class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium bg-indigo-50 text-indigo-700">
+          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+          </svg>
+          Inventory
+          <span class="ml-auto text-xs bg-indigo-100 text-indigo-500 font-medium px-1.5 py-0.5 rounded-md"
+                x-text="bottles.length"></span>
+        </a>
+
+        <a href="queued-samples.html"
+           class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z" />
+          </svg>
+          Queued Samples
+        </a>
+
+      </nav>
+
+      <div class="p-3 border-t border-gray-100">
+        <a href="../operator/tem.html"
+           class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium text-gray-500 hover:bg-gray-100 transition-colors">
+          <svg class="w-4 h-4 shrink-0 text-teal-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+          </svg>
+          <span class="text-teal-700 font-medium">Operator App</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="flex-1 overflow-y-auto px-8 py-7">
+
+      <!-- Page header -->
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h1 class="text-xl font-bold text-gray-900">Inventory</h1>
+          <p class="text-xs text-gray-400 mt-0.5"
+             x-text="`${bottles.length} bottles · ${lowStockCount} low stock · ${expiredCount} expired`"></p>
+        </div>
+        <button @click="showForm = !showForm"
+                :class="showForm ? 'bg-gray-100 text-gray-700 border-gray-200' : 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm'"
+                class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-colors border border-transparent">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  x-bind:d="showForm ? 'M6 18L18 6M6 6l12 12' : 'M12 4.5v15m7.5-7.5h-15'" />
+          </svg>
+          <span x-text="showForm ? 'Cancel' : 'Add to Inventory'"></span>
+        </button>
+      </div>
+
+      <!-- Add form (collapsible) -->
+      <div x-show="showForm" x-cloak
+           class="bg-white rounded-xl border border-indigo-200 p-5 mb-6 shadow-sm">
+        <p class="text-sm font-semibold text-gray-800 mb-4">New inventory entry</p>
+        <div class="grid grid-cols-3 gap-4 mb-4">
+          <div class="col-span-2">
+            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Reagent name</label>
+            <input type="text" placeholder="e.g. Iron(III) chloride hexahydrate"
+                   class="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder:text-gray-300"
+                   x-model="newEntry.name" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Chemical formula</label>
+            <input type="text" placeholder="FeCl₃·6H₂O"
+                   class="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg font-mono focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder:text-gray-300 placeholder:font-sans"
+                   x-model="newEntry.formula" />
+          </div>
+        </div>
+        <div class="grid grid-cols-4 gap-4 mb-4">
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">CAS</label>
+            <input type="text" placeholder="7705-08-0"
+                   class="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg font-mono focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder:text-gray-300 placeholder:font-sans"
+                   x-model="newEntry.cas" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Purity</label>
+            <input type="text" placeholder="≥99%"
+                   class="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder:text-gray-300"
+                   x-model="newEntry.purity" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Manufacturer</label>
+            <input type="text" placeholder="Sigma-Aldrich"
+                   class="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder:text-gray-300"
+                   x-model="newEntry.manufacturer" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Hazard</label>
+            <select class="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
+                    x-model="newEntry.hazard">
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid grid-cols-4 gap-4 mb-5">
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Quantity</label>
+            <input type="number" step="any" placeholder="500"
+                   class="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder:text-gray-300"
+                   x-model="newEntry.quantity" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Unit</label>
+            <input type="text" placeholder="g / ml"
+                   class="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder:text-gray-300"
+                   x-model="newEntry.unit" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Expiry date</label>
+            <input type="date"
+                   class="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                   x-model="newEntry.expiry" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Location</label>
+            <input type="text" placeholder="Szafa C, półka 2"
+                   class="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder:text-gray-300"
+                   x-model="newEntry.location" />
+          </div>
+        </div>
+        <button @click="addEntry()"
+                :disabled="!newEntry.name || !newEntry.quantity"
+                class="px-5 py-2.5 text-sm font-semibold rounded-lg transition-colors"
+                :class="newEntry.name && newEntry.quantity
+                  ? 'bg-indigo-600 hover:bg-indigo-700 text-white'
+                  : 'bg-gray-100 text-gray-400 cursor-not-allowed'">
+          Add to Inventory
+        </button>
+      </div>
+
+      <!-- Stats row -->
+      <div class="grid grid-cols-3 gap-4 mb-6">
+        <div class="bg-white rounded-xl border border-gray-200 px-5 py-4 flex items-center gap-4">
+          <div class="w-9 h-9 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
+            <svg class="w-4.5 h-4.5 text-indigo-600 w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+            </svg>
+          </div>
+          <div>
+            <p class="text-2xl font-bold text-gray-900" x-text="bottles.length"></p>
+            <p class="text-xs text-gray-400">bottles in stock</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-200 px-5 py-4 flex items-center gap-4">
+          <div class="w-9 h-9 rounded-lg bg-amber-50 flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+            </svg>
+          </div>
+          <div>
+            <p class="text-2xl font-bold text-amber-600" x-text="lowStockCount"></p>
+            <p class="text-xs text-gray-400">low stock (&lt; 20%)</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-200 px-5 py-4 flex items-center gap-4">
+          <div class="w-9 h-9 rounded-lg bg-red-50 flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 9v7.5" />
+            </svg>
+          </div>
+          <div>
+            <p class="text-2xl font-bold text-red-500" x-text="expiredCount"></p>
+            <p class="text-xs text-gray-400">expired</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search + filters -->
+      <div class="flex items-center gap-3 mb-4">
+        <div class="relative flex-1 max-w-sm">
+          <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+          </svg>
+          <input type="text" placeholder="Search by name, formula, CAS, location…"
+                 class="w-full pl-9 pr-4 py-2 text-sm border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                 x-model="search" />
+        </div>
+
+        <div class="flex items-center gap-2">
+          <!-- Hazard filters -->
+          <button @click="toggleFilter('low')"
+                  :class="activeFilters.includes('low') ? 'bg-emerald-100 text-emerald-800 border-emerald-300' : 'bg-white text-gray-500 border-gray-200 hover:bg-gray-50'"
+                  class="px-3 py-1.5 text-xs font-medium rounded-lg border transition-colors">
+            Low hazard
+          </button>
+          <button @click="toggleFilter('medium')"
+                  :class="activeFilters.includes('medium') ? 'bg-amber-100 text-amber-800 border-amber-300' : 'bg-white text-gray-500 border-gray-200 hover:bg-gray-50'"
+                  class="px-3 py-1.5 text-xs font-medium rounded-lg border transition-colors">
+            Medium
+          </button>
+          <button @click="toggleFilter('high')"
+                  :class="activeFilters.includes('high') ? 'bg-red-100 text-red-800 border-red-300' : 'bg-white text-gray-500 border-gray-200 hover:bg-gray-50'"
+                  class="px-3 py-1.5 text-xs font-medium rounded-lg border transition-colors">
+            High hazard
+          </button>
+          <button @click="toggleFilter('expired')"
+                  :class="activeFilters.includes('expired') ? 'bg-gray-200 text-gray-800 border-gray-400' : 'bg-white text-gray-500 border-gray-200 hover:bg-gray-50'"
+                  class="px-3 py-1.5 text-xs font-medium rounded-lg border transition-colors">
+            Expired
+          </button>
+          <button @click="activeFilters = []" x-show="activeFilters.length > 0"
+                  class="text-xs text-gray-400 hover:text-gray-600 px-2">
+            Clear
+          </button>
+        </div>
+      </div>
+
+      <!-- Selection bar -->
+      <div x-show="selected.length > 0"
+           class="flex items-center justify-between bg-indigo-50 border border-indigo-200 rounded-xl px-5 py-3 mb-4">
+        <p class="text-sm text-indigo-800 font-medium">
+          <span x-text="selected.length"></span> item<span x-show="selected.length > 1">s</span> selected
+        </p>
+        <div class="flex items-center gap-3">
+          <button @click="selected = []"
+                  class="text-xs text-indigo-500 hover:text-indigo-700 font-medium transition-colors">
+            Clear selection
+          </button>
+          <button @click="printSelected()"
+                  class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition-colors shadow-sm">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5zm-3 0h.008v.008H15V10.5z" />
+            </svg>
+            Print list
+          </button>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b border-gray-100 bg-gray-50/60">
+              <!-- Select all -->
+              <th class="px-4 py-3 w-10">
+                <input type="checkbox"
+                       class="w-4 h-4 rounded border-gray-300 text-indigo-600 cursor-pointer"
+                       :checked="selected.length === filteredBottles.length && filteredBottles.length > 0"
+                       @change="toggleAll($event.target.checked)" />
+              </th>
+              <th class="text-center px-3 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide w-24">Hazard</th>
+              <th class="text-left px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Name</th>
+              <th class="text-left px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide w-36">Location</th>
+              <th class="text-left px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide w-36">Stock</th>
+              <th class="text-left px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide w-28">Expiry</th>
+              <th class="text-left px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide w-28">CAS</th>
+              <th class="text-left px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide w-20">Purity</th>
+              <th class="text-left px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide w-32">Manufacturer</th>
+            </tr>
+          </thead>
+          <tbody>
+            <template x-for="b in filteredBottles" :key="b.bottle_id">
+              <tr class="border-b border-gray-50 last:border-0 hover:bg-gray-50/50 transition-colors"
+                  :class="isSelected(b.bottle_id) ? 'bg-indigo-50/40' : ''">
+
+                <!-- Checkbox -->
+                <td class="px-4 py-3.5">
+                  <input type="checkbox"
+                         class="w-4 h-4 rounded border-gray-300 text-indigo-600 cursor-pointer"
+                         :checked="isSelected(b.bottle_id)"
+                         @change="toggleSelect(b.bottle_id)" />
+                </td>
+
+                <!-- Hazard -->
+                <td class="px-3 py-3.5 text-center">
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium"
+                        :class="hazardBadge(b.hazard)"
+                        x-text="b.hazard.charAt(0).toUpperCase() + b.hazard.slice(1)">
+                  </span>
+                </td>
+
+                <!-- Name + formula -->
+                <td class="px-4 py-3.5">
+                  <p class="font-medium text-gray-900 leading-tight" x-text="b.name"></p>
+                  <p class="font-mono text-xs text-gray-400 mt-0.5" x-text="b.formula"></p>
+                </td>
+
+                <!-- Location -->
+                <td class="px-4 py-3.5">
+                  <span class="text-xs text-gray-500 leading-tight" x-text="b.location"></span>
+                </td>
+
+                <!-- Stock -->
+                <td class="px-4 py-3.5">
+                  <p class="text-xs text-gray-700 leading-tight"
+                     x-text="`${b.current} / ${b.initial} ${b.unit}`"></p>
+                  <div class="w-full bg-gray-100 rounded-full h-1 mt-1.5">
+                    <div class="h-1 rounded-full transition-all"
+                         :class="stockBarColor(b)"
+                         :style="`width: ${Math.min(100, Math.round(b.current / b.initial * 100))}%`"></div>
+                  </div>
+                  <p x-show="isLowStock(b)"
+                     class="text-xs text-amber-600 font-medium mt-0.5">Low stock</p>
+                </td>
+
+                <!-- Expiry -->
+                <td class="px-4 py-3.5">
+                  <span class="text-xs font-medium"
+                        :class="expiryClass(b.expiry)"
+                        x-text="b.expiry"></span>
+                  <p x-show="isExpired(b.expiry)"
+                     class="text-xs text-red-500 font-semibold mt-0.5">Expired</p>
+                  <p x-show="!isExpired(b.expiry) && isExpiringSoon(b.expiry)"
+                     class="text-xs text-amber-500 mt-0.5">Expiring soon</p>
+                </td>
+
+                <!-- CAS -->
+                <td class="px-4 py-3.5">
+                  <span class="font-mono text-xs text-gray-400" x-text="b.cas || '—'"></span>
+                </td>
+
+                <!-- Purity -->
+                <td class="px-4 py-3.5 text-sm text-gray-600" x-text="b.purity || '—'"></td>
+
+                <!-- Manufacturer -->
+                <td class="px-4 py-3.5 text-sm text-gray-500" x-text="b.manufacturer"></td>
+
+              </tr>
+            </template>
+
+            <tr x-show="filteredBottles.length === 0">
+              <td colspan="9" class="px-5 py-14 text-center">
+                <p class="text-sm text-gray-400">No reagents match your filters.</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="text-xs text-gray-400 mt-3"
+         x-text="`${filteredBottles.length} of ${bottles.length} bottles`"></p>
+
+    </main>
+  </div>
+
+  <script>
+    function app() {
+      return {
+        search: '',
+        activeFilters: [],
+        showForm: false,
+        selected: [],
+        clock: { date: '', time: '' },
+
+        newEntry: {
+          name: '', formula: '', cas: '', purity: '',
+          manufacturer: '', hazard: 'low',
+          quantity: '', unit: '', expiry: '', location: ''
+        },
+
+        bottles: [],
+
+        async init() {
+          const update = () => {
+            const now = new Date()
+            this.clock.date = now.toLocaleDateString('en-GB', { timeZone: 'Europe/Warsaw', day: 'numeric', month: 'short', year: 'numeric' })
+            this.clock.time = now.toLocaleTimeString('en-GB', { timeZone: 'Europe/Warsaw', hour: '2-digit', minute: '2-digit', second: '2-digit' })
+          }
+          update()
+          setInterval(update, 1000)
+
+          try {
+            const res = await fetch('/api/bottles')
+            if (res.ok) this.bottles = await res.json()
+          } catch (e) {
+            console.error('Failed to load bottles:', e)
+          }
+        },
+
+        get filteredBottles() {
+          return this.bottles.filter(b => {
+            const q = this.search.toLowerCase()
+            const matchSearch = q === '' ||
+              b.name.toLowerCase().includes(q) ||
+              (b.formula || '').toLowerCase().includes(q) ||
+              (b.cas || '').toLowerCase().includes(q) ||
+              b.location.toLowerCase().includes(q) ||
+              b.manufacturer.toLowerCase().includes(q)
+
+            const matchFilter = this.activeFilters.length === 0 || (
+              (this.activeFilters.includes(b.hazard)) ||
+              (this.activeFilters.includes('expired') && this.isExpired(b.expiry))
+            )
+            return matchSearch && matchFilter
+          })
+        },
+
+        get lowStockCount() {
+          return this.bottles.filter(b => this.isLowStock(b)).length
+        },
+
+        get expiredCount() {
+          return this.bottles.filter(b => this.isExpired(b.expiry)).length
+        },
+
+        isLowStock(b) {
+          return b.current / b.initial < 0.20
+        },
+
+        isExpired(expiry) {
+          return new Date(expiry) < new Date()
+        },
+
+        isExpiringSoon(expiry) {
+          const soon = new Date()
+          soon.setDate(soon.getDate() + 90)
+          return new Date(expiry) < soon
+        },
+
+        expiryClass(expiry) {
+          if (this.isExpired(expiry)) return 'text-red-500'
+          if (this.isExpiringSoon(expiry)) return 'text-amber-600'
+          return 'text-gray-500'
+        },
+
+        stockBarColor(b) {
+          const pct = b.current / b.initial
+          if (pct < 0.20) return 'bg-amber-400'
+          if (pct < 0.50) return 'bg-indigo-400'
+          return 'bg-emerald-400'
+        },
+
+        hazardBadge(level) {
+          return {
+            low:    'bg-emerald-100 text-emerald-700',
+            medium: 'bg-amber-100 text-amber-800',
+            high:   'bg-red-100 text-red-700',
+          }[level] || 'bg-gray-100 text-gray-600'
+        },
+
+        isSelected(id) {
+          return this.selected.includes(id)
+        },
+
+        toggleSelect(id) {
+          if (this.isSelected(id)) {
+            this.selected = this.selected.filter(s => s !== id)
+          } else {
+            this.selected.push(id)
+          }
+        },
+
+        toggleAll(checked) {
+          if (checked) {
+            this.selected = this.filteredBottles.map(b => b.bottle_id)
+          } else {
+            this.selected = []
+          }
+        },
+
+        printSelected() {
+          const items = this.bottles.filter(b => this.selected.includes(b.bottle_id))
+          const rows = items.map(b => `
+            <tr>
+              <td>${b.name}<br><span style="font-family:monospace;font-size:11px;color:#888">${b.formula || ''}</span></td>
+              <td>${b.hazard.toUpperCase()}</td>
+              <td>${b.location}</td>
+              <td>${b.current} / ${b.initial} ${b.unit}</td>
+              <td>${b.expiry}</td>
+              <td style="font-family:monospace">${b.cas || '—'}</td>
+              <td>${b.purity || '—'}</td>
+              <td>${b.manufacturer}</td>
+            </tr>`).join('')
+          const win = window.open('', '_blank')
+          win.document.write(`<!DOCTYPE html><html><head><title>NanoLab Inventory — selected items</title>
+            <style>
+              body { font-family: Arial, sans-serif; font-size: 12px; padding: 24px; }
+              h2 { font-size: 16px; margin-bottom: 4px; }
+              p.meta { color: #888; font-size: 11px; margin-bottom: 16px; }
+              table { border-collapse: collapse; width: 100%; }
+              th { background: #f4f4f4; text-align: left; padding: 6px 8px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 2px solid #ddd; }
+              td { padding: 6px 8px; border-bottom: 1px solid #eee; vertical-align: top; }
+              tr:last-child td { border-bottom: none; }
+            </style></head><body>
+            <h2>NanoLab · University Research Lab — Inventory list</h2>
+            <p class="meta">Printed: ${new Date().toLocaleString('en-GB')} · ${items.length} item(s) selected</p>
+            <table>
+              <thead><tr>
+                <th>Name / Formula</th><th>Hazard</th><th>Location</th>
+                <th>Stock</th><th>Expiry</th><th>CAS</th><th>Purity</th><th>Manufacturer</th>
+              </tr></thead>
+              <tbody>${rows}</tbody>
+            </table>
+            </body></html>`)
+          win.document.close()
+          win.print()
+        },
+
+        toggleFilter(value) {
+          if (this.activeFilters.includes(value)) {
+            this.activeFilters = this.activeFilters.filter(f => f !== value)
+          } else {
+            this.activeFilters.push(value)
+          }
+        },
+
+        async addEntry() {
+          if (!this.newEntry.name || !this.newEntry.quantity) return
+          try {
+            const res = await fetch('/api/bottles', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                name:         this.newEntry.name,
+                formula:      this.newEntry.formula || '',
+                cas:          this.newEntry.cas || '',
+                purity:       this.newEntry.purity || '',
+                manufacturer: this.newEntry.manufacturer || '',
+                hazard:       this.newEntry.hazard,
+                quantity:     parseFloat(this.newEntry.quantity),
+                unit:         this.newEntry.unit || '',
+                expiry:       this.newEntry.expiry || '',
+                location:     this.newEntry.location || '',
+              })
+            })
+            if (!res.ok) throw new Error(await res.text())
+            const newBottle = await res.json()
+            this.bottles.unshift(newBottle)
+          } catch (e) {
+            console.error('Failed to add bottle:', e)
+            return
+          }
+          this.newEntry = { name: '', formula: '', cas: '', purity: '', manufacturer: '', hazard: 'low', quantity: '', unit: '', expiry: '', location: '' }
+          this.showForm = false
+        },
+      }
+    }
+  </script>
+
+</body>
+</html>
