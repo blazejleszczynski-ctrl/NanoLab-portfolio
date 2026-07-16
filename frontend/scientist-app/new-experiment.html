@@ -1315,6 +1315,29 @@
           </div>
 
         </div>
+
+        <!-- Planned characterization methods (mock — shows intent to book instrument time right after synthesis) -->
+        <div class="bg-white rounded-xl border border-gray-200 p-6 mt-6">
+          <div class="flex items-center justify-between mb-1">
+            <p class="text-base font-semibold text-gray-800">Planned characterization methods</p>
+            <span class="text-xs font-medium text-gray-400 bg-gray-100 px-2 py-0.5 rounded-md">Mock — booking not wired up yet</span>
+          </div>
+          <p class="text-xs text-gray-400 mb-4">Mark which instruments this sample will need once synthesis is done, so time can be booked ahead instead of after the fact.</p>
+
+          <div class="grid grid-cols-3 gap-3">
+            <template x-for="inst in characterizationInstruments" :key="inst.code">
+              <label class="flex items-start gap-2.5 p-3 rounded-lg border cursor-pointer transition-colors"
+                     :class="plannedCharacterization[inst.code] ? 'border-indigo-200 bg-indigo-50/50' : 'border-gray-200 hover:bg-gray-50'">
+                <input type="checkbox" x-model="plannedCharacterization[inst.code]"
+                       class="w-4 h-4 mt-0.5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 shrink-0" />
+                <span class="min-w-0">
+                  <span class="block text-sm font-medium text-gray-800" x-text="inst.name"></span>
+                  <span class="block text-xs text-gray-400" x-text="inst.technique"></span>
+                </span>
+              </label>
+            </template>
+          </div>
+        </div>
       </div>
 
     </main>
@@ -1559,6 +1582,17 @@
         editingStepIndex: null,
         showStepReagentDropdown: false,
         stepReagentResults: [],
+
+        // Planned characterization methods — mock, not persisted to backend
+        characterizationInstruments: [
+          { code: 'TEM',   name: 'TEM',   technique: 'Transmission Electron Microscopy' },
+          { code: 'XRD',   name: 'XRD',   technique: 'Powder X-ray Diffraction' },
+          { code: 'DLS',   name: 'DLS',   technique: 'Dynamic Light Scattering / Zeta Potential' },
+          { code: 'SQUID', name: 'SQUID', technique: 'DC/AC Magnetometry' },
+          { code: 'SEM',   name: 'SEM',   technique: 'Scanning Electron Microscopy / EDS' },
+          { code: 'FTIR',  name: 'FTIR',  technique: 'Fourier Transform Infrared Spectroscopy' },
+        ],
+        plannedCharacterization: { TEM: false, XRD: false, DLS: false, SQUID: false, SEM: false, FTIR: false },
 
         async init() {
           this.form.experiment_id = this.generateId()
