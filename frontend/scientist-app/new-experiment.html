@@ -521,8 +521,9 @@
               <!-- Model -->
               <select x-model="llmModel" :disabled="pdfProcessing"
                       class="flex-1 px-3 py-2 text-sm border border-violet-200 rounded-lg bg-white/70 focus:outline-none focus:ring-2 focus:ring-violet-400 disabled:opacity-40">
-                <option value="gpt-4o">GPT-4o</option>
-                <option value="gpt-4o-mini">GPT-4o mini</option>
+                <template x-for="m in llmModels" :key="m.id">
+                  <option :value="m.id" x-text="m.label" :selected="m.id === llmModel"></option>
+                </template>
               </select>
 
               <!-- Prompt -->
@@ -1512,7 +1513,8 @@
         pdfFilename: '',
         selectedFile: null,
         dragging: false,
-        llmModel: 'gpt-4o-mini',
+        llmModel: 'openai/gpt-4o-mini',
+        llmModels: [],        // z /api/llm/models/pdf (bramka/modele.json)
         llmPromptFile: '',
         availablePrompts: [],
         llmLog: null,
@@ -1596,13 +1598,15 @@
 
         async init() {
           this.form.experiment_id = this.generateId()
-          const [availRes, reagentsRes, prevRes, promptsRes, bottlesRes] = await Promise.all([
+          const [availRes, reagentsRes, prevRes, promptsRes, bottlesRes, modelsRes] = await Promise.all([
             fetch('/api/reagents/availability'),
             fetch('/api/reagents'),
             fetch('/api/experiments'),
             fetch('/api/llm/prompts'),
             fetch('/api/bottles'),
+            fetch('/api/llm/models/pdf'),
           ])
+          if (modelsRes.ok)   this.llmModels           = await modelsRes.json()
           if (availRes.ok)    this.inventory           = await availRes.json()
           if (reagentsRes.ok) this.allReagents         = await reagentsRes.json()
           if (prevRes.ok)     this.previousExperiments = await prevRes.json()

@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:schematy:log",
+  "$comment": "Jedna linia logu NDJSON (logi/<skrypt>.ndjson): pola wspólne w każdej linii, pola zależne od zdarzenia z zamkniętej listy, reszta w szczegoly. Bez promptów, obrazów i odpowiedzi modelu; sekrety zamazane przed zapisem. Własne pola zdarzeń (np. id zadania) dopisz w properties.",
+  "type": "object",
+  "required": ["czas", "uruchomienie_id", "skrypt", "wersja", "krok", "wynik"],
+  "additionalProperties": false,
+  "properties": {
+    "czas": {
+      "description": "Chwila zdarzenia ze strefą czasową.",
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]{1,6})?(Z|[+-][0-9]{2}:[0-9]{2})$",
+      "examples": ["2026-10-24T14:02:11.305+02:00"]
+    },
+    "uruchomienie_id": {
+      "description": "Wspólne dla wszystkich linii jednego uruchomienia skryptu.",
+      "type": "string",
+      "pattern": "^[0-9a-f]{12}$",
+      "examples": ["a3f9c21b7d04"]
+    },
+    "skrypt": {
+      "description": "Nazwa skryptu, który pisze log (= nazwa pliku logu).",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "examples": ["odczyt"]
+    },
+    "wersja": {
+      "description": "Skrót commita kodu; null, gdy git niedostępny.",
+      "anyOf": [{"type": "string", "pattern": "^[0-9a-f]{7,40}$"}, {"type": "null"}],
+      "examples": ["0022f0d", null]
+    },
+    "krok": {
+      "description": "Rodzaj zdarzenia (start, koniec, wywolanie_api, ponowienie, szczegoly, stan_klucza…) – lista otwarta.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "examples": ["start", "wywolanie_api", "koniec"]
+    },
+    "wynik": {
+      "description": "Wynik zdarzenia.",
+      "enum": ["ok", "ostrzezenie", "blad"],
+      "examples": ["ok"]
+    },
+    "komunikat": {"description": "Zdanie dla człowieka.", "type": "string", "minLength": 1},
+    "powod": {"description": "Krótki powód zakończenia albo przerwania (np. wyjatek, przerwane).", "type": "string", "pattern": "^[a-z][a-z0-9_]*$", "examples": ["wyjatek"]},
+    "request_id": {"description": "Id zapytania u dostawcy API.", "type": "string", "minLength": 1},
+    "szczegoly": {
+      "description": "Reszta danych zdarzenia: ustawienia, argumenty, czas trwania, tokeny i koszt wywołania.",
+      "type": "object",
+      "examples": [{"argumenty": ["--profil", "x"]}, {"czas_trwania_s": 0.42}]
+    },
+    "blad": {"description": "Pełny ślad wyjątku (traceback), sekrety zamazane.", "type": "string", "minLength": 1}
+  }
+}

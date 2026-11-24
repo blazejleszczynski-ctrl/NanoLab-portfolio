@@ -1,0 +1,92 @@
+{
+  "_opis": "Profile modeli dla bramka.py. Dostawca = adapter (nazwa z ADAPTERY w bramka.py), adresy i nazwa zmiennej z kluczem (klucz w .env). Profil = dostawca + model + wysilek (low / medium / high – adapter tłumaczy na format dostawcy, OpenRouter: reasoning.effort) + max_tokens (wysyłana mniejsza z wartości profil / MAX_OUTPUT_TOKENS w .env) + parametry_dostawcy (wysyłane bez zmian) + cennik (USD za 1 mln tokenów; wyjście obejmuje myślenie; z datą sprawdzenia – ceny sprawdź przed użyciem). Nagłówki: {etap} = wzór wypełniany w wczytaj_profil (np. nazwa zadania), bez nazwy projektu. Doświadczenia: Sonnet 5.5 z wysiłkiem medium odpowiadał na skróty – stąd high; GPT-6.1 Sol nie obsługuje zero data retention (stąd data_collection deny zamiast zdr). NanoLab: zadanie (pdf / tem) + etykieta = profil widoczny w liście modeli formularza (GET /api/llm/models/{zadanie}); profile bez zadania tylko dla skryptów. Profile *-or (gpt4o-or, gpt4omini-or) = import PDF (klucz OPENROUTER_API_KEY, limit MAX_OUTPUT_TOKENS_ARTICLE); profile *-orv = analiza obrazu TEM (osobny klucz OPENROUTER_API_KEY_VISION), na razie bez wysiłku – zapytanie jak przed bramką, wyniki porównywalne 1:1.",
+  "dostawcy": {
+    "openrouter": {
+      "adapter": "openrouter",
+      "adres": "https://openrouter.ai/api/v1/chat/completions",
+      "adres_szczegolow": "https://openrouter.ai/api/v1/generation",
+      "adres_klucza": "https://openrouter.ai/api/v1/key",
+      "klucz_env": "OPENROUTER_API_KEY",
+      "naglowki": {"HTTP-Referer": "https://{etap}.local", "X-OpenRouter-Title": "{etap}", "X-OpenRouter-App-Visibility": "hidden"}
+    },
+    "openrouter-vision": {
+      "adapter": "openrouter",
+      "adres": "https://openrouter.ai/api/v1/chat/completions",
+      "adres_szczegolow": "https://openrouter.ai/api/v1/generation",
+      "adres_klucza": "https://openrouter.ai/api/v1/key",
+      "klucz_env": "OPENROUTER_API_KEY_VISION",
+      "naglowki": {"HTTP-Referer": "https://{etap}.local", "X-OpenRouter-Title": "{etap}", "X-OpenRouter-App-Visibility": "hidden"}
+    }
+  },
+  "profile": {
+    "gpt4o-or": {
+      "zadanie": "pdf", "etykieta": "GPT-4o",
+      "dostawca": "openrouter",
+      "model": "openai/gpt-4o",
+      "max_tokens": 16000,
+      "parametry_dostawcy": {"provider": {"only": ["openai"], "allow_fallbacks": false, "require_parameters": true, "data_collection": "deny"}},
+      "cennik": {"wejscie": 2.5, "wyjscie": 10, "z_pamieci": 1.25, "sprawdzono": null, "zrodlo": "do sprawdzenia: openrouter.ai/models"}
+    },
+    "gpt4omini-or": {
+      "zadanie": "pdf", "etykieta": "GPT-4o mini",
+      "dostawca": "openrouter",
+      "model": "openai/gpt-4o-mini",
+      "max_tokens": 16000,
+      "parametry_dostawcy": {"provider": {"only": ["openai"], "allow_fallbacks": false, "require_parameters": true, "data_collection": "deny"}},
+      "cennik": {"wejscie": 0.15, "wyjscie": 0.6, "z_pamieci": 0.075, "sprawdzono": null, "zrodlo": "do sprawdzenia: openrouter.ai/models"}
+    },
+    "gpt4o-orv": {
+      "zadanie": "tem", "etykieta": "GPT-4o",
+      "dostawca": "openrouter-vision",
+      "model": "openai/gpt-4o",
+      "max_tokens": 16000,
+      "parametry_dostawcy": {"provider": {"only": ["openai"], "allow_fallbacks": false, "require_parameters": true, "data_collection": "deny"}},
+      "cennik": {"wejscie": 2.5, "wyjscie": 10, "z_pamieci": 1.25, "sprawdzono": null, "zrodlo": "do sprawdzenia: openrouter.ai/models"}
+    },
+    "gpt4omini-orv": {
+      "zadanie": "tem", "etykieta": "GPT-4o mini",
+      "dostawca": "openrouter-vision",
+      "model": "openai/gpt-4o-mini",
+      "max_tokens": 16000,
+      "parametry_dostawcy": {"provider": {"only": ["openai"], "allow_fallbacks": false, "require_parameters": true, "data_collection": "deny"}},
+      "cennik": {"wejscie": 0.15, "wyjscie": 0.6, "z_pamieci": 0.075, "sprawdzono": null, "zrodlo": "do sprawdzenia: openrouter.ai/models"}
+    },
+    "gpt54mini-orv": {
+      "zadanie": "tem", "etykieta": "GPT-5.4 mini",
+      "dostawca": "openrouter-vision",
+      "model": "openai/gpt-5.4-mini",
+      "max_tokens": 16000,
+      "parametry_dostawcy": {"provider": {"only": ["openai"], "allow_fallbacks": false, "require_parameters": true, "data_collection": "deny"}},
+      "cennik": {"wejscie": 0, "wyjscie": 0, "z_pamieci": 0, "sprawdzono": null, "zrodlo": "nieznany – koszt liczony tylko z kwoty OpenRouter; uzupełnij z openrouter.ai/models"}
+    },
+    "gpt61sol-orv": {
+      "zadanie": "tem", "etykieta": "GPT-6.1 Sol",
+      "dostawca": "openrouter-vision",
+      "model": "openai/gpt-6.1-sol",
+      "max_tokens": 16000,
+      "parametry_dostawcy": {"provider": {"only": ["openai"], "allow_fallbacks": false, "require_parameters": true, "data_collection": "deny"}},
+      "cennik": {"wejscie": 2, "wyjscie": 10, "z_pamieci": 0.10, "sprawdzono": "2026-10-29", "zrodlo": "do sprawdzenia: openrouter.ai/models"}
+    },
+    "gpt61sol-or-medium": {
+      "dostawca": "openrouter",
+      "model": "openai/gpt-6.1-sol",
+      "wysilek": "medium",
+      "max_tokens": 32000,
+      "parametry_dostawcy": {
+        "provider": {"only": ["openai"], "allow_fallbacks": false, "require_parameters": true,
+                     "data_collection": "deny", "max_price": {"prompt": 2, "completion": 10}}
+      },
+      "cennik": {"wejscie": 2, "wyjscie": 10, "z_pamieci": 0.10, "sprawdzono": "2026-10-29", "zrodlo": "do sprawdzenia: openrouter.ai/models"}
+    },
+    "sonnet55-or-high": {
+      "dostawca": "openrouter",
+      "model": "anthropic/claude-sonnet-5.5",
+      "wysilek": "high",
+      "max_tokens": 32000,
+      "parametry_dostawcy": {
+        "provider": {"order": ["anthropic"], "allow_fallbacks": false, "require_parameters": true}
+      },
+      "cennik": {"wejscie": 2, "wyjscie": 10, "z_pamieci": 0.10, "sprawdzono": "2026-10-29", "zrodlo": "do sprawdzenia: openrouter.ai/models"}
+    }
+  }
+}

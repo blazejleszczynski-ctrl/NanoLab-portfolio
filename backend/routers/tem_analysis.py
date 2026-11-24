@@ -1,16 +1,19 @@
+# Analiza obrazu TEM przez LLM vision: kwalifikacja obrazu, detekcja cząstek, bboxy 0–1000 → piksele oryginału, statystyki.
+# Wywołania modelu idą przez bramkę (backend/bramka): profile *-orv z modele.json, ponowienia, koszt, log logi/tem_analysis.ndjson.
 import base64
 import io
 import json
 import math
-import os
 import pathlib
 import re
 import datetime
 from typing import Optional
 
-import requests
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
+
+from bramka import bramka, log_ndjson
+from bramka.wywolanie_http import MODELE_JSON, modele_zadania, wywolaj_http
 
 router = APIRouter(prefix="/api/llm", tags=["tem-analysis"])
 
@@ -18,6 +21,12 @@ router = APIRouter(prefix="/api/llm", tags=["tem-analysis"])
 
 _BASE_DIR    = pathlib.Path(__file__).parent.parent
 _PROMPTS_DIR = _BASE_DIR / "LLM" / "prompts" / "vision"
+
+# ─── Bramka API: profile modeli vision i jeden log na czas działania serwera ──
+
+_PROFILE_VISION = {m["id"]: m["profil"] for m in modele_zadania("tem")}   # model z przeglądarki → profil; inne odrzucane
+_LOG = log_ndjson.Log(_BASE_DIR / "logi", "tem_analysis")
+_LOG.start(profile=sorted(_PROFILE_VISION.values()))
 
 # ─── JSON schemas for response_format (OpenAI strict mode) ───────────────────
 #
@@ -168,79 +177,13 @@ def _strip_b64_prefix(b64: str) -> str:
     return b64.split(",", 1)[1] if "," in b64 else b64
 
 
-def _call_with_schema(
-    model: str,
-    system: str,
-    user_text: str,
-    jpg_b64_raw: str,
-    schema_name: str,
-    schema: dict,
-) -> dict:
-    """
-    Call OpenRouter vision API with response_format: json_schema (strict).
-    Works with GPT-4o and GPT-4o mini — model must return valid JSON matching schema.
-    """
-    api_key = os.getenv("OPENROUTER_API_KEY_VISION") or os.getenv("OPENROUTER_API_KEY", "")
-    if not api_key:
-        raise HTTPException(500, "OPENROUTER_API_KEY_VISION (or OPENROUTER_API_KEY) not set in backend/.env")
-
-    messages = [
-        {"role": "system", "content": system},
-        {
-            "role": "user",
-            "content": [
-                {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{jpg_b64_raw}", "detail": "high"}},
-                {"type": "text", "text": user_text},
-            ],
-        },
-    ]
-
-    payload = {
-        "model": model,
-        "messages": messages,
-        "response_format": {
-            "type": "json_schema",
-            "json_schema": {
-                "name":   schema_name,
-                "strict": True,
-                "schema": schema,
-            },
-        },
-    }
-
+def _call_with_schema(profil: dict, system: str, user_text: str, jpg_b64_raw: str, schema: dict) -> dict:
+    """Jedno wywołanie modelu przez bramkę (obraz + ścisły schemat JSON); błędy wywołania → HTTPException w wywolaj_http."""
+    wynik = wywolaj_http(profil, system, user_text, [base64.b64decode(jpg_b64_raw)], schema, _LOG)
     try:
-        resp = requests.post(
-            "https://openrouter.ai/api/v1/chat/completions",
-            headers={
-                "Authorization": f"Bearer {api_key}",
-                "Content-Type": "application/json",
-                "HTTP-Referer": "https://nanolab.amu.edu.pl",
-                "X-Title": "NanoLab TEM image",
-            },
-            json=payload,
-            timeout=120,
-        )
-    except requests.Timeout:
-        raise HTTPException(504, "OpenRouter request timed out (120 s)")
-    except requests.RequestException as e:
-        raise HTTPException(502, f"OpenRouter connection error: {e}")
-
-    if not resp.ok:
-        raise HTTPException(502, f"OpenRouter HTTP {resp.status_code}: {resp.text[:400]}")
-
-    try:
-        message = resp.json()["choices"][0]["message"]
-    except (KeyError, IndexError) as e:
-        raise HTTPException(502, f"Unexpected OpenRouter response structure: {e}")
-
-    content = (message.get("content") or "").strip()
-    if not content:
-        raise HTTPException(502, "LLM returned empty content")
-
-    try:
-        return json.loads(content)
-    except json.JSONDecodeError as e:
-        raise HTTPException(502, f"LLM returned non-JSON content: {content[:300]!r}")
+        return json.loads(wynik["tekst"])
+    except json.JSONDecodeError:
+        raise HTTPException(502, f"LLM returned non-JSON content: {wynik['tekst'][:300]!r}")
 
 
 # ─── Validation + statistics ──────────────────────────────────────────────────
@@ -338,7 +281,7 @@ def list_vision_prompts():
 
 
 @router.post("/analyze-tem")
-async def analyze_tem(req: AnalyzeTemRequest):
+def analyze_tem(req: AnalyzeTemRequest):   # zwykłe def: FastAPI uruchamia ją w osobnym wątku, czekanie na model nie blokuje serwera
     """
     Two-phase TEM image analysis via LLM vision (OpenRouter).
 
@@ -347,22 +290,27 @@ async def analyze_tem(req: AnalyzeTemRequest):
     This works for GPT-4o and Claude via OpenRouter.
 
     Prompts loaded from LLM/prompts/vision/{prompt_file}.
+    Model → profil bramki (*-orv w bramka/modele.json); model spoza profili → 400, nic nie idzie do API.
     API key: OPENROUTER_API_KEY_VISION (fallback: OPENROUTER_API_KEY).
     """
     ctx       = req.context
     model     = req.model
+    if model not in _PROFILE_VISION:
+        raise HTTPException(400, f"Nieznany model: {model}. Dostępne: {sorted(_PROFILE_VISION)}")
+    profil    = bramka.wczytaj_profil(MODELE_JSON, _PROFILE_VISION[model], {"etap": "nanolab-tem"})
     timestamp = datetime.datetime.utcnow().isoformat() + "Z"
     b64_raw   = _strip_b64_prefix(req.jpg_base64)
 
     # ── Pre-resize image for LLM ──────────────────────────────────────────────
-    # GPT-4o does not expose the internal resolution it uses when processing
-    # large images, so bboxes come back in an unknown coordinate space.
-    # We pre-resize to exactly 1024 px wide, adjust pixel_size_nm proportionally,
-    # and scale bboxes back to original coordinates after the LLM responds.
+    # Providers rescale images internally (GPT-4o: shorter side → 768 px), so the
+    # model never sees our pixel grid. Bboxes are therefore requested in
+    # normalized 0–1000 coordinates and mapped to original pixels afterwards.
+    # Pre-resize to 1024 px only reduces payload size; it does not affect coords.
     _LLM_MAX_W   = 1024
     _img_scale   = 1.0          # original → LLM; <1 means image was shrunk
     b64_for_llm  = b64_raw
     pixel_size_nm_llm = ctx.pixel_size_nm
+    _orig_w, _orig_h = ctx.image_width_px, ctx.image_height_px   # fallback if decode fails
 
     try:
         from PIL import Image as _PILImage
@@ -385,10 +333,6 @@ async def analyze_tem(req: AnalyzeTemRequest):
     prompt   = _load_prompt(req.prompt_file)
     sections = prompt.get("sections", {})
 
-    size_line  = (
-        f"Image size: {ctx.image_width_px} × {ctx.image_height_px} px. "
-        if ctx.image_width_px and ctx.image_height_px else ""
-    )
     notes_line = f"Additional context: {ctx.experiment_notes}" if ctx.experiment_notes else ""
 
     calibration_note = (
@@ -435,7 +379,6 @@ async def analyze_tem(req: AnalyzeTemRequest):
         "min_detectable_nm":    ctx.min_detectable_nm,
         "scientist":            ctx.scientist   or "unknown",
         "sample_name":          ctx.sample_name or "unknown",
-        "size_line":            size_line,
         "notes_line":           notes_line,
         "calibration_note":     calibration_note_llm,
     }
@@ -446,7 +389,7 @@ async def analyze_tem(req: AnalyzeTemRequest):
     p2_user   = sections.get("phase2_user",   "").format(**fmt)
 
     # ── Phase 1: image qualification ──────────────────────────────────────────
-    phase1 = _call_with_schema(model, p1_system, p1_user, b64_for_llm, "qualify_image", _QUALIFY_IMAGE_SCHEMA)
+    phase1 = _call_with_schema(profil, p1_system, p1_user, b64_for_llm, _QUALIFY_IMAGE_SCHEMA)
 
     if not phase1.get("can_analyze", False):
         return {
@@ -464,17 +407,20 @@ async def analyze_tem(req: AnalyzeTemRequest):
         }
 
     # ── Phase 2: quantitative particle detection ───────────────────────────────
-    phase2 = _call_with_schema(model, p2_system, p2_user, b64_for_llm, "report_particles", _REPORT_PARTICLES_SCHEMA)
+    phase2 = _call_with_schema(profil, p2_system, p2_user, b64_for_llm, _REPORT_PARTICLES_SCHEMA)
 
     raw_particles = phase2.get("particles") or []
 
-    # Scale bboxes back from LLM image space → original image coordinates
-    if _img_scale < 1.0 and raw_particles:
-        inv = 1.0 / _img_scale
+    # Map bboxes from normalized 0–1000 space → original image pixels
+    if _orig_w and _orig_h:
         for p in raw_particles:
             bbox = p.get("bbox")
             if bbox and len(bbox) == 4:
-                p["bbox"] = [round(c * inv) for c in bbox]
+                x1, y1, x2, y2 = bbox
+                p["bbox"] = [
+                    round(x1 / 1000 * _orig_w), round(y1 / 1000 * _orig_h),
+                    round(x2 / 1000 * _orig_w), round(y2 / 1000 * _orig_h),
+                ]
 
     # Recompute diameter_nm from bbox + pixel_size_nm (backend is authoritative).
     # LLMs estimate size visually, not arithmetically — their diameter values are
@@ -503,7 +449,7 @@ async def analyze_tem(req: AnalyzeTemRequest):
                 grid_artifact = True
 
     valid_particles, n_removed = _validate_particles(
-        raw_particles, ctx.image_width_px, ctx.image_height_px, ctx.pixel_size_nm,
+        raw_particles, _orig_w, _orig_h, ctx.pixel_size_nm,
     )
 
     warning = (phase2.get("warning") or "").strip() or None

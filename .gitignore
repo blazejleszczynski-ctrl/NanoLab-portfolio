@@ -14,3 +14,6 @@ backend/data/uploads/*
 !backend/data/uploads/.gitkeep
 backend/LLM/extracted/*
 !backend/LLM/extracted/.gitkeep
+
+# LLM call logs (NDJSON, written by backend/bramka)
+backend/logi/

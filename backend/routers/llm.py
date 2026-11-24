@@ -1,26 +1,30 @@
+# Import PDF: tekst z PDF (pdfplumber), lista promptów, wywołanie LLM tekstowego przez bramkę (profile *-or z bramka/modele.json).
+# Limit tokenów wyjścia: MAX_OUTPUT_TOKENS_ARTICLE w .env; log wywołań: logi/llm_call.ndjson.
 import os
 import re
 import json
 import time
-import requests
 from collections import defaultdict
 from fastapi import APIRouter, HTTPException, Request, UploadFile, File
 from pydantic import BaseModel
 from dotenv import load_dotenv
 from config import PDF_MAX_PAGES, LLM_MAX_TEXT_CHARS, LLM_MAX_INSTRUCTION_CHARS, LLM_RATE_LIMIT_SECONDS
+from bramka import bramka, log_ndjson
+from bramka.wywolanie_http import MODELE_JSON, modele_zadania, wywolaj_http
 
 load_dotenv()
 
 router = APIRouter(prefix="/llm", tags=["LLM"])
 
-LLM_DIR      = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "LLM")
+BACKEND_DIR  = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
+LLM_DIR      = os.path.join(BACKEND_DIR, "LLM")
 PROMPTS_DIR  = os.path.join(LLM_DIR, "prompts")
 EXTRACTED_DIR = os.path.join(LLM_DIR, "extracted")
 
-MODELS = {
-    "gpt-4o":       "openai/gpt-4o",
-    "gpt-4o-mini":  "openai/gpt-4o-mini",
-}
+MODELS = {m["id"]: m["profil"] for m in modele_zadania("pdf")}   # model z przeglądarki (np. openai/gpt-4o-mini) → profil bramki
+
+_LOG = log_ndjson.Log(os.path.join(BACKEND_DIR, "logi"), "llm_call")   # jeden log na czas działania serwera
+_LOG.start(profile=sorted(MODELS.values()))
 
 _last_llm_call: dict[str, float] = defaultdict(float)
 
@@ -51,12 +55,21 @@ def _parse_prompt_file(path: str) -> tuple[str, str, dict | None]:
 
 class LLMCallRequest(BaseModel):
     text: str
-    model: str = "gpt-4o"
+    model: str = "openai/gpt-4o"
     prompt_file: str
     user_instruction: str = ""
 
 
 # --- Endpointy ---
+
+@router.get("/models/{zadanie}")
+def list_models(zadanie: str):
+    """Modele dla listy w formularzu (pdf – import PDF, tem – analiza obrazu TEM) z bramka/modele.json."""
+    modele = [{"id": m["id"], "label": m["label"]} for m in modele_zadania(zadanie)]
+    if not modele:
+        raise HTTPException(status_code=404, detail=f"Brak modeli dla zadania: {zadanie}")
+    return modele
+
 
 @router.get("/prompts")
 def list_prompts():
@@ -126,8 +139,8 @@ async def extract_pdf(file: UploadFile = File(...)):
 @router.post("/call")
 def llm_call(body: LLMCallRequest, request: Request):
     """
-    Wywołuje LLM przez OpenRouter.
-    Zwraca wynik + pełne metadane wywołania do śledzenia.
+    Wywołuje LLM przez bramkę (OpenRouter).
+    Zwraca wynik + pełne metadane wywołania do śledzenia (tokeny, czas, koszt).
     """
     # Rate limiting
     if LLM_RATE_LIMIT_SECONDS > 0:
@@ -138,13 +151,10 @@ def llm_call(body: LLMCallRequest, request: Request):
             raise HTTPException(status_code=429, detail=f"Rate limit: wait {int(wait) + 1}s before next LLM call.")
         _last_llm_call[ip] = now
 
-    api_key = os.getenv("OPENROUTER_API_KEY", "")
-    if not api_key:
-        raise HTTPException(status_code=500, detail="OPENROUTER_API_KEY not set in .env")
-
-    model_id = MODELS.get(body.model)
-    if not model_id:
+    profil_nazwa = MODELS.get(body.model)
+    if not profil_nazwa:
         raise HTTPException(status_code=400, detail=f"Unknown model: {body.model}. Available: {list(MODELS.keys())}")
+    profil = bramka.wczytaj_profil(MODELE_JSON, profil_nazwa, {"etap": "nanolab-pdf"})
 
     if not body.prompt_file.endswith(".md") or "/" in body.prompt_file or "\\" in body.prompt_file or ".." in body.prompt_file:
         raise HTTPException(status_code=400, detail="Invalid prompt_file name.")
@@ -162,58 +172,27 @@ def llm_call(body: LLMCallRequest, request: Request):
     if body.user_instruction.strip():
         user_prompt = f"Additional instruction from the user: {body.user_instruction.strip()}\n\n{user_prompt}"
 
-    if schema:
-        schema_name = body.prompt_file.replace(".md", "").replace("-", "_")
-        response_format = {
-            "type": "json_schema",
-            "json_schema": {"name": schema_name, "strict": True, "schema": schema},
-        }
-    else:
-        response_format = {"type": "json_object"}
-
-    payload = {
-        "model": model_id,
-        "messages": [
-            {"role": "system", "content": system_prompt},
-            {"role": "user",   "content": user_prompt},
-        ],
-        "response_format": response_format,
-    }
-
-    t_start = time.time()
-    response = requests.post(
-        "https://openrouter.ai/api/v1/chat/completions",
-        headers={
-            "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json",
-        },
-        json=payload,
-        timeout=60,
-    )
-    elapsed_ms = int((time.time() - t_start) * 1000)
-
-    if response.status_code != 200:
-        raise HTTPException(status_code=502, detail=f"OpenRouter error {response.status_code}: {response.text}")
-
-    data = response.json()
-    raw_content = data["choices"][0]["message"]["content"]
-    usage = data.get("usage", {})
+    # Schemat z pliku promptu → ścisły JSON; prompt bez schematu → zwykły tekst (result = None, gdy to nie JSON)
+    wynik = wywolaj_http(profil, system_prompt, user_prompt, [], schema, _LOG, limit_env="MAX_OUTPUT_TOKENS_ARTICLE")
+    raw_content = wynik["tekst"]
 
     try:
         parsed = json.loads(raw_content)
     except json.JSONDecodeError:
         parsed = None
 
+    tokeny = (wynik["tokeny_wejscie"], wynik["tokeny_wyjscie"])
     return {
         "result": parsed,
         "raw_response": raw_content,
         "meta": {
             "model":        body.model,
-            "model_id":     model_id,
+            "model_id":     profil["model"],
             "prompt_file":  body.prompt_file,
-            "elapsed_ms":   elapsed_ms,
-            "prompt_tokens":     usage.get("prompt_tokens"),
-            "completion_tokens": usage.get("completion_tokens"),
-            "total_tokens":      usage.get("total_tokens"),
+            "elapsed_ms":   wynik["czas_ms"],
+            "prompt_tokens":     tokeny[0],
+            "completion_tokens": tokeny[1],
+            "total_tokens":      sum(tokeny) if None not in tokeny else None,
+            "koszt_usd":         round(wynik["koszt_usd"], 6),
         }
     }

@@ -1,7 +1,7 @@
 ---
 name: Conservative BF-TEM — high confidence only v1
 description: Jak v1, ale faza 2 wymaga confidence ≥ 0.8 i izolowanych cząstek. Mniej detekcji, za to bardzo niski odsetek fałszywych wyników. Dobry dla agregatów.
-version: tem-analysis-conservative-v1
+version: tem-analysis-conservative-v1.1
 ---
 
 ## phase1_system
@@ -31,20 +31,20 @@ Rules:
 - SKIP any particle that touches another particle or is partially cut by the image edge.
 - SKIP any particle where you are less than 80% confident.
 - Do not hallucinate. An empty particles list is a valid answer.
-- Coordinates are [x_min, y_min, x_max, y_max] in pixels, origin top-left.
+- Coordinates are [x_min, y_min, x_max, y_max] as integers normalized to 0–1000: x relative to image width, y relative to image height. (0, 0) = top-left corner, (1000, 1000) = bottom-right corner.
 - Set d_spacing_nm to 0 unless lattice fringes are unambiguously visible.
 Respond with a JSON object containing your findings.
 
 ## phase2_user
 Analyze this BF-TEM image — conservative mode (isolated particles only, confidence ≥ 0.8).
-{size_line}Pixel size: {pixel_size_nm} nm/px.
+Field of view: {field_of_view} (the full image spans 1000 × 1000 coordinate units).
 Material: {material}. Scientist: {scientist}. Sample: {sample_name}.
 {notes_line}
 {calibration_note}
 Report only particles you are highly confident about (confidence ≥ 0.8, clearly isolated).
 For each particle:
-- draw a TIGHT bounding box [x1, y1, x2, y2] that fits the visible particle boundary — NOT a fixed-size template
-- estimate diameter_nm from the particle's visual size and pixel_size_nm = {pixel_size_nm} nm/px
+- draw a TIGHT bounding box [x1, y1, x2, y2] in 0–1000 normalized coordinates that fits the visible particle boundary — NOT a fixed-size template
+- estimate diameter_nm from the particle's size relative to the field of view
 - rate your confidence (must be ≥ 0.8 to include)
 - set has_fringes=true and estimate d_spacing_nm if lattice fringes are unambiguously visible
 

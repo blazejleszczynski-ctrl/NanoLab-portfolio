@@ -1,7 +1,7 @@
 ---
 name: HRTEM — lattice fringes & d-spacing v1
 description: Dla obrazów HRTEM (pixel_size < 0.1 nm/px). Szuka prążków sieciowych i mierzy d-spacing. NIE zlicza cząstek jako obiektów.
-version: tem-analysis-hrtem-v1
+version: tem-analysis-hrtem-v1.1
 ---
 
 ## phase1_system
@@ -30,7 +30,7 @@ Rules:
 - For each domain: draw a bounding box around the fringed region, measure fringe spacing (d-spacing in nm).
 - DO NOT annotate amorphous regions or areas without clear periodicity.
 - DO NOT count particles — annotate crystal domains only.
-- Coordinates are [x_min, y_min, x_max, y_max] in pixels, origin top-left.
+- Coordinates are [x_min, y_min, x_max, y_max] as integers normalized to 0–1000: x relative to image width, y relative to image height. (0, 0) = top-left corner, (1000, 1000) = bottom-right corner.
 - Set d_spacing_nm to the measured fringe spacing; set has_fringes = true for all entries.
 - Set diameter_nm to the longest dimension of the domain in nm.
 - Set confidence based on fringe clarity (1.0 = sharp, unambiguous; 0.5 = barely resolved).
@@ -38,12 +38,12 @@ Respond with a JSON object containing your findings.
 
 ## phase2_user
 Analyze this HRTEM image — identify crystal domains with resolved lattice fringes.
-{size_line}Pixel size: {pixel_size_nm} nm/px. Field of view: {field_of_view}.
+Field of view: {field_of_view} (the full image spans 1000 × 1000 coordinate units).
 Material: {material}. Scientist: {scientist}. Sample: {sample_name}.
 {notes_line}
 {calibration_note}
 For each crystal domain with resolved lattice fringes:
-- provide bounding box [x1, y1, x2, y2] in pixels (origin top-left)
+- provide bounding box [x1, y1, x2, y2] in 0–1000 normalized coordinates (origin top-left)
 - measure d-spacing in nm (fringe periodicity); set has_fringes = true
 - estimate domain size (diameter_nm = longest axis in nm)
 - rate fringe clarity as confidence (0.0–1.0)

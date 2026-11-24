@@ -369,7 +369,7 @@ async def annotate_image(req: AnnotateRequest):
         conf = p.confidence
         color = "#22c55e" if conf >= 0.9 else ("#f97316" if conf >= 0.6 else "#ef4444")
 
-        line_w = max(2, min(8, (x2 - x1) // 20))   # proportional to bbox size
+        line_w = max(3, round(w / 200))   # proportional to image width — stays visible when downscaled in UI
         draw.rectangle([x1, y1, x2, y2], outline=color, width=line_w)
 
         d_str = f"{p.diameter_nm:.1f}nm" if p.diameter_nm is not None else ""
