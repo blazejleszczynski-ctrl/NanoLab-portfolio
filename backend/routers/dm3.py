@@ -72,13 +72,14 @@ _TAG_MAP = {
         ".ImageList.1.ImageData.Calibrations.Dimension.1.Units",
         ".ImageList.1.ImageData.Calibrations.Dimension.0.Units",
     ],
+    # JEOL JEM-1400 DM3: 1-based Dimension index (.1 = width, .2 = height), checked on 22/22 files
     "image_width_px": [
-        ".ImageList.2.ImageData.Dimensions.0",
-        ".ImageList.1.ImageData.Dimensions.0",
-    ],
-    "image_height_px": [
         ".ImageList.2.ImageData.Dimensions.1",
         ".ImageList.1.ImageData.Dimensions.1",
+    ],
+    "image_height_px": [
+        ".ImageList.2.ImageData.Dimensions.2",
+        ".ImageList.1.ImageData.Dimensions.2",
     ],
     "stage_alpha_deg": [
         ".ImageList.2.ImageTags.Stage Position.Stage Alpha",
@@ -369,7 +370,7 @@ async def annotate_image(req: AnnotateRequest):
         conf = p.confidence
         color = "#22c55e" if conf >= 0.9 else ("#f97316" if conf >= 0.6 else "#ef4444")
 
-        line_w = max(3, round(w / 200))   # proportional to image width — stays visible when downscaled in UI
+        line_w = max(2, round(w / 400))   # 1/400 of image width — thin, but still visible when downscaled in UI
         draw.rectangle([x1, y1, x2, y2], outline=color, width=line_w)
 
         d_str = f"{p.diameter_nm:.1f}nm" if p.diameter_nm is not None else ""

@@ -84,7 +84,8 @@ served directly by FastAPI's `StaticFiles`. No webpack, no npm install, no compi
 
 <p>
   <img src="0_screenshots/13.png" width="90%" alt="DM3 file naming and save"><br>
-  <img src="0_screenshots/15.png" width="90%" alt="AI nanoparticle detection on a TEM image">
+  <img src="0_screenshots/19.png" width="90%" alt="AI nanoparticle detection and size distribution on a TEM image"><br>
+  <img src="0_screenshots/20.png" width="90%" alt="HRTEM analysis: lattice fringes and d-spacing">
 </p>
 
 More screenshots (full workflow, both apps, light/dark mode) are in [`0_screenshots/`](0_screenshots/).
